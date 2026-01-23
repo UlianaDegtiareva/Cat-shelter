@@ -6,7 +6,6 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Включаем проверку входящих данных (чтобы работали @IsString, @IsInt)
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     transform: true,

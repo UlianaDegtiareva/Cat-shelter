@@ -46,3 +46,9 @@
 2. `npm run start:dev`
 
 Приложение будет доступно по адресу: [http://localhost:3000/api](http://localhost:3000/api)
+
+# Для тестирования
+Контракт можно посмотреть по ссылке: 
+```bash
+http://localhost:3000/api-json
+```

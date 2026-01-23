@@ -5,69 +5,67 @@ import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 
-@ApiTags('cats')
+@ApiTags('Cats Management')
 @Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Добавить новую кошку' })
+  @ApiOperation({ 
+    summary: 'Register a new cat', 
+    description: 'Creates a new cat record in the database. The name must be unique to avoid identification errors.' 
+  })
+  @ApiResponse({ status: 201, description: 'The cat has been successfully registered.' })
+  @ApiResponse({ status: 400, description: 'Invalid input data.' })
+  @ApiResponse({ status: 409, description: 'Conflict: A cat with this name already exists.' })
   create(@Body() dto: CreateCatDto) {
     return this.catsService.create(dto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Список всех кошек с фильтрацией' })
-  @ApiQuery({ name: 'breed', required: false, description: 'Фильтр по породе' })
-  @ApiQuery({ name: 'isAdopted', required: false, description: 'Фильтр по статусу (true/false)' })
-  findAll(
-    @Query('breed') breed?: string,
-    @Query('isAdopted') isAdopted?: string,
-  ) {
+  @ApiOperation({ 
+    summary: 'Search shelter database', 
+    description: 'Returns a list of all cats. Supports filtering by breed and adoption status.' 
+  })
+  @ApiQuery({ name: 'breed', required: false, description: 'Filter cats by specific breed' })
+  @ApiQuery({ name: 'isAdopted', required: false, description: 'Filter by adoption status (true/false)' })
+  findAll(@Query('breed') breed?: string, @Query('isAdopted') isAdopted?: string) {
     return this.catsService.findAll(breed, isAdopted);
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Детальная информация о кошке' })
+  @ApiOperation({ 
+    summary: 'Get cat details', 
+    description: 'Returns full information about a specific cat, including history and owner details if adopted.' 
+  })
+  @ApiParam({ name: 'id', description: 'Unique numerical ID of the cat' })
+  @ApiResponse({ status: 200, description: 'Cat data retrieved successfully.' })
+  @ApiResponse({ status: 404, description: 'Cat not found.' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.catsService.findOne(id);
   }
 
   @Patch(':id/adopt')
-  @ApiOperation({ summary: 'Усыновить кошку (закрепить за пользователем)' })
-  @ApiParam({ name: 'id', description: 'ID кошки' })
-  @ApiBody({ 
-    schema: { 
-      type: 'object', 
-      properties: { 
-        userId: { type: 'number', example: 1 } 
-      } 
-    } 
+  @ApiOperation({ 
+    summary: 'Process adoption', 
+    description: 'Links a cat to a specific user. Sets adoption status to true and records the current timestamp.' 
   })
-  adopt(
-    @Param('id', ParseIntPipe) catId: number,
-    @Body('userId', ParseIntPipe) userId: number,
-  ) {
+  @ApiBody({ 
+    schema: { type: 'object', properties: { userId: { type: 'number', description: 'Internal ID of the adopter' } } } 
+  })
+  @ApiResponse({ status: 200, description: 'Adoption process completed.' })
+  @ApiResponse({ status: 400, description: 'Cat is already adopted or invalid user ID.' })
+  @ApiResponse({ status: 404, description: 'Cat or User not found.' })
+  adopt(@Param('id', ParseIntPipe) catId: number, @Body('userId', ParseIntPipe) userId: number) {
     return this.catsService.adopt(catId, userId);
-  }
-
-  @Patch(':id')
-  @ApiOperation({ summary: 'Обновить данные кошки' })
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCatDto) {
-    return this.catsService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Удалить кошку из базы' })
+  @ApiOperation({ summary: 'Remove cat from system', description: 'Permanently deletes a cat record from the database.' })
+  @ApiResponse({ status: 204, description: 'Record deleted successfully.' })
+  @ApiResponse({ status: 404, description: 'Cat not found, cannot delete.' })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.catsService.remove(id);
-  }
-
-  @Get('user/:userId')
-  @ApiOperation({ summary: 'Получить всех кошек, усыновленных конкретным пользователем' })
-  @ApiParam({ name: 'userId', description: 'ID владельца' })
-  findByUser(@Param('userId', ParseIntPipe) userId: number) {
-    return this.catsService.findAdoptedByUser(userId);
   }
 }
