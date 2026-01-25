@@ -35,4 +35,13 @@ export class CreateCatDto {
   @IsOptional()
   @IsString()
   history?: string;
+
+  @ApiProperty({ 
+    example: 'A very friendly and playful cat, loves children.', 
+    description: 'Detailed characteristic or personality description',
+    required: false 
+  })
+  @IsOptional()
+  @IsString()
+  description?: string;
 }
