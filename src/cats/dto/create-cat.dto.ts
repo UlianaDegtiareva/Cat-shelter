@@ -1,46 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsOptional, Min, MinLength } from 'class-validator';
+import { IsString, IsInt, Min, MinLength, IsOptional } from 'class-validator';
 
 export class CreateCatDto {
-  @ApiProperty({ 
-    example: 'Barsik', 
-    description: 'The official name of the cat for registration',
-    minLength: 2 
-  })
+  @ApiProperty({ example: 'Barsik', description: 'Name of the cat' })
   @IsString()
   @MinLength(2)
   name: string;
 
-  @ApiProperty({ 
-    example: 2, 
-    description: 'Age of the cat in years',
-    minimum: 0 
-  })
+  @ApiProperty({ example: 2, description: 'Age of the cat' })
   @IsInt()
-  @Min(0)
+  @Min(1)
   age: number;
 
-  @ApiProperty({ 
-    example: 'Siamese', 
-    description: 'Breed or closest phenotype' 
-  })
+  @ApiProperty({ example: 'Siamese', description: 'Breed of the cat' })
   @IsString()
   breed: string;
 
-  @ApiProperty({ 
-    example: 'Found in a park during winter 2024', 
-    description: 'Background story of how the cat arrived at the shelter',
-    required: false 
-  })
+  @ApiProperty({ example: 'Found in 2024', required: false })
   @IsOptional()
   @IsString()
   history?: string;
 
-  @ApiProperty({ 
-    example: 'A very friendly and playful cat, loves children.', 
-    description: 'Detailed characteristic or personality description',
-    required: false 
-  })
+  @ApiProperty({ example: 'Very friendly', required: false })
   @IsOptional()
   @IsString()
   description?: string;

@@ -1,5 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('cats')
 export class CatEntity {
@@ -15,18 +14,9 @@ export class CatEntity {
   @Column()
   breed: string;
 
-  @Column({ default: false })
-  isAdopted: boolean;
-
-  @Column({ type: 'text', nullable: true })
+  @Column({ nullable: true })
   history: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   description: string;
-
-  @Column({ type: 'timestamp', nullable: true })
-  adoptionDate: Date; // Дата усыновления
-
-  @ManyToOne(() => UserEntity, (user) => user.cats, { onDelete: 'SET NULL' })
-  owner: UserEntity
 }

@@ -11,19 +11,22 @@ async function bootstrap() {
     transform: true,
   }));
 
-  // Настройка Swagger
   const config = new DocumentBuilder()
-    .setTitle('Приют для кошек')
-    .setDescription('Система управления кошками и пользователями (без регистрации)')
+    .setTitle('Cat Shelter Foundation API')
+    .setDescription('Basic system for tracking shelter animals. Assignment #1.')
     .setVersion('1.0')
-    .addTag('cats', 'Операции с животными')
-    .addTag('users', 'Операции с пользователями')
+    .addTag('Cats Management', 'Core operations for cat records')
     .build();
     
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document); // Swagger будет по ссылке /api
+  SwaggerModule.setup('api', app, document);
 
+  // Запуск сервера
   await app.listen(3000);
-  console.log(`Приложение запущено на: http://localhost:3000/api`);
+  
+  console.log(`---`);
+  console.log(`Application is running on: http://localhost:3000/api`);
+  console.log(`OpenAPI specification (JSON): http://localhost:3000/api-json`);
+  console.log(`---`);
 }
 bootstrap();
