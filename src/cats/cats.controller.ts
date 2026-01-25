@@ -40,6 +40,7 @@ export class CatsController {
   })
   @ApiParam({ name: 'id', description: 'Unique numerical ID of the cat' })
   @ApiResponse({ status: 200, description: 'Cat data retrieved successfully.' })
+  @ApiResponse ({ status: 400, description: 'Invalid ID format. Expected an integer.'})
   @ApiResponse({ status: 404, description: 'Cat not found.' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.catsService.findOne(id);
@@ -64,6 +65,7 @@ export class CatsController {
   @HttpCode(204)
   @ApiOperation({ summary: 'Remove cat from system', description: 'Permanently deletes a cat record from the database.' })
   @ApiResponse({ status: 204, description: 'Record deleted successfully.' })
+  @ApiResponse ({ status: 400, description: 'Invalid ID format. Expected an integer.'})
   @ApiResponse({ status: 404, description: 'Cat not found, cannot delete.' })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.catsService.remove(id);

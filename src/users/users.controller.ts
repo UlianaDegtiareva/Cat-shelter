@@ -27,6 +27,7 @@ export class UsersController {
     description: 'Retrieves user details and the list of cats they have adopted.' 
   })
   @ApiResponse({ status: 200, description: 'User found.' })
+  @ApiResponse({ status: 400, description: 'Invalid ID format provided.' })
   @ApiResponse({ status: 404, description: 'User not found.' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
