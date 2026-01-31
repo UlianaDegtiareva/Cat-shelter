@@ -12,6 +12,7 @@ export class UsersController {
   @Post()
   @ApiOperation({ summary: 'Create new user/volunteer' })
   @ApiResponse({ status: 201, description: 'User successfully created.' })
+  @ApiResponse({ status: 400, description: 'Validation failed' })
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -41,6 +42,7 @@ export class UsersController {
   })
   @ApiParam({ name: 'id', description: 'User ID', example: 1 })
   @ApiResponse({ status: 200, description: 'Success', type: UserEntity })
+  @ApiResponse({ status: 400, description: 'Invalid ID' })
   @ApiResponse({ status: 404, description: 'User not found' })
   getUserCats(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findUserCats(id);
@@ -53,6 +55,7 @@ export class UsersController {
   })
   @ApiParam({ name: 'id', description: 'User ID to delete', example: 1 })
   @ApiResponse({ status: 204, description: 'User deleted successfully.' })
+  @ApiResponse({ status: 400, description: 'Invalid ID' })
   @ApiResponse({ status: 404, description: 'User not found.' })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);

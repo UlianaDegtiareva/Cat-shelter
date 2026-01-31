@@ -29,7 +29,9 @@ export class CatsController {
   })
   @ApiParam({ name: 'id', description: 'Unique numerical ID of the cat' })
   @ApiResponse({ status: 200, description: 'Cat info updated successfully.' })
+  @ApiResponse({ status: 400, description: 'Invalid input or ID' })
   @ApiResponse({ status: 404, description: 'Cat not found.' })
+  @ApiResponse({ status: 409, description: 'New name already taken' })
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCatDto) {
     return this.catsService.update(id, dto);
   }
@@ -41,6 +43,7 @@ export class CatsController {
   })
   @ApiQuery({ name: 'breed', required: false, description: 'Filter cats by specific breed' })
   @ApiQuery({ name: 'isAdopted', required: false, description: 'Filter by adoption status (true/false)' })
+  @ApiResponse({ status: 200, description: 'Success' })
   findAll(@Query('breed') breed?: string, @Query('isAdopted') isAdopted?: string) {
     return this.catsService.findAll(breed, isAdopted);
   }
