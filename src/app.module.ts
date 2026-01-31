@@ -4,6 +4,8 @@ import { UsersModule } from './users/users.module';
 import { CatsModule } from './cats/cats.module';
 import { CatEntity } from './cats/entities/cat.entity';
 import { UserEntity } from './users/entities/user.entity';
+import { StatsModule } from './stats/stats.module';
+
 
 
 @Module({
@@ -20,6 +22,7 @@ import { UserEntity } from './users/entities/user.entity';
     }),
     CatsModule,
     UsersModule,
+    StatsModule,
   ],
 })
 export class AppModule {}

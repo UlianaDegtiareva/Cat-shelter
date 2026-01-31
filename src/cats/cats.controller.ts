@@ -36,18 +36,6 @@ export class CatsController {
     return this.catsService.update(id, dto);
   }
 
-  @Get()
-  @ApiOperation({ 
-    summary: 'Search shelter database', 
-    description: 'Returns a list of all cats. Supports filtering by breed and adoption status.' 
-  })
-  @ApiQuery({ name: 'breed', required: false, description: 'Filter cats by specific breed' })
-  @ApiQuery({ name: 'isAdopted', required: false, description: 'Filter by adoption status (true/false)' })
-  @ApiResponse({ status: 200, description: 'Success' })
-  findAll(@Query('breed') breed?: string, @Query('isAdopted') isAdopted?: string) {
-    return this.catsService.findAll(breed, isAdopted);
-  }
-
   @Get(':id')
   @ApiOperation({ 
     summary: 'Get cat details', 
@@ -74,6 +62,23 @@ export class CatsController {
   @ApiResponse({ status: 404, description: 'Cat or User not found.' })
   adopt(@Param('id', ParseIntPipe) catId: number, @Body('userId', ParseIntPipe) userId: number) {
     return this.catsService.adopt(catId, userId);
+  }
+
+  @Get()
+  @ApiOperation({ 
+    summary: 'Search shelter database', 
+    description: 'Returns a list of all cats. Supports filtering by breed, adoption status and age (kittens).' 
+  })
+  @ApiQuery({ name: 'breed', required: false, description: 'Filter cats by specific breed' })
+  @ApiQuery({ name: 'isAdopted', required: false, description: 'Filter by adoption status (true/false)' })
+  @ApiQuery({ name: 'isKitten', required: false, type: Boolean, description: 'Filter only cats younger than 1 year' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  findAll(
+    @Query('breed') breed?: string, 
+    @Query('isAdopted') isAdopted?: string,
+    @Query('isKitten') isKitten?: string
+  ) {
+    return this.catsService.findAll(breed, isAdopted, isKitten);
   }
 
   @Delete(':id')

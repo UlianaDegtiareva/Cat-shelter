@@ -16,16 +16,22 @@ export class CatsService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async findAll(breed?: string, isAdopted?: string): Promise<CatEntity[]> {
-    const where: any = {};
-    
-    if (breed) where.breed = breed;
-    if (isAdopted !== undefined) where.isAdopted = isAdopted === 'true';
-
-    return this.catRepository.find({ 
-      where, 
-      relations: ['owner']
-    });
+  async findAll(breed?: string, isAdopted?: string, isKitten?: string): Promise<CatEntity[]> {
+    const query = this.catRepository
+      .createQueryBuilder('cat')
+      .leftJoinAndSelect('cat.owner', 'owner');
+    if (breed) {
+      query.andWhere('cat.breed = :breed', { breed });
+    }
+    if (isAdopted !== undefined) {
+      query.andWhere('cat.isAdopted = :isAdopted', { 
+        isAdopted: isAdopted === 'true' 
+      });
+    }
+    if (isKitten === 'true') {
+      query.andWhere('cat.age < :age', { age: 1 });
+    }
+    return query.getMany();
   }
 
   async create(dto: CreateCatDto): Promise<CatEntity> {
@@ -37,7 +43,10 @@ export class CatsService {
   }
 
   async findOne(id: number): Promise<CatEntity> {
-    const cat = await this.catRepository.findOneBy({ id });
+    const cat = await this.catRepository.findOne({ 
+      where: { id },
+      relations: ['owner']
+    });
     if (!cat) throw new NotFoundException(`Кошка с id ${id} не найдена`);
     return cat;
   }
