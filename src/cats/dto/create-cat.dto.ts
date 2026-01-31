@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsOptional, Min, MinLength } from 'class-validator';
+import { IsString, IsInt, IsOptional, Min, MinLength, IsNotEmpty } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class CreateCatDto {
   @ApiProperty({ 
@@ -8,6 +9,8 @@ export class CreateCatDto {
     minLength: 2 
   })
   @IsString()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  @IsNotEmpty({ message: 'Name should not be empty or contain only spaces' })
   @MinLength(2)
   name: string;
 
@@ -25,6 +28,8 @@ export class CreateCatDto {
     description: 'Breed or closest phenotype' 
   })
   @IsString()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  @IsNotEmpty({ message: 'Breed should not be empty' })
   breed: string;
 
   @ApiProperty({ 
@@ -34,6 +39,7 @@ export class CreateCatDto {
   })
   @IsOptional()
   @IsString()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   history?: string;
 
   @ApiProperty({ 
@@ -43,5 +49,6 @@ export class CreateCatDto {
   })
   @IsOptional()
   @IsString()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   description?: string;
 }

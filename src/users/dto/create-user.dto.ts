@@ -1,5 +1,6 @@
-import { IsString, MinLength } from 'class-validator';
+import { IsString, MinLength, IsNotEmpty} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class CreateUserDto {
   @ApiProperty({ 
@@ -8,6 +9,8 @@ export class CreateUserDto {
     minLength: 2 
   })
   @IsString()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  @IsNotEmpty({ message: 'First name should not be empty' })
   @MinLength(2)
   readonly firstName: string;
 
@@ -17,6 +20,7 @@ export class CreateUserDto {
     minLength: 2 
   })
   @IsString()
-  @MinLength(2)
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  @IsNotEmpty({ message: 'Last name should not be empty' })
   readonly lastName: string;
 }
