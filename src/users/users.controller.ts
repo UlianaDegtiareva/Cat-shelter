@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserEntity } from './entities/user.entity';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('Users Management')
@@ -31,5 +32,29 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'User not found.' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
+  }
+
+  @Get(':id/cats')
+  @ApiOperation({ 
+    summary: 'Get all cats adopted by a specific user',
+    description: 'Returns user profile with the list of their adopted cats.' 
+  })
+  @ApiParam({ name: 'id', description: 'User ID', example: 1 })
+  @ApiResponse({ status: 200, description: 'Success', type: UserEntity })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  getUserCats(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findUserCats(id);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ 
+    summary: 'Delete user profile', 
+    description: 'Permanently removes a user. Note: Associated cats will remain in the system but will become ownerless (SET NULL).' 
+  })
+  @ApiParam({ name: 'id', description: 'User ID to delete', example: 1 })
+  @ApiResponse({ status: 204, description: 'User deleted successfully.' })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.remove(id);
   }
 }

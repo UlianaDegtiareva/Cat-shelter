@@ -24,7 +24,7 @@ export class CatsService {
 
     return this.catRepository.find({ 
       where, 
-      relations: ['owner'] // Чтобы в ответе видеть данные хозяина
+      relations: ['owner']
     });
   }
 
@@ -36,10 +36,6 @@ export class CatsService {
     return this.catRepository.save(newCat);
   }
 
-  // findAll(): Promise<CatEntity[]> {
-  //   return this.catRepository.find();
-  // }
-
   async findOne(id: number): Promise<CatEntity> {
     const cat = await this.catRepository.findOneBy({ id });
     if (!cat) throw new NotFoundException(`Кошка с id ${id} не найдена`);
@@ -47,20 +43,32 @@ export class CatsService {
   }
 
   async update(id: number, dto: UpdateCatDto): Promise<CatEntity> {
-    const cat = await this.findOne(id);
-    Object.assign(cat, dto);
-    return this.catRepository.save(cat);
+    const cat = await this.catRepository.preload({
+      id: id,
+      ...dto,
+    });
+
+    if (!cat) {
+      throw new NotFoundException(`Cat with ID ${id} not found`);
+    }
+
+    if (dto.name) {
+      const existing = await this.catRepository.findOneBy({ name: dto.name });
+      if (existing && existing.id !== id) {
+        throw new ConflictException(`Name "${dto.name}" is already taken`);
+      }
+    }
+
+    return this.findOne(id);
   }
 
   async remove(id: number): Promise<void> {
-    // Сначала ищем кошку, чтобы убедиться, что она существует
     const cat = await this.catRepository.findOneBy({ id });
     
     if (!cat) {
       throw new NotFoundException(`Кошка с id=${id} не найдена, удаление невозможно.`);
     }
 
-    // Удаляем запись из базы данных навсегда
     await this.catRepository.remove(cat);
   }
 

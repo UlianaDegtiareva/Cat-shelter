@@ -22,6 +22,18 @@ export class CatsController {
     return this.catsService.create(dto);
   }
 
+  @Patch(':id')
+  @ApiOperation({ 
+    summary: 'Update cat information', 
+    description: 'Updates specific fields like name, breed, or history. System fields (isAdopted) should not be modified here.' 
+  })
+  @ApiParam({ name: 'id', description: 'Unique numerical ID of the cat' })
+  @ApiResponse({ status: 200, description: 'Cat info updated successfully.' })
+  @ApiResponse({ status: 404, description: 'Cat not found.' })
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCatDto) {
+    return this.catsService.update(id, dto);
+  }
+
   @Get()
   @ApiOperation({ 
     summary: 'Search shelter database', 
