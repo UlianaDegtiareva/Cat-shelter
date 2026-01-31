@@ -1,17 +1,38 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString, IsBoolean } from 'class-validator';
+import { IsInt, IsOptional, IsString, Min, MinLength, IsNotEmpty } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class UpdateCatDto {
-  @ApiPropertyOptional({ example: 'Barsik', description: 'Updated name of the cat' })
-  @IsOptional() @IsString() readonly name?: string;
+  @ApiPropertyOptional({ example: 'Barsik' })
+  @IsOptional()
+  @IsString()
+  @Transform(({ value }) => value?.trim())
+  @IsNotEmpty()
+  @MinLength(2)
+  readonly name?: string;
 
-  @ApiPropertyOptional({ example: 3, description: 'Updated age of the cat' })
-  @IsOptional() @IsInt() readonly age?: number;
+  @ApiPropertyOptional({ example: 3 })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  readonly age?: number;
 
-  @ApiPropertyOptional({ example: 'Siamese', description: 'Updated breed' })
-  @IsOptional() @IsString() readonly breed?: string;
+  @ApiPropertyOptional({ example: 'Siamese' })
+  @IsOptional()
+  @IsString()
+  @Transform(({ value }) => value?.trim())
+  @IsNotEmpty()
+  readonly breed?: string;
 
-  @ApiPropertyOptional({ example: 'Doing well, very active', description: 'Updated health or history notes' })
-  @IsOptional() @IsString() readonly history?: string;
+  @ApiPropertyOptional({ example: 'Healthy and active' })
+  @IsOptional()
+  @IsString()
+  @Transform(({ value }) => value?.trim())
+  readonly history?: string;
 
+  @ApiPropertyOptional({ example: 'Loves playing with balls' })
+  @IsOptional()
+  @IsString()
+  @Transform(({ value }) => value?.trim())
+  readonly description?: string;
 }
