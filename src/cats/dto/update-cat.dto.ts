@@ -14,6 +14,4 @@ export class UpdateCatDto {
   @ApiPropertyOptional({ example: 'Doing well, very active', description: 'Updated health or history notes' })
   @IsOptional() @IsString() readonly history?: string;
 
-  @ApiPropertyOptional({ example: true, description: 'Status: true if cat is adopted' })
-  @IsOptional() @IsBoolean() readonly isAdopted?: boolean;
 }

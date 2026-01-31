@@ -59,6 +59,8 @@ export class CatsService {
       }
     }
 
+    await this.catRepository.save(cat);
+
     return this.findOne(id);
   }
 
