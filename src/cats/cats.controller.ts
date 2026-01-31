@@ -9,9 +9,13 @@ export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Add a new cat to the shelter' })
-  @ApiResponse({ status: 201, description: 'Cat successfully created.' })
-  @ApiResponse({ status: 400, description: 'Validation failed.' })
+  @ApiOperation({ 
+    summary: 'Register a new cat', 
+    description: 'Creates a new cat record in the database. The name must be unique to avoid identification errors.' 
+  })
+  @ApiResponse({ status: 201, description: 'The cat has been successfully registered.' })
+  @ApiResponse({ status: 400, description: 'Invalid input data.' })
+  @ApiResponse({ status: 409, description: 'Conflict: A cat with this name already exists.' })
   create(@Body() dto: CreateCatDto) {
     return this.catsService.create(dto);
   }

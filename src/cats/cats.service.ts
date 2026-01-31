@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException,  ConflictException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatEntity } from './entities/cat.entity';
@@ -21,7 +21,12 @@ export class CatsService {
     return cat;
   }
 
-  create(dto: CreateCatDto): Promise<CatEntity> {
+  async create(dto: CreateCatDto): Promise<CatEntity> {
+    const existing = await this.catRepository.findOneBy({ name: dto.name });
+    if (existing) {
+      throw new ConflictException(`Cat with name "${dto.name}" already exists`);
+    }
+    
     const newCat = this.catRepository.create(dto);
     return this.catRepository.save(newCat);
   }
