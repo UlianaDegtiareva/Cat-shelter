@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Delete, Body, Param, HttpCode, ParseIntPipe } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 
@@ -21,6 +21,19 @@ export class CatsController {
   @ApiResponse({ status: 200, description: 'Return list of cats.' })
   findAll() {
     return this.catsService.findAll();
+  }
+
+  @Get(':id')
+  @ApiOperation({ 
+    summary: 'Get cat details', 
+    description: 'Retrieves full information about a specific cat by its unique ID.' 
+  })
+  @ApiParam({ name: 'id', description: 'Unique numerical ID of the cat', example: 1 })
+  @ApiResponse({ status: 200, description: 'Cat data retrieved successfully.' })
+  @ApiResponse({ status: 400, description: 'Invalid ID format. Expected an integer.' })
+  @ApiResponse({ status: 404, description: 'Cat not found.' })
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.catsService.findOne(id);
   }
 
   @Delete(':id')

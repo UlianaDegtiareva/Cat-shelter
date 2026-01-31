@@ -15,6 +15,12 @@ export class CatsService {
     return this.catRepository.find();
   }
 
+  async findOne(id: number): Promise<CatEntity> {
+    const cat = await this.catRepository.findOneBy({ id });
+    if (!cat) throw new NotFoundException(`Cat with ID ${id} not found`);
+    return cat;
+  }
+
   create(dto: CreateCatDto): Promise<CatEntity> {
     const newCat = this.catRepository.create(dto);
     return this.catRepository.save(newCat);
