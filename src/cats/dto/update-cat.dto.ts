@@ -7,7 +7,7 @@ export class UpdateCatDto {
   @IsOptional()
   @IsString()
   @Transform(({ value }) => value?.trim())
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Name should not be empty or contain only spaces' })
   @MinLength(2)
   readonly name?: string;
 
@@ -21,7 +21,7 @@ export class UpdateCatDto {
   @IsOptional()
   @IsString()
   @Transform(({ value }) => value?.trim())
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Breed should not be empty' })
   readonly breed?: string;
 
   @ApiPropertyOptional({ example: 'Healthy and active' })
