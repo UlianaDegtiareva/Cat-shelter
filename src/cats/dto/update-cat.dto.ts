@@ -11,7 +11,7 @@ export class UpdateCatDto {
   @ApiPropertyOptional({ example: 3, description: 'Updated age of the cat' })
   @IsOptional() 
   @IsInt() 
-  @Min(1)
+  @Min(0)
   readonly age?: number;
 
   @ApiPropertyOptional({ example: 'Siamese', description: 'Updated breed' })

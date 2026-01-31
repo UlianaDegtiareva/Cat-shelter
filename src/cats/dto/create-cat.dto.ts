@@ -9,7 +9,7 @@ export class CreateCatDto {
 
   @ApiProperty({ example: 2, description: 'Age of the cat' })
   @IsInt()
-  @Min(1)
+  @Min(0)
   age: number;
 
   @ApiProperty({ example: 'Siamese', description: 'Breed of the cat' })
