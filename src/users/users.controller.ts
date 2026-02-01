@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, HttpCode } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './entities/user.entity';
@@ -49,6 +49,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   @ApiOperation({ 
     summary: 'Delete user profile', 
     description: 'Permanently removes a user. Note: Associated cats will remain in the system but will become ownerless (SET NULL).' 
