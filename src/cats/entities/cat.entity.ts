@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+// TODO: Настроить декоратор Entity и описать поля таблицы
 @Entity('cats')
 export class CatEntity {
   @PrimaryGeneratedColumn()
@@ -8,15 +9,6 @@ export class CatEntity {
   @Column({ unique: true })
   name: string;
 
-  @Column()
-  age: number;
-
-  @Column()
-  breed: string;
-
-  @Column({ nullable: true })
-  history: string;
-
-  @Column({ type: 'text', nullable: true })
-  description: string;
+  // TODO: Добавить остальные поля (age, breed, history, description)
+  // Помните про типы данных и возможность пустых значений (nullable)
 }

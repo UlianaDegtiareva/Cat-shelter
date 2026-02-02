@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException,  ConflictException} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatEntity } from './entities/cat.entity';
 import { CreateCatDto } from './dto/create-cat.dto';
+import { UpdateCatDto } from './dto/update-cat.dto';
 
 @Injectable()
 export class CatsService {
@@ -11,31 +12,21 @@ export class CatsService {
     private readonly catRepository: Repository<CatEntity>,
   ) {}
 
-  findAll(): Promise<CatEntity[]> {
-    return this.catRepository.find();
+  async create(dto: CreateCatDto) {
+    // TODO: Проверить уникальность имени (ошибка 409 ConflictException)
+    // TODO: Создать экземпляр сущности и сохранить в БД
   }
 
-  async findOne(id: number): Promise<CatEntity> {
-    const cat = await this.catRepository.findOneBy({ id });
-    if (!cat) throw new NotFoundException(`Cat with ID ${id} not found`);
-    return cat;
+  findAll() {
+    // TODO: Вернуть массив всех кошек из базы
   }
 
-  async create(dto: CreateCatDto): Promise<CatEntity> {
-    const existing = await this.catRepository.findOneBy({ name: dto.name });
-    if (existing) {
-      throw new ConflictException(`Cat with name "${dto.name}" already exists`);
-    }
-    
-    const newCat = this.catRepository.create(dto);
-    return this.catRepository.save(newCat);
+  async findOne(id: number) {
+    // TODO: Найти кошку по ID. Если не найдена — выбросить NotFoundException (404)
   }
 
-  async remove(id: number): Promise<void> {
-    const cat = await this.catRepository.findOneBy({ id });
-    if (!cat) {
-      throw new NotFoundException(`Cat with ID ${id} not found`);
-    }
-    await this.catRepository.remove(cat);
+  async remove(id: number) {
+    // TODO: Проверить существование по ID. Если нет — 404.
+    // TODO: Удалить запись из базы данных
   }
 }

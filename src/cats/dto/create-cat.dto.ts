@@ -4,32 +4,27 @@ import { Transform } from 'class-transformer';
 
 export class CreateCatDto {
   @ApiProperty({ example: 'Barsik', description: 'Name of the cat' })
-  @IsString()
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsNotEmpty({ message: 'Name should not be empty' })
-  @MinLength(2)
+  // TODO: Добавить валидацию (минимум 2 символа, не пустое)
+  // TODO: Реализовать обрезку пробелов через @Transform
   name: string;
 
   @ApiProperty({ example: 2, description: 'Age of the cat' })
-  @IsInt()
-  @Min(0)
+  // TODO: Добавить валидацию типа и минимального значения
   age: number;
 
   @ApiProperty({ example: 'Siamese', description: 'Breed of the cat' })
-  @IsString()
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsNotEmpty({ message: 'Breed should not be empty' })
+  // TODO: Добавить валидацию (не пустое)
+  // TODO: Реализовать обрезку пробелов через @Transform
   breed: string;
 
   @ApiProperty({ example: 'Found in 2024', required: false })
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  // TODO: Поле должно быть опциональным
+  // TODO: Реализовать обрезку пробелов через @Transform
   history?: string;
 
   @ApiProperty({ example: 'Very friendly', required: false })
   @IsOptional()
   @IsString()
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  // TODO: Реализовать обрезку пробелов через @Transform
   description?: string;
 }

@@ -19,6 +19,26 @@
     * `GET /cats/:id` — получение детальной информации о конкретной кошке.
     * `DELETE /cats/:id` — исключение записи из базы данных.
 
+Ваш контроллер должен реализовывать следующие коды состояния и описания ответов:
+
+1. Создание кошки (`POST /cats`)
+   - **201 Created**: "The cat has been successfully registered."
+   - **400 Bad Request**: "Invalid input data."
+   - **409 Conflict**: "Conflict: A cat with this name already exists."
+
+2. Получение полного списка кошек (`GET /cats`)
+   - **200 OK**: "Return list of cats."
+
+3. Получение описания одной конкретной кошки (`GET /cats/:id`)
+   - **200 OK**: "Cat data retrieved successfully."
+   - **400 Bad Request**: "Invalid ID format. Expected an integer."
+   - **404 Not Found**: "Cat not found."
+
+4. Удаление кошки (`DELETE /cats/:id`)
+   - **204 No Content**: "Cat deleted."
+   - **400 Bad Request**: "Invalid ID format."
+   - **404 Not Found**: "Cat not found."
+
 ### Технические требования и валидация:
 
 1.  **Валидация входящих данных:**
