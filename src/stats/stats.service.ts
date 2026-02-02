@@ -13,27 +13,30 @@ export class StatsService {
   async getGeneralSummary() {
     const total = await this.catRepository.count();
     const adopted = await this.catRepository.countBy({ isAdopted: true });
-    const percentage = total > 0 ? (adopted / total) * 100 : 0;
-
+    const percentage = total > 0 ? Number(((adopted / total) * 100).toFixed(2)) : 0;
     return {
       totalAnimals: total,
       adoptedCount: adopted,
-      adoptionRate: `${percentage.toFixed(2)}%`,
+      adoptionRate: percentage,
     };
   }
 
   async getBreedDistribution() {
-    return this.catRepository
+    const rawStats = await this.catRepository
       .createQueryBuilder('cat')
       .select('cat.breed', 'breed')
       .addSelect('COUNT(cat.id)', 'count')
       .groupBy('cat.breed')
       .orderBy('count', 'DESC')
       .getRawMany();
+    return rawStats.map(item => ({
+      breed: item.breed,
+      count: Number(item.count),
+    }));
   }
 
   async getTopAdopters() {
-    return this.catRepository
+    const rawAdopters = await this.catRepository
       .createQueryBuilder('cat')
       .innerJoin('cat.owner', 'user')
       .select([
@@ -46,5 +49,11 @@ export class StatsService {
       .orderBy('count', 'DESC')
       .limit(5)
       .getRawMany();
+    return rawAdopters.map(adopter => ({
+      id: Number(adopter.id),
+      firstName: adopter.firstName,
+      lastName: adopter.lastName,
+      count: Number(adopter.count),
+    }));
   }
 }
