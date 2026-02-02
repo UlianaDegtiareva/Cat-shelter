@@ -40,6 +40,54 @@
 | GET    | `/users/:id/cats`        | Список кошек конкретного владельца   | 200    |
 | DELETE | `/users/:id`        | Удаление записи (с проверкой SET NULL)                   | 204    |
 
+Ваш контроллер должен строго реализовывать следующие коды состояния и описания ответов для корректной работы автоматических тестов и генерации Swagger:
+
+Модуль кошек (Cats Module):
+1. Регистрация новой кошки (`POST /cats`)
+   * **201 Created**: "The cat has been successfully registered."
+   * **400 Bad Request**: "Invalid input data."
+   * **409 Conflict**: "Conflict: A cat with this name already exists."
+2. Обновление данных (`PATCH /cats/:id`)
+   * **200 OK**: "Cat info updated successfully."
+   * **400 Bad Request**: "Invalid input or ID"
+   * **404 Not Found**: "Cat not found."
+   * **409 Conflict**: "New name already taken"
+3. Поиск по базе приюта (`GET /cats`)
+   * **200 OK**: "Success"
+4. Детальная информация о кошке (`GET /cats/:id`)
+   * **200 OK**: "Cat data retrieved successfully."
+   * **400 Bad Request**: "Invalid ID format. Expected an integer."
+   * **404 Not Found**: "Cat not found."
+5. Процесс усыновления (`PATCH /cats/:id/adopt`)
+   * **200 OK**: "Adoption process completed."
+   * 400 Bad Request: "Cat is already adopted or invalid user ID."
+   * 404 Not Found: "Cat or User not found."
+6. Удаление записи (`DELETE /cats/:id`)
+   * **204 No Conten**t: "Record deleted successfully."
+   * **400 Bad Request**: "Invalid ID format. Expected an integer."
+   * **404 Not Found**: "Cat not found, cannot delete."
+
+Модуль пользователей (Users Module):
+1. Создание волонтера (`POST /users`)
+   * **201 Created**: "User successfully created."
+   * **400 Bad Request**: "Validation failed"
+2. Список всех пользователей (`GET /users`)
+   * **200 OK**: "Returns a list of all registered users."
+3. Профиль пользователя (`GET /users/:id`)
+   * **200 OK**: "User found."
+   * **400 Bad Request**: "Invalid ID format provided."
+   * **404 Not Found**: "User not found."
+4. Список кошек владельца (`GET /users/:id/cats`)
+   * **200 OK**: "Success"
+   * **400 Bad Request**: "Invalid ID"
+   * **404 Not Found**: "User not found"
+5. Удаление пользователя (`DELETE /users/:id`)
+   * **204 No Content**: "User deleted successfully."
+   * **400 Bad Request**: "Invalid ID"
+   * **404 Not Found**: "User not found."
+
+Для каждого эндпоинта используйте декораторы `@ApiResponse({ status: X, description: '...' })` или специализированные версии, такие как `@ApiNotFoundResponse()`. Помните, что для успешного удаления (`DELETE`) необходимо также использовать декоратор `@HttpCode(204)`.
+
 ### Технические требования:
 1. Использовать `class-validator` для проверки имен (минимум 2 символа) и возраста (неотрицательное число).
 2. Все эндпоинты должны быть документированы. Ошибки `404 (Not Found)` и `400 (Bad Request)` должны быть описаны.

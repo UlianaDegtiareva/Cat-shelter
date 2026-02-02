@@ -17,15 +17,9 @@ export class CatsService {
   ) {}
 
   async findAll(breed?: string, isAdopted?: string): Promise<CatEntity[]> {
-    const where: any = {};
-    
-    if (breed) where.breed = breed;
-    if (isAdopted !== undefined) where.isAdopted = isAdopted === 'true';
-
-    return this.catRepository.find({ 
-      where, 
-      relations: ['owner']
-    });
+    // TODO: Сформировать объект 'where' для фильтрации по породе и статусу
+    // TODO: Настроить подгрузку владельца через relations
+    return [];
   }
 
   async create(dto: CreateCatDto): Promise<CatEntity> {
@@ -37,34 +31,15 @@ export class CatsService {
   }
 
   async findOne(id: number): Promise<CatEntity> {
-    const cat = await this.catRepository.findOne({ 
-      where: { id },
-      relations: ['owner']
-    });
-    if (!cat) throw new NotFoundException(`Кошка с id ${id} не найдена`);
-    return cat;
+    // TODO: Найти кошку по ID с подгрузкой владельца (relations)
+    // TODO: Обработать ошибку 404
+    return null;
   }
 
   async update(id: number, dto: UpdateCatDto): Promise<CatEntity> {
-    const cat = await this.catRepository.preload({
-      id: id,
-      ...dto,
-    });
-
-    if (!cat) {
-      throw new NotFoundException(`Cat with ID ${id} not found`);
-    }
-
-    if (dto.name) {
-      const existing = await this.catRepository.findOneBy({ name: dto.name });
-      if (existing && existing.id !== id) {
-        throw new ConflictException(`Name "${dto.name}" is already taken`);
-      }
-    }
-
-    await this.catRepository.save(cat);
-
-    return this.findOne(id);
+    // TODO: Использовать preload для обновления данных
+    // TODO: Реализовать проверку на уникальность имени (ConflictException 409)
+    return null;
   }
 
   async remove(id: number): Promise<void> {
@@ -79,27 +54,10 @@ export class CatsService {
 
   // Логика усыновления
   async adopt(catId: number, userId: number): Promise<CatEntity> {
-    const cat = await this.catRepository.findOneBy({ id: catId });
-    const user = await this.userRepository.findOneBy({ id: userId });
-
-    if (!cat) throw new NotFoundException('Кошка не найдена');
-    if (!user) throw new NotFoundException('Пользователь не найден');
-    if (cat.isAdopted) throw new BadRequestException('Эту кошку уже забрали');
-
-    cat.owner = user;
-    cat.isAdopted = true;
-    cat.adoptionDate = new Date();
-
-    return this.catRepository.save(cat);
-  }
-
-  async findAdoptedByUser(userId: number): Promise<CatEntity[]> {
-    return this.catRepository.find({
-      where: {
-        owner: { id: userId },
-        isAdopted: true
-      },
-      order: { adoptionDate: 'DESC' }
-    });
+    // TODO: Найти кошку и пользователя. Если кто-то не найден — 404.
+    // TODO: Проверить, не усыновлена ли уже кошка — 400 (BadRequestException).
+    // TODO: Установить owner, isAdopted = true и текущую дату.
+    // TODO: Сохранить и вернуть результат.
+    return null;
   }
 }

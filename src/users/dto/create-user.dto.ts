@@ -8,10 +8,10 @@ export class CreateUserDto {
     description: 'First name of the user/volunteer',
     minLength: 2 
   })
-  @IsString()
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsNotEmpty({ message: 'First name should not be empty' })
-  @MinLength(2)
+  // TODO: Добавить проверку на строку
+  // TODO: Реализовать обрезку пробелов (trim)
+  // TODO: Добавить проверку на пустое значение
+  // TODO: Установить минимальную длину 2 символа
   readonly firstName: string;
 
   @ApiProperty({ 
@@ -19,8 +19,6 @@ export class CreateUserDto {
     description: 'Last name of the user/volunteer',
     minLength: 2 
   })
-  @IsString()
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsNotEmpty({ message: 'Last name should not be empty' })
+  // TODO: Добавить валидацию аналогично полю firstName
   readonly lastName: string;
 }

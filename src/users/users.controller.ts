@@ -11,54 +11,38 @@ export class UsersController {
 
   @Post()
   @ApiOperation({ summary: 'Create new user/volunteer' })
-  @ApiResponse({ status: 201, description: 'User successfully created.' })
-  @ApiResponse({ status: 400, description: 'Validation failed' })
+  // TODO: Описать ответы (201, 400) согласно Contract Specification
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    // TODO: Реализовать создание через сервис
   }
 
   @Get()
-  @ApiOperation({ summary: 'List all users', description: 'Returns a list of all registered users.' })
+  @ApiOperation({ summary: 'List all users' })
+  // TODO: Описать ответ 200
   findAll() {
-    return this.usersService.findAll();
+    // TODO: Реализовать получение списка
   }
 
   @Get(':id')
-  @ApiOperation({ 
-    summary: 'Get user profile', 
-    description: 'Retrieves user details and the list of cats they have adopted.' 
-  })
-  @ApiResponse({ status: 200, description: 'User found.' })
-  @ApiResponse({ status: 400, description: 'Invalid ID format provided.' })
-  @ApiResponse({ status: 404, description: 'User not found.' })
+  @ApiOperation({ summary: 'Get user profile' })
+  // TODO: Описать ответы (200, 400, 404)
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.findOne(id);
+    // TODO: Реализовать получение профиля
   }
 
   @Get(':id/cats')
-  @ApiOperation({ 
-    summary: 'Get all cats adopted by a specific user',
-    description: 'Returns user profile with the list of their adopted cats.' 
-  })
-  @ApiParam({ name: 'id', description: 'User ID', example: 1 })
-  @ApiResponse({ status: 200, description: 'Success', type: UserEntity })
-  @ApiResponse({ status: 400, description: 'Invalid ID' })
-  @ApiResponse({ status: 404, description: 'User not found' })
+  @ApiOperation({ summary: 'Get all cats adopted by user' })
+  @ApiParam({ name: 'id', description: 'User ID' })
+  // TODO: Описать ответы (200, 400, 404)
   getUserCats(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.findUserCats(id);
+    // TODO: Вызвать метод findUserCats в сервисе
   }
 
   @Delete(':id')
-  @HttpCode(204)
-  @ApiOperation({ 
-    summary: 'Delete user profile', 
-    description: 'Permanently removes a user. Note: Associated cats will remain in the system but will become ownerless (SET NULL).' 
-  })
-  @ApiParam({ name: 'id', description: 'User ID to delete', example: 1 })
-  @ApiResponse({ status: 204, description: 'User deleted successfully.' })
-  @ApiResponse({ status: 400, description: 'Invalid ID' })
-  @ApiResponse({ status: 404, description: 'User not found.' })
+  // TODO: Установить HTTP статус-код 204
+  @ApiOperation({ summary: 'Delete user profile' })
+  // TODO: Описать ответы (204, 400, 404)
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.remove(id);
+    // TODO: Реализовать удаление через сервис
   }
 }

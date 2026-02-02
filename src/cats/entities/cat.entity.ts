@@ -15,18 +15,16 @@ export class CatEntity {
   @Column()
   breed: string;
 
-  @Column({ default: false })
-  isAdopted: boolean;
-
   @Column({ type: 'text', nullable: true })
   history: string;
 
   @Column({ nullable: true })
   description: string;
 
-  @Column({ type: 'timestamp', nullable: true })
-  adoptionDate: Date; // Дата усыновления
+  // TODO: Добавить флаг isAdopted (boolean, default: false)
+  // TODO: Добавить дату adoptionDate (тип timestamp, nullable)
 
-  @ManyToOne(() => UserEntity, (user) => user.cats, { onDelete: 'SET NULL' })
-  owner: UserEntity
+  // TODO: Настроить связь ManyToOne к UserEntity
+  // TODO: Установить onDelete: 'SET NULL'
+  owner: any;
 }

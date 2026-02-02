@@ -11,36 +11,17 @@ export class UsersService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  create(dto: CreateUserDto) {
-    const user = this.userRepository.create(dto);
-    return this.userRepository.save(user);
-  }
+  // TODO: Реализовать метод create
 
-  findAll() {
-    return this.userRepository.find();
-  }
+  // TODO: Реализовать метод findAll
 
-  async findOne(id: number) {
-    const user = await this.userRepository.findOneBy({ id });
-    if (!user) throw new NotFoundException('Пользователь не найден');
-    return user;
-  }
+  // TODO: Реализовать метод findOne с обработкой 404
 
-  async remove(id: number) {
-    const user = await this.findOne(id);
-    await this.userRepository.remove(user);
-  }
+  // TODO: Реализовать метод remove
 
   async findUserCats(userId: number): Promise<UserEntity> {
-    const user = await this.userRepository.findOne({
-      where: { id: userId },
-      relations: ['cats'],
-    });
-  
-    if (!user) {
-      throw new NotFoundException(`User with ID ${userId} not found`);
-    }
-  
-    return user;
+    // TODO: Найти пользователя по ID и подгрузить его кошек через relations
+    // TODO: Обработать 404 ошибку
+    return null;
   }
 }

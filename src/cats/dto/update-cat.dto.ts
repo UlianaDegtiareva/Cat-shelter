@@ -1,38 +1,30 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString, Min, MinLength, IsNotEmpty } from 'class-validator';
-import { Transform } from 'class-transformer';
+// TODO: Импортировать валидаторы: IsInt, IsOptional, IsString, Min, MinLength, IsNotEmpty
+// TODO: Импортировать Transform из class-transformer
 
 export class UpdateCatDto {
   @ApiPropertyOptional({ example: 'Barsik' })
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => value?.trim())
-  @IsNotEmpty({ message: 'Name should not be empty or contain only spaces' })
-  @MinLength(2)
+  // TODO: Сделать поле опциональным
+  // TODO: Если передано: строка, не пустая, минимум 2 символа, trim
   readonly name?: string;
 
   @ApiPropertyOptional({ example: 3 })
-  @IsOptional()
-  @IsInt()
-  @Min(0)
+  // TODO: Сделать поле опциональным
+  // TODO: Если передано: целое число, минимум 0
   readonly age?: number;
 
   @ApiPropertyOptional({ example: 'Siamese' })
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => value?.trim())
-  @IsNotEmpty({ message: 'Breed should not be empty' })
+  // TODO: Сделать поле опциональным
+  // TODO: Если передано: строка, не пустая, trim
   readonly breed?: string;
 
   @ApiPropertyOptional({ example: 'Healthy and active' })
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => value?.trim())
+  // TODO: Сделать поле опциональным
+  // TODO: Если передано: строка, trim
   readonly history?: string;
 
   @ApiPropertyOptional({ example: 'Loves playing with balls' })
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => value?.trim())
+  // TODO: Сделать поле опциональным
+  // TODO: Если передано: строка, trim
   readonly description?: string;
 }

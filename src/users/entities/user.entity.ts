@@ -6,12 +6,8 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
-
-  @OneToMany(() => CatEntity, (cat) => cat.owner)
-  cats: CatEntity[];
+  // TODO: Добавить колонки firstName и lastName
+  
+  // TODO: Настроить связь OneToMany к CatEntity
+  cats: any[];
 }
