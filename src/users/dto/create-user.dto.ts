@@ -23,4 +23,14 @@ export class CreateUserDto {
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsNotEmpty({ message: 'Last name should not be empty' })
   readonly lastName: string;
+
+  @ApiProperty({ example: 'vanya_pro', description: 'Unique login' })
+  @IsString()
+  @IsNotEmpty()
+  readonly login: string;
+
+  @ApiProperty({ example: 'password123', minLength: 6 })
+  @IsString()
+  @MinLength(6)
+  readonly password: string;
 }

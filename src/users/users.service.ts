@@ -43,4 +43,11 @@ export class UsersService {
   
     return user;
   }
+
+  async findByLogin(login: string) {
+    return this.userRepository.findOne({ 
+      where: { login },
+      select: ['id', 'login', 'password']
+    });
+  }
 }

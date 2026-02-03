@@ -15,8 +15,10 @@ async function bootstrap() {
   // Настройка Swagger
   const config = new DocumentBuilder()
     .setTitle('Приют для кошек')
-    .setDescription('Система управления кошками и пользователями (без регистрации)')
+    .setDescription('Система управления кошками и пользователями')
     .setVersion('1.0')
+    .addBearerAuth()
+    .addTag('auth', 'Авторизация и регистрация')
     .addTag('cats', 'Операции с животными')
     .addTag('users', 'Операции с пользователями')
     .build();
