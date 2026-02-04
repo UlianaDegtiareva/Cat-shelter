@@ -96,7 +96,11 @@
 
 Для повседневной работы достаточно убедиться, что контейнер БД запущен, и запустить сервер:
 1. `docker-compose start` (если контейнер был остановлен)
-2. `npm run start:dev`
+2. Для этого задания потребуются новые библиотеки, установить которые можно при помощи команды:
+   ```bash
+      npm install @nestjs/jwt @nestjs/passport bcrypt passport-jwt
+   ```
+3. `npm run start:dev`
 
 Приложение будет доступно по адресу: [http://localhost:3000/api](http://localhost:3000/api)
 
