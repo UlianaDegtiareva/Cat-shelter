@@ -5,11 +5,22 @@ import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Role } from '../roles/entities/role.entity';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateHealthCardDto } from './dto/create-health-card.dto';
+
 
 @ApiTags('Cats Management')
 @Controller('cats')
 export class CatsController {
-  constructor(private readonly catsService: CatsService) {}
+  constructor(
+    private readonly catsService: CatsService,
+    @InjectRepository(Role)
+    private readonly roleRepository: Repository<Role>,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -91,7 +102,8 @@ export class CatsController {
     return this.catsService.findAll(breed, isAdopted, isKitten);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @ApiBearerAuth()
   @Delete(':id')
   @HttpCode(204)
@@ -99,8 +111,42 @@ export class CatsController {
   @ApiResponse({ status: 204, description: 'Record deleted successfully.' })
   @ApiResponse ({ status: 400, description: 'Invalid ID format. Expected an integer.'})
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
+  @ApiResponse({ status: 403, description: 'Forbidden: You do not have administrator rights.' })
   @ApiResponse({ status: 404, description: 'Cat not found, cannot delete.' })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.catsService.remove(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Post(':id/health-card')
+  @ApiOperation({ 
+    summary: 'Create a health card', 
+    description: 'Initializes a new medical record for a specific cat. Only one card can exist per cat.' 
+  })
+  @ApiParam({ name: 'id', description: 'Internal ID of the cat', example: 1 })
+  @ApiResponse({ status: 201, description: 'Health card created successfully.' })
+  @ApiResponse({ status: 400, description: 'Invalid input data.' })
+  @ApiResponse({ status: 401, description: 'Not authorized: No token provided.' })
+  @ApiResponse({ status: 404, description: 'Cat not found.' })
+  @ApiResponse({ status: 409, description: 'Conflict: This cat already has a health card.' })
+  async createCard(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateHealthCardDto) {
+    return this.catsService.createHealthCard(id, dto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Patch(':id/health-card')
+  @ApiOperation({ 
+    summary: 'Update health card info', 
+    description: 'Modifies medical status, vaccination date, or veterinary notes for an existing card.' 
+  })
+  @ApiParam({ name: 'id', description: 'Internal ID of the cat', example: 1 })
+  @ApiResponse({ status: 200, description: 'Health card updated successfully.' })
+  @ApiResponse({ status: 400, description: 'Invalid input or ID format.' })
+  @ApiResponse({ status: 401, description: 'Not authorized: No token provided.' })
+  @ApiResponse({ status: 404, description: 'Health card not found for this cat.' })
+  async updateCard(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateHealthCardDto) {
+    return this.catsService.updateHealthCard(id, dto);
   }
 }

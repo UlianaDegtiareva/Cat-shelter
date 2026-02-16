@@ -6,6 +6,8 @@ import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { Equal } from 'typeorm';
+import { HealthCard } from './entities/health-card.entity';
+import { CreateHealthCardDto } from './dto/create-health-card.dto';
 
 @Injectable()
 export class CatsService {
@@ -14,12 +16,15 @@ export class CatsService {
     private readonly catRepository: Repository<CatEntity>,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(HealthCard)
+    private readonly healthCardRepo: Repository<HealthCard>,
   ) {}
 
   async findAll(breed?: string, isAdopted?: string, isKitten?: string): Promise<CatEntity[]> {
     const query = this.catRepository
       .createQueryBuilder('cat')
-      .leftJoinAndSelect('cat.owner', 'owner');
+      .leftJoinAndSelect('cat.owner', 'owner')
+      .leftJoinAndSelect('cat.healthCard', 'healthCard');
     if (breed) {
       query.andWhere('cat.breed = :breed', { breed });
     }
@@ -45,7 +50,7 @@ export class CatsService {
   async findOne(id: number): Promise<CatEntity> {
     const cat = await this.catRepository.findOne({ 
       where: { id },
-      relations: ['owner']
+      relations: ['owner', 'healthCard']
     });
     if (!cat) throw new NotFoundException(`Кошка с id ${id} не найдена`);
     return cat;
@@ -107,5 +112,31 @@ export class CatsService {
       },
       order: { adoptionDate: 'DESC' }
     });
+  }
+
+  async createHealthCard(catId: number, dto: CreateHealthCardDto) {
+    // Исправили catsRepository -> catRepository
+    const cat = await this.catRepository.findOne({ 
+      where: { id: catId }, 
+      relations: ['healthCard'] 
+    });
+    
+    if (!cat) throw new NotFoundException('Кошка не найдена');
+    if (cat.healthCard) throw new ConflictException('У этой кошки уже есть медкарта');
+  
+    const card = this.healthCardRepo.create({
+      ...dto,
+      cat: cat
+    });
+    
+    return await this.healthCardRepo.save(card);
+  }
+
+  async updateHealthCard(catId: number, dto: Partial<CreateHealthCardDto>) {
+    const card = await this.healthCardRepo.findOne({ where: { cat: { id: catId } } });
+    if (!card) throw new NotFoundException('Медкарта для этой кошки не найдена');
+  
+    Object.assign(card, dto);
+    return await this.healthCardRepo.save(card);
   }
 }

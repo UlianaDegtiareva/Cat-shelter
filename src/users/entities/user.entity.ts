@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
 import { CatEntity } from 'src/cats/entities/cat.entity';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -20,4 +21,7 @@ export class UserEntity {
 
   @OneToMany(() => CatEntity, (cat) => cat.owner)
   cats: CatEntity[];
+
+  @ManyToOne(() => Role)
+  role: Role;
 }

@@ -1,14 +1,23 @@
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, HttpCode, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, HttpCode, UseGuards, Req, ForbiddenException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Role } from '../roles/entities/role.entity';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @ApiTags('Users Management')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    @InjectRepository(Role)
+    private readonly roleRepository: Repository<Role>,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -73,8 +82,35 @@ export class UsersController {
   @ApiResponse({ status: 204, description: 'User deleted successfully.' })
   @ApiResponse({ status: 400, description: 'Invalid ID' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
+  @ApiResponse({ status: 403, description: 'Access denied. You can only delete your own profile'})
   @ApiResponse({ status: 404, description: 'User not found.' })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  async remove(@Param('id', ParseIntPipe) id: number, @Req() req) {
+    const currentUser = req.user; // Данные из JWT (id и role)
+
+    // Если текущий пользователь НЕ админ И его ID не совпадает с тем, кого удаляют
+    if (currentUser.role !== 'admin' && currentUser.id !== id) {
+      throw new ForbiddenException('Access denied. You can only delete your own profile');
+    }
+
     return this.usersService.remove(id);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  @ApiBearerAuth()
+  @Post(':id/make-admin')
+  @ApiOperation({ 
+    summary: 'Give admin rights to user', 
+    description: 'Changes the user role to Admin. Restricted to users with existing Admin privileges.' 
+  })
+  @ApiParam({ name: 'id', description: 'User ID to be promoted', example: 2 })
+  @ApiResponse({ status: 200, description: 'User has been successfully promoted to Admin.' })
+  @ApiResponse({ status: 400, description: 'Invalid ID format provided.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized: Token is missing or invalid.' })
+  @ApiResponse({ status: 403, description: 'Forbidden: You do not have administrator rights.' })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  async makeAdmin(@Param('id', ParseIntPipe) id: number) {
+     const adminRole = await this.roleRepository.findOne({ where: { name: 'admin' } });
+     return this.usersService.changeRole(id, adminRole);
   }
 }

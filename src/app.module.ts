@@ -6,6 +6,9 @@ import { CatEntity } from './cats/entities/cat.entity';
 import { UserEntity } from './users/entities/user.entity';
 import { StatsModule } from './stats/stats.module';
 import { AuthModule } from './auth/auth.module';
+import { Role } from './roles/entities/role.entity';
+import { HealthCard } from './cats/entities/health-card.entity';
+
 
 @Module({
   imports: [
@@ -16,7 +19,7 @@ import { AuthModule } from './auth/auth.module';
       username: 'user',
       password: 'password',
       database: 'shelter',
-      entities: [CatEntity, UserEntity],
+      entities: [CatEntity, UserEntity, Role, HealthCard],
       synchronize: true,
     }),
     AuthModule,

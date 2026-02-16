@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne } from 'typeorm';
 import { UserEntity } from 'src/users/entities/user.entity';
+import { HealthCard } from './health-card.entity';
 
 @Entity('cats')
 export class CatEntity {
@@ -29,4 +30,7 @@ export class CatEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.cats, { onDelete: 'SET NULL' })
   owner: UserEntity
+
+  @OneToOne(() => HealthCard, (healthCard) => healthCard.cat)
+  healthCard: HealthCard;
 }
