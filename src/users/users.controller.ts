@@ -12,17 +12,6 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @Post()
-  @ApiOperation({ summary: 'Create new user/volunteer' })
-  @ApiResponse({ status: 201, description: 'User successfully created.' })
-  @ApiResponse({ status: 400, description: 'Validation failed' })
-  @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   @Get()
   @ApiOperation({ summary: 'List all users', description: 'Returns a list of all registered users.' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
