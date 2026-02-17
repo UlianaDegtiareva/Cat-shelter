@@ -1,13 +1,12 @@
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, HttpCode, UseGuards, Req, ForbiddenException } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from '../roles/entities/role.entity';
-import { RolesGuard } from 'src/common/guards/roles.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard'; 
 import { Roles } from '../auth/decorators/roles.decorator';
 
 @ApiTags('Users Management')
@@ -18,17 +17,6 @@ export class UsersController {
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>,
   ) {}
-
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
-  @Post()
-  @ApiOperation({ summary: 'Create new user/volunteer' })
-  @ApiResponse({ status: 201, description: 'User successfully created.' })
-  @ApiResponse({ status: 400, description: 'Validation failed' })
-  @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -85,13 +73,12 @@ export class UsersController {
   @ApiResponse({ status: 403, description: 'Access denied. You can only delete your own profile'})
   @ApiResponse({ status: 404, description: 'User not found.' })
   async remove(@Param('id', ParseIntPipe) id: number, @Req() req) {
-    const currentUser = req.user; // Данные из JWT (id и role)
-
-    // Если текущий пользователь НЕ админ И его ID не совпадает с тем, кого удаляют
-    if (currentUser.role !== 'admin' && currentUser.id !== id) {
+    const currentUser = req.user;
+    const isAdmin = currentUser.role === 'admin' || currentUser.roleId === 2;
+    const isOwner = currentUser.userId === id;
+    if (!isAdmin && !isOwner) {
       throw new ForbiddenException('Access denied. You can only delete your own profile');
     }
-
     return this.usersService.remove(id);
   }
 
@@ -104,7 +91,7 @@ export class UsersController {
     description: 'Changes the user role to Admin. Restricted to users with existing Admin privileges.' 
   })
   @ApiParam({ name: 'id', description: 'User ID to be promoted', example: 2 })
-  @ApiResponse({ status: 200, description: 'User has been successfully promoted to Admin.' })
+  @ApiResponse({ status: 201, description: 'User has been successfully promoted to Admin.' })
   @ApiResponse({ status: 400, description: 'Invalid ID format provided.' })
   @ApiResponse({ status: 401, description: 'Unauthorized: Token is missing or invalid.' })
   @ApiResponse({ status: 403, description: 'Forbidden: You do not have administrator rights.' })

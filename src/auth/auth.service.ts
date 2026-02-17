@@ -62,7 +62,12 @@ export class AuthService {
   }
 
   private generateToken(user: any) {
-    const payload = { sub: user.id, username: user.login, role: user.role?.name || 'volunteer' };
+    const payload = { 
+      sub: user.id, 
+      username: user.login, 
+      role: user.role?.name || 'volunteer',
+      roleId: user.role?.id || 1 
+    };
     return {
       access_token: this.jwtService.sign(payload),
     };
@@ -70,12 +75,7 @@ export class AuthService {
 
   async onModuleInit() {
     await this.seedRoles();
-    
-    // Генерируем "родной" хеш для базы
-    const testHash = await bcrypt.hash('123456', 10);
-    console.log('--- СКОПИРУЙ ЭТОТ ХЕШ ДЛЯ БД ---');
-    console.log(testHash);
-    console.log('-------------------------------');
+    await this.seedAdmin();
   }
   
   private async seedRoles() {
@@ -86,6 +86,33 @@ export class AuthService {
         { name: 'admin' }
       ]);
       console.log('Roles have been initialized');
+    }
+  }
+
+  private async seedAdmin() {
+    const adminLogin = 'superadmin';
+    const existingAdmin = await this.usersService.findByLogin(adminLogin);
+    if (existingAdmin) {
+      return;
+    }
+    const adminRole = await this.roleRepository.findOne({ where: { name: 'admin' } });
+    if (!adminRole) {
+      console.error('[Seed] Cannot create admin: Role "admin" not found.');
+      return;
+    }
+    const hashedPassword = await bcrypt.hash('123456', 10);
+  
+    try {
+      await this.usersService.create({
+        login: adminLogin,
+        password: hashedPassword,
+        firstName: 'Admin',
+        lastName: 'Glavniy',
+        role: adminRole,
+      });
+      console.log(`[Seed] SuperAdmin created successfully! Login: ${adminLogin}, Pass: 123456`);
+    } catch (error) {
+      console.error('[Seed] Error creating admin:', error.message);
     }
   }
 }

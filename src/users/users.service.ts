@@ -54,7 +54,13 @@ export class UsersService {
     return this.userRepository.findOne({ 
       where: { login },
       relations: ['role'],
-      select: ['id', 'login', 'password']
+      select: {
+        id: true,
+        login: true,
+        password: true,
+        firstName: true,
+        lastName: true,
+      }
     });
   }
 }

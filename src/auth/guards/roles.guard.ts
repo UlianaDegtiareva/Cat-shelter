@@ -7,16 +7,15 @@ export class RolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.get<string[]>('roles', context.getHandler());
-    
-    if (!requiredRoles) {
-      return true;
-    }
+    if (!requiredRoles) return true;
+  
     const { user } = context.switchToHttp().getRequest();
-    const hasRole = () => requiredRoles.includes(user.role);
-
-    if (user && user.role && hasRole()) {
-      return true;
+    const isAdmin = user.role === 'admin' || user.roleId === 2;
+  
+    if (requiredRoles.includes('admin') && !isAdmin) {
+      throw new ForbiddenException('Forbidden: You do not have administrator rights.');
     }
-    throw new ForbiddenException('У вас недостаточно прав для этого действия');
+  
+    return true;
   }
 }
