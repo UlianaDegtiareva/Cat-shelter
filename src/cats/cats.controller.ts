@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, Query } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, Query, BadRequestException } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiQuery, ApiParam, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
@@ -9,6 +9,13 @@ import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 @Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
+
+  private validateId(id: string): number {
+    if (!/^\d+$/.test(id)) {
+      throw new BadRequestException(`Validation failed. ID must be a whole positive integer, but received: ${id}`);
+    }
+    return parseInt(id, 10);
+  }
 
   @Post()
   @ApiOperation({ 
@@ -32,8 +39,9 @@ export class CatsController {
   @ApiResponse({ status: 400, description: 'Invalid input or ID' })
   @ApiResponse({ status: 404, description: 'Cat not found.' })
   @ApiResponse({ status: 409, description: 'New name already taken' })
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCatDto) {
-    return this.catsService.update(id, dto);
+  update(@Param('id') id: string, @Body() dto: UpdateCatDto) {
+    const numericId = this.validateId(id);
+    return this.catsService.update(numericId, dto);
   }
 
   @Get()
@@ -57,8 +65,9 @@ export class CatsController {
   @ApiResponse({ status: 200, description: 'Cat data retrieved successfully.' })
   @ApiResponse ({ status: 400, description: 'Invalid ID format. Expected an integer.'})
   @ApiResponse({ status: 404, description: 'Cat not found.' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.catsService.findOne(id);
+  findOne(@Param('id') id: string) {
+    const numericId = this.validateId(id);
+    return this.catsService.findOne(numericId);
   }
 
   @Patch(':id/adopt')
@@ -72,8 +81,9 @@ export class CatsController {
   @ApiResponse({ status: 200, description: 'Adoption process completed.' })
   @ApiResponse({ status: 400, description: 'Cat is already adopted or invalid user ID.' })
   @ApiResponse({ status: 404, description: 'Cat or User not found.' })
-  adopt(@Param('id', ParseIntPipe) catId: number, @Body('userId', ParseIntPipe) userId: number) {
-    return this.catsService.adopt(catId, userId);
+  adopt(@Param('id') catId: string, @Body('userId', ParseIntPipe) userId: number) {
+    const numericCatId = this.validateId(catId);
+    return this.catsService.adopt(numericCatId, userId);
   }
 
   @Delete(':id')
@@ -82,7 +92,8 @@ export class CatsController {
   @ApiResponse({ status: 204, description: 'Record deleted successfully.' })
   @ApiResponse ({ status: 400, description: 'Invalid ID format. Expected an integer.'})
   @ApiResponse({ status: 404, description: 'Cat not found, cannot delete.' })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.catsService.remove(id);
+  remove(@Param('id') id: string) {
+    const numericId = this.validateId(id);
+    return this.catsService.remove(numericId);
   }
 }
