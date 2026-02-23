@@ -81,9 +81,12 @@ export class CatsController {
   @ApiResponse({ status: 200, description: 'Adoption process completed.' })
   @ApiResponse({ status: 400, description: 'Cat is already adopted or invalid user ID.' })
   @ApiResponse({ status: 404, description: 'Cat or User not found.' })
-  adopt(@Param('id') catId: string, @Body('userId', ParseIntPipe) userId: number) {
+  adopt(@Param('id') catId: string, @Body('userId') userId: any) {
     const numericCatId = this.validateId(catId);
-    return this.catsService.adopt(numericCatId, userId);
+    if (!/^\d+$/.test(String(userId))) {
+      throw new BadRequestException(`Validation failed. User ID must be a whole integer, but received: ${userId}`);
+    }
+    return this.catsService.adopt(numericCatId, Number(userId));
   }
 
   @Delete(':id')
