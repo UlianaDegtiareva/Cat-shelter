@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, Query, UseGuards, BadRequestException } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiQuery, ApiParam, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
@@ -21,6 +21,13 @@ export class CatsController {
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>,
   ) {}
+
+  private validateId(id: string): number {
+    if (!/^\d+$/.test(id)) {
+      throw new BadRequestException(`Validation failed. ID must be a whole positive integer, but received: ${id}`);
+    }
+    return parseInt(id, 10);
+  }
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -50,8 +57,9 @@ export class CatsController {
   @ApiResponse({ status: 400, description: 'Invalid input or ID' })
   @ApiResponse({ status: 404, description: 'Cat not found.' })
   @ApiResponse({ status: 409, description: 'New name already taken' })
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCatDto) {
-    return this.catsService.update(id, dto);
+  update(@Param('id') id: string, @Body() dto: UpdateCatDto) {
+    const numericId = this.validateId(id);
+    return this.catsService.update(numericId, dto);
   }
 
   @Get(':id')
@@ -63,8 +71,9 @@ export class CatsController {
   @ApiResponse({ status: 200, description: 'Cat data retrieved successfully.' })
   @ApiResponse ({ status: 400, description: 'Invalid ID format. Expected an integer.'})
   @ApiResponse({ status: 404, description: 'Cat not found.' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.catsService.findOne(id);
+  findOne(@Param('id') id: string) {
+    const numericId = this.validateId(id);
+    return this.catsService.findOne(numericId);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -81,8 +90,12 @@ export class CatsController {
   @ApiResponse({ status: 400, description: 'Cat is already adopted or invalid user ID.' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   @ApiResponse({ status: 404, description: 'Cat or User not found.' })
-  adopt(@Param('id', ParseIntPipe) catId: number, @Body('userId', ParseIntPipe) userId: number) {
-    return this.catsService.adopt(catId, userId);
+  adopt(@Param('id') catId: string, @Body('userId') userId: any) {
+    const numericCatId = this.validateId(catId);
+    if (!/^\d+$/.test(String(userId))) {
+      throw new BadRequestException(`Validation failed. User ID must be a whole integer, but received: ${userId}`);
+    }
+    return this.catsService.adopt(numericCatId, Number(userId));
   }
 
   @Get()
@@ -113,8 +126,9 @@ export class CatsController {
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   @ApiResponse({ status: 403, description: 'Forbidden: You do not have administrator rights.' })
   @ApiResponse({ status: 404, description: 'Cat not found, cannot delete.' })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.catsService.remove(id);
+  remove(@Param('id') id: string) {
+    const numericId = this.validateId(id);
+    return this.catsService.remove(numericId);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -130,8 +144,9 @@ export class CatsController {
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided.' })
   @ApiResponse({ status: 404, description: 'Cat not found.' })
   @ApiResponse({ status: 409, description: 'Conflict: This cat already has a health card.' })
-  async createCard(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateHealthCardDto) {
-    return this.catsService.createHealthCard(id, dto);
+  async createCard(@Param('id') id: string, @Body() dto: CreateHealthCardDto) {
+    const numericId = this.validateId(id);
+    return this.catsService.createHealthCard(numericId, dto);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -146,7 +161,8 @@ export class CatsController {
   @ApiResponse({ status: 400, description: 'Invalid input or ID format.' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided.' })
   @ApiResponse({ status: 404, description: 'Health card not found for this cat.' })
-  async updateCard(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateHealthCardDto) {
-    return this.catsService.updateHealthCard(id, dto);
+  async updateCard(@Param('id') id: string, @Body() dto: CreateHealthCardDto) {
+    const numericId = this.validateId(id);
+    return this.catsService.updateHealthCard(numericId, dto);
   }
 }
