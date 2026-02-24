@@ -14,6 +14,7 @@ export class UsersController {
   @ApiBearerAuth()
   @Get()
   @ApiOperation({ summary: 'List all users', description: 'Returns a list of all registered users.' })
+  @ApiResponse({ status: 200, description: 'Success' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   findAll() {
     return this.usersService.findAll();
