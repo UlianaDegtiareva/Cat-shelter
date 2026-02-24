@@ -22,7 +22,6 @@ func main() {
 
 	r := gin.Default()
 
-	// Маршруты совпадают с вызовами из NestJS
 	r.GET("/cats", findAllCats)
 	r.GET("/cats/:id", findOneCat)
 	r.GET("/users", findAllUsers)
@@ -35,8 +34,6 @@ func main() {
 	log.Println("High-performance Reader Service started on :8080")
 	r.Run(":8080")
 }
-
-// --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ОШИБОК ---
 
 func sendError(c *gin.Context, status int, message string) {
 	c.JSON(status, gin.H{"message": message})
@@ -195,8 +192,6 @@ func findOneUser(c *gin.Context) {
 
 func findUserCats(c *gin.Context) {
 	id := c.Param("id")
-	
-	// Сначала проверим, существует ли юзер
 	var exists int
 	db.QueryRow("SELECT 1 FROM users WHERE id = $1", id).Scan(&exists)
 	if exists == 0 {
@@ -220,8 +215,6 @@ func findUserCats(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, cats)
 }
-
-// --- STATS LOGIC ---
 
 func getGeneralSummary(c *gin.Context) {
 	var total, adopted int
