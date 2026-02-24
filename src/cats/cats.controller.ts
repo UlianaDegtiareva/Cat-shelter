@@ -112,7 +112,6 @@ export class CatsController {
     @Query('isAdopted') isAdopted?: string,
     @Query('isKitten') isKitten?: string
   ) {
-    // Формируем строку запроса для Go
     const params = new URLSearchParams({ 
       ...(breed && { breed }), 
       ...(isAdopted && { isAdopted }), 
