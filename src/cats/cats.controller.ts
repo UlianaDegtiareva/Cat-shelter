@@ -67,7 +67,7 @@ export class CatsController {
     summary: 'Get cat details', 
     description: 'Returns full information about a specific cat, including history and owner details if adopted.' 
   })
-  @ApiParam({ name: 'id', description: 'Unique numerical ID of the cat' })
+  @ApiParam({ name: 'id', type: 'number', description: 'Unique numerical ID of the cat' })
   @ApiResponse({ status: 200, description: 'Cat data retrieved successfully.' })
   @ApiResponse ({ status: 400, description: 'Invalid ID format. Expected an integer.'})
   @ApiResponse({ status: 404, description: 'Cat not found.' })
