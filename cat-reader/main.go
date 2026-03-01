@@ -119,7 +119,12 @@ func findAllCats(c *gin.Context) {
 }
 
 func findOneCat(c *gin.Context) {
-	id := c.Param("id")
+	idParam := c.Param("id")
+	id, err := strconv.Atoi(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID integer"})
+		return
+	}
 	query := `
         SELECT c.id, c.name, c.age, c.breed, c."isAdopted", c.history, c.description, c."adoptionDate",
                u.id, u.login, u."firstName", u."lastName",
