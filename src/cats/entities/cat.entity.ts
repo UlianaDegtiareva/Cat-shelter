@@ -33,4 +33,7 @@ export class CatEntity {
 
   @OneToOne(() => HealthCard, (healthCard) => healthCard.cat)
   healthCard: HealthCard;
+
+  @Column({ nullable: true })
+  chipCode: string; //код чипа от РосКотМониторинга
 }

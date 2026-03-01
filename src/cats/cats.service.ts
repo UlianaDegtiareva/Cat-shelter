@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ConflictException, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatEntity } from './entities/cat.entity';
@@ -8,12 +8,19 @@ import { UserEntity } from 'src/users/entities/user.entity';
 import { Equal } from 'typeorm';
 import { HealthCard } from './entities/health-card.entity';
 import { CreateHealthCardDto } from './dto/create-health-card.dto';
+import { HttpService } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
+import { lastValueFrom } from 'rxjs';
+import { RosKotRegistrationDto } from 'src/external-api/roskot-registration.dto';
+
 
 @Injectable()
 export class CatsService {
   constructor(
     @InjectRepository(CatEntity)
     private readonly catRepository: Repository<CatEntity>,
+    private readonly httpService: HttpService,     // Для HTTP запросов
+    private readonly configService: ConfigService, // Для чтения .env
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(HealthCard)
@@ -138,5 +145,48 @@ export class CatsService {
   
     Object.assign(card, dto);
     return await this.healthCardRepo.save(card);
+  }
+
+  async chipCat(id: number) {
+    // 1. Ищем кошку в нашей базе
+    const cat = await this.catRepository.findOneBy({ id });
+    if (!cat) throw new NotFoundException('Cat not found');
+    if (cat.chipCode) throw new BadRequestException('The cat is already microchipped');
+  
+    // 2. Берем настройки из .env
+    const apiUrl = this.configService.get('ROSKOT_API_URL');
+    const apiKey = this.configService.get('ROSKOT_API_KEY');
+  
+    try {
+      const payload: RosKotRegistrationDto = {
+        name: cat.name || 'Без имени',
+        breed: cat.breed || 'Метис',
+      };
+      
+      // 3. Делаем запрос к имитатору
+      const response = await lastValueFrom(
+        this.httpService.post(
+          `${apiUrl}/register-chip`, 
+          payload, // Передаем подготовленный объект
+          { 
+            headers: { 
+              'x-api-key': apiKey,
+              'Content-Type': 'application/json', // Явно указываем тип контента
+            },
+            timeout: 5000 
+          }
+        )
+      );
+  
+      cat.chipCode = response.data.chipId;
+      return await this.catRepository.save(cat);
+  
+    } catch (error) {
+      const status = error.response?.status || 500;
+      throw new HttpException(
+        `RosKotMonitoring Error: ${error.response?.data?.message || error.message}`, 
+        status
+      );
+    }
   }
 }
