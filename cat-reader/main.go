@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
+	"strconv"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -118,13 +118,28 @@ func findAllCats(c *gin.Context) {
 	c.JSON(http.StatusOK, cats)
 }
 
+func getErrType(status int) string {
+	switch status {
+	case 400: return "Bad Request"
+	case 404: return "Not Found"
+	default: return "Internal Server Error"
+	}
+}
+
 func findOneCat(c *gin.Context) {
 	idParam := c.Param("id")
+	
 	id, err := strconv.Atoi(idParam)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID integer"})
+	if err != nil || id <= 0 {
+		msg := fmt.Sprintf("Validation failed. ID must be a whole positive integer, but received: %s", idParam)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"statusCode": 400,
+			"message":    msg,
+			"error":      "Bad Request",
+		})
 		return
 	}
+
 	query := `
         SELECT c.id, c.name, c.age, c.breed, c."isAdopted", c.history, c.description, c."adoptionDate",
                u.id, u.login, u."firstName", u."lastName",
@@ -141,7 +156,8 @@ func findOneCat(c *gin.Context) {
 	var uID, hID sql.NullInt64
 	var uLogin, uFirst, uLast, hStatus, hNotes, hVaccinated sql.NullString
 
-	err := db.QueryRow(query, id).Scan(
+	// ИСПРАВЛЕНО: используем "=" вместо ":=", так как err объявлена выше через strconv.Atoi
+	err = db.QueryRow(query, id).Scan(
 		&catID, &name, &age, &breed, &isAdopted, &history, &description, &adoptionDate,
 		&uID, &uLogin, &uFirst, &uLast, &hID, &hStatus, &hNotes, &hVaccinated,
 	)
@@ -150,7 +166,7 @@ func findOneCat(c *gin.Context) {
 		if err == sql.ErrNoRows {
 			sendError(c, http.StatusNotFound, "Cat not found")
 		} else {
-			sendError(c, http.StatusBadRequest, "Invalid ID format")
+			sendError(c, http.StatusInternalServerError, "Database error")
 		}
 		return
 	}
