@@ -47,9 +47,9 @@ func findAllCats(c *gin.Context) {
 	isKitten := c.Query("isKitten")
 
 	query := `
-        SELECT c.id, c.name, c.age, c.breed, c."isAdopted", c.history, c.description,
-               u.id as owner_id, u."firstName" as owner_name,
-               h.id as health_id, h."medicalStatus"
+        SELECT c.id, c.name, c.age, c.breed, c."isAdopted", c.history, c.description, c."adoptionDate",
+               u.id as owner_id, u.login as owner_login, u."firstName" as owner_first, u."lastName" as owner_last,
+               h.id as health_id, h."medicalStatus", h.notes, h."lastVaccination"
         FROM cats c
         LEFT JOIN users u ON c."ownerId" = u.id
         LEFT JOIN health_cards h ON h."catId" = c.id
@@ -84,25 +84,34 @@ func findAllCats(c *gin.Context) {
 		var id, age int
 		var name, breed, history, description string
 		var isAdopted bool
+		var adoptionDate sql.NullString
 		var ownerID, healthID sql.NullInt64
-		var ownerName, medicalStatus sql.NullString
+		var ownerLogin, ownerFirst, ownerLast, medicalStatus, notes, lastVaccination sql.NullString
 
-		rows.Scan(&id, &name, &age, &breed, &isAdopted, &history, &description, &ownerID, &ownerName, &healthID, &medicalStatus)
+		rows.Scan(&id, &name, &age, &breed, &isAdopted, &history, &description, &adoptionDate,
+			&ownerID, &ownerLogin, &ownerFirst, &ownerLast, &healthID, &medicalStatus, &notes, &lastVaccination)
 
 		cat := gin.H{
-			"id":          id,
-			"name":        name,
-			"age":         age,
-			"breed":       breed,
-			"isAdopted":   isAdopted,
-			"history":     history,
-			"description": description,
+			"id":           id,
+			"name":         name,
+			"age":          age,
+			"breed":        breed,
+			"isAdopted":    isAdopted,
+			"history":      history,
+			"description":  description,
+			"adoptionDate": nil,
+			"owner":        nil,
+			"healthCard":   nil,
+		}
+
+		if adoptionDate.Valid {
+			cat["adoptionDate"] = adoptionDate.String
 		}
 		if ownerID.Valid {
-			cat["owner"] = gin.H{"id": ownerID.Int64, "firstName": ownerName.String}
+			cat["owner"] = gin.H{"id": ownerID.Int64, "login": ownerLogin.String, "firstName": ownerFirst.String, "lastName": ownerLast.String}
 		}
 		if healthID.Valid {
-			cat["healthCard"] = gin.H{"id": healthID.Int64, "medicalStatus": medicalStatus.String}
+			cat["healthCard"] = gin.H{"id": healthID.Int64, "medicalStatus": medicalStatus.String, "notes": notes.String, "lastVaccination": lastVaccination.String}
 		}
 		cats = append(cats, cat)
 	}
@@ -112,21 +121,26 @@ func findAllCats(c *gin.Context) {
 func findOneCat(c *gin.Context) {
 	id := c.Param("id")
 	query := `
-        SELECT c.id, c.name, c.age, c.breed, c."isAdopted", 
-               u.id, u."firstName", u."lastName",
-               h.id, h."medicalStatus", h.notes
+        SELECT c.id, c.name, c.age, c.breed, c."isAdopted", c.history, c.description, c."adoptionDate",
+               u.id, u.login, u."firstName", u."lastName",
+               h.id, h."medicalStatus", h.notes, h."lastVaccination"
         FROM cats c
         LEFT JOIN users u ON c."ownerId" = u.id
         LEFT JOIN health_cards h ON h."catId" = c.id
         WHERE c.id = $1`
 
 	var catID, age int
-	var name, breed string
+	var name, breed, history, description string
 	var isAdopted bool
+	var adoptionDate sql.NullString
 	var uID, hID sql.NullInt64
-	var uFirst, uLast, hStatus, hNotes sql.NullString
+	var uLogin, uFirst, uLast, hStatus, hNotes, hVaccinated sql.NullString
 
-	err := db.QueryRow(query, id).Scan(&catID, &name, &age, &breed, &isAdopted, &uID, &uFirst, &uLast, &hID, &hStatus, &hNotes)
+	err := db.QueryRow(query, id).Scan(
+		&catID, &name, &age, &breed, &isAdopted, &history, &description, &adoptionDate,
+		&uID, &uLogin, &uFirst, &uLast, &hID, &hStatus, &hNotes, &hVaccinated,
+	)
+
 	if err != nil {
 		if err == sql.ErrNoRows {
 			sendError(c, http.StatusNotFound, "Cat not found")
@@ -137,19 +151,27 @@ func findOneCat(c *gin.Context) {
 	}
 
 	res := gin.H{
-		"id":        catID,
-		"name":      name,
-		"age":       age,
-		"breed":     breed,
-		"isAdopted": isAdopted,
-	}
-	if uID.Valid {
-		res["owner"] = gin.H{"id": uID.Int64, "firstName": uFirst.String, "lastName": uLast.String}
-	}
-	if hID.Valid {
-		res["healthCard"] = gin.H{"id": hID.Int64, "medicalStatus": hStatus.String, "notes": hNotes.String}
+		"id":           catID,
+		"name":         name,
+		"age":          age,
+		"breed":        breed,
+		"isAdopted":    isAdopted,
+		"history":      history,
+		"description":  description,
+		"adoptionDate": nil,
+		"owner":        nil,
+		"healthCard":   nil,
 	}
 
+	if adoptionDate.Valid {
+		res["adoptionDate"] = adoptionDate.String
+	}
+	if uID.Valid {
+		res["owner"] = gin.H{"id": uID.Int64, "login": uLogin.String, "firstName": uFirst.String, "lastName": uLast.String}
+	}
+	if hID.Valid {
+		res["healthCard"] = gin.H{"id": hID.Int64, "medicalStatus": hStatus.String, "notes": hNotes.String, "lastVaccination": hVaccinated.String}
+	}
 	c.JSON(http.StatusOK, res)
 }
 
@@ -178,7 +200,7 @@ func findOneUser(c *gin.Context) {
 	var uID int
 	var login, first, last string
 	err := db.QueryRow(`SELECT id, login, "firstName", "lastName" FROM users WHERE id = $1`, id).Scan(&uID, &login, &first, &last)
-	
+
 	if err != nil {
 		if err == sql.ErrNoRows {
 			sendError(c, http.StatusNotFound, "User not found")
@@ -190,30 +212,65 @@ func findOneUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"id": uID, "login": login, "firstName": first, "lastName": last})
 }
 
+// --- USERS LOGIC ---
+
 func findUserCats(c *gin.Context) {
-	id := c.Param("id")
-	var exists int
-	db.QueryRow("SELECT 1 FROM users WHERE id = $1", id).Scan(&exists)
-	if exists == 0 {
-		sendError(c, http.StatusNotFound, "User not found")
-		return
-	}
+    id := c.Param("id")
+    
+    var uID int
+    var login, first, last string
+    err := db.QueryRow(`SELECT id, login, "firstName", "lastName" FROM users WHERE id = $1`, id).
+        Scan(&uID, &login, &first, &last)
+    
+    if err != nil {
+        if err == sql.ErrNoRows {
+            sendError(c, http.StatusNotFound, "User not found")
+        } else {
+            sendError(c, http.StatusInternalServerError, "Database error")
+        }
+        return
+    }
 
-	rows, err := db.Query(`SELECT id, name, breed FROM cats WHERE "ownerId" = $1`, id)
-	if err != nil {
-		sendError(c, http.StatusInternalServerError, "Database error")
-		return
-	}
-	defer rows.Close()
+    rows, err := db.Query(`
+        SELECT id, name, breed, age, "isAdopted", "adoptionDate" 
+        FROM cats 
+        WHERE "ownerId" = $1`, id)
+    if err != nil {
+        sendError(c, http.StatusInternalServerError, "Database error")
+        return
+    }
+    defer rows.Close()
 
-	cats := []gin.H{}
-	for rows.Next() {
-		var cid int
-		var name, breed string
-		rows.Scan(&cid, &name, &breed)
-		cats = append(cats, gin.H{"id": cid, "name": name, "breed": breed})
-	}
-	c.JSON(http.StatusOK, cats)
+    cats := []gin.H{}
+    for rows.Next() {
+        var cid, age int
+        var name, breed string
+        var isAdopted bool
+        var adoptionDate sql.NullString
+        
+        rows.Scan(&cid, &name, &breed, &age, &isAdopted, &adoptionDate)
+        
+        catObj := gin.H{
+            "id":           cid,
+            "name":         name,
+            "breed":        breed,
+            "age":          age,
+            "isAdopted":    isAdopted,
+            "adoptionDate": nil,
+        }
+        if adoptionDate.Valid {
+            catObj["adoptionDate"] = adoptionDate.String
+        }
+        cats = append(cats, catObj)
+    }
+
+    c.JSON(http.StatusOK, gin.H{
+        "id":        uID,
+        "login":     login,
+        "firstName": first,
+        "lastName":  last,
+        "cats":      cats,
+    })
 }
 
 func getGeneralSummary(c *gin.Context) {
@@ -228,7 +285,7 @@ func getGeneralSummary(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"totalAnimals": total,
 		"adoptedCount": adopted,
-		"adoptionRate": fmt.Sprintf("%.2f", rate),
+		"adoptionRate": rate,
 	})
 }
 
