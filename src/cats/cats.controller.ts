@@ -6,7 +6,7 @@ import { UpdateCatDto } from './dto/update-cat.dto';
 import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Role } from '../roles/entities/role.entity';
-import { RolesGuard } from 'src/common/guards/roles.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard'; 
 import { Roles } from '../auth/decorators/roles.decorator';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
