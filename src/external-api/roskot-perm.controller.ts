@@ -7,7 +7,7 @@ import { RosKotRegistrationDto } from './roskot-registration.dto';
 export class RosKotPermController {
   private readonly logger = new Logger('RosKotPerm');
 
-  private dailyLimit = 5;
+  private dailyLimit = 20;
   private currentUsage = 0;
 
   @Post('register-chip')
@@ -29,7 +29,7 @@ export class RosKotPermController {
       this.logger.warn('Лимит регистраций на сегодня исчерпан');
       throw new HttpException(
         { 
-          message: 'You have used up your available daily limit codes (max: 5)', 
+          message: 'You have used up your available daily limit codes (max: 20)', 
           error: 'QuotaExceeded' 
         }, 
         HttpStatus.TOO_MANY_REQUESTS
