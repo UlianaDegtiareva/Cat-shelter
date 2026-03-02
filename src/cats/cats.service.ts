@@ -148,12 +148,10 @@ export class CatsService {
   }
 
   async chipCat(id: number) {
-    // 1. Ищем кошку в нашей базе
     const cat = await this.catRepository.findOneBy({ id });
     if (!cat) throw new NotFoundException('Cat not found');
-    if (cat.chipCode) throw new BadRequestException('The cat is already microchipped');
+    if (cat.chipCode) throw new ConflictException('Conflict: The cat is already microchipped.');
   
-    // 2. Берем настройки из .env
     const apiUrl = this.configService.get('ROSKOT_API_URL');
     const apiKey = this.configService.get('ROSKOT_API_KEY');
   
@@ -163,15 +161,14 @@ export class CatsService {
         breed: cat.breed || 'Метис',
       };
       
-      // 3. Делаем запрос к имитатору
       const response = await lastValueFrom(
         this.httpService.post(
           `${apiUrl}/register-chip`, 
-          payload, // Передаем подготовленный объект
+          payload,
           { 
             headers: { 
               'x-api-key': apiKey,
-              'Content-Type': 'application/json', // Явно указываем тип контента
+              'Content-Type': 'application/json',
             },
             timeout: 5000 
           }

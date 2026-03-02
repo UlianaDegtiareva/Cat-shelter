@@ -172,10 +172,11 @@ export class CatsController {
   @Post(':id/chip')
   @ApiOperation({ summary: 'Register cat with RosKotMonitoring' })
   @ApiResponse({ status: 201, description: 'Chipping successful, code received.' })
-  @ApiResponse({ status: 400, description: 'The cat is already microchipped or the data is incorrect.' })
+  @ApiResponse({ status: 400, description: 'The data is incorrect.' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   @ApiResponse({ status: 403, description: 'Forbidden: You do not have administrator rights.' })
   @ApiResponse({ status: 404, description: 'Cat not found.' })
+  @ApiResponse({ status: 409, description: 'Conflict: The cat is already microchipped.' })
   @ApiResponse({ status: 502, description: 'The external system is unavailable.' })
   async chipCat(@Param('id') id: string) {
     const numericId = this.validateId(id);
