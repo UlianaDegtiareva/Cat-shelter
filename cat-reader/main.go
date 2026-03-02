@@ -127,74 +127,79 @@ func getErrType(status int) string {
 }
 
 func findOneCat(c *gin.Context) {
-	idParam := c.Param("id")
-	
+	idParam := c.Param("id")	
 	id, err := strconv.Atoi(idParam)
 	if err != nil || id <= 0 {
-		msg := fmt.Sprintf("Validation failed. ID must be a whole positive integer, but received: %s", idParam)
-		c.JSON(http.StatusBadRequest, gin.H{
-			"statusCode": 400,
-			"message":    msg,
-			"error":      "Bad Request",
-		})
-		return
+	  msg := fmt.Sprintf("Validation failed. ID must be a whole positive integer, but received: %s", idParam)
+	  c.JSON(http.StatusBadRequest, gin.H{
+		"statusCode": 400,
+		"message":    msg,
+		"error":      "Bad Request",
+	  })
+	  return
 	}
-
+  
 	query := `
-        SELECT c.id, c.name, c.age, c.breed, c."isAdopted", c.history, c.description, c."adoptionDate",
-               u.id, u.login, u."firstName", u."lastName",
-               h.id, h."medicalStatus", h.notes, h."lastVaccination"
-        FROM cats c
-        LEFT JOIN users u ON c."ownerId" = u.id
-        LEFT JOIN health_cards h ON h."catId" = c.id
-        WHERE c.id = $1`
-
+		  SELECT c.id, c.name, c.age, c.breed, c."isAdopted", c.history, c.description, c."adoptionDate",
+				 u.id, u.login, u."firstName", u."lastName",
+				 h.id, h."medicalStatus", h.notes, h."lastVaccination"
+		  FROM cats c
+		  LEFT JOIN users u ON c."ownerId" = u.id
+		  LEFT JOIN health_cards h ON h."catId" = c.id
+		  WHERE c.id = $1`
+  
 	var catID, age int
-	var name, breed, history, description string
+	var name, breed string
+	var history, description sql.NullString
 	var isAdopted bool
 	var adoptionDate sql.NullString
 	var uID, hID sql.NullInt64
 	var uLogin, uFirst, uLast, hStatus, hNotes, hVaccinated sql.NullString
-
-	// ИСПРАВЛЕНО: используем "=" вместо ":=", так как err объявлена выше через strconv.Atoi
+  
 	err = db.QueryRow(query, id).Scan(
-		&catID, &name, &age, &breed, &isAdopted, &history, &description, &adoptionDate,
-		&uID, &uLogin, &uFirst, &uLast, &hID, &hStatus, &hNotes, &hVaccinated,
+	  &catID, &name, &age, &breed, &isAdopted, &history, &description, &adoptionDate,
+	  &uID, &uLogin, &uFirst, &uLast, &hID, &hStatus, &hNotes, &hVaccinated,
 	)
-
+  
 	if err != nil {
-		if err == sql.ErrNoRows {
-			sendError(c, http.StatusNotFound, "Cat not found")
-		} else {
-			sendError(c, http.StatusInternalServerError, "Database error")
-		}
-		return
+	  if err == sql.ErrNoRows {
+		sendError(c, http.StatusNotFound, "Cat not found")
+	  } else {
+		sendError(c, http.StatusInternalServerError, "Database error")
+	  }
+	  return
 	}
-
+  
 	res := gin.H{
-		"id":           catID,
-		"name":         name,
-		"age":          age,
-		"breed":        breed,
-		"isAdopted":    isAdopted,
-		"history":      history,
-		"description":  description,
-		"adoptionDate": nil,
-		"owner":        nil,
-		"healthCard":   nil,
+	  "id":           catID,
+	  "name":         name,
+	  "age":          age,
+	  "breed":        breed,
+	  "isAdopted":    isAdopted,
+	  "history":     nil,
+		"description": nil,
+	  "adoptionDate": nil,
+	  "owner":        nil,
+	  "healthCard":   nil,
 	}
-
+  
+	if history.Valid {
+		res["history"] = history.String
+	}
+	if description.Valid {
+	  res["description"] = description.String
+	}
 	if adoptionDate.Valid {
-		res["adoptionDate"] = adoptionDate.String
+	  res["adoptionDate"] = adoptionDate.String
 	}
 	if uID.Valid {
-		res["owner"] = gin.H{"id": uID.Int64, "login": uLogin.String, "firstName": uFirst.String, "lastName": uLast.String}
+	  res["owner"] = gin.H{"id": uID.Int64, "login": uLogin.String, "firstName": uFirst.String, "lastName": uLast.String}
 	}
 	if hID.Valid {
-		res["healthCard"] = gin.H{"id": hID.Int64, "medicalStatus": hStatus.String, "notes": hNotes.String, "lastVaccination": hVaccinated.String}
+	  res["healthCard"] = gin.H{"id": hID.Int64, "medicalStatus": hStatus.String, "notes": hNotes.String, "lastVaccination": hVaccinated.String}
 	}
 	c.JSON(http.StatusOK, res)
-}
+  }
 
 // --- USERS LOGIC ---
 
