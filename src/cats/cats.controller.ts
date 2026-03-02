@@ -177,7 +177,6 @@ export class CatsController {
   @ApiResponse({ status: 403, description: 'Forbidden: You do not have administrator rights.' })
   @ApiResponse({ status: 404, description: 'Cat not found.' })
   @ApiResponse({ status: 409, description: 'Conflict: The cat is already microchipped.' })
-  @ApiResponse({ status: 429, description: 'You have used up your available daily limit codes (max: 20)' })
   @ApiResponse({ status: 502, description: 'Internal Server Error in Government System' })
   @ApiResponse({ status: 504, description: 'Gateway Timeout' })
   async chipCat(@Param('id') id: string) {

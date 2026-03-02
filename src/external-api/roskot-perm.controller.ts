@@ -7,9 +7,6 @@ import { RosKotRegistrationDto } from './roskot-registration.dto';
 export class RosKotPermController {
   private readonly logger = new Logger('RosKotPerm');
 
-  private dailyLimit = 20;
-  private currentUsage = 0;
-
   @Post('register-chip')
   @ApiOperation({ summary: 'Simulating an external chip registration API' })
   @ApiHeader({ name: 'x-api-key', description: 'Secret access key' })
@@ -24,17 +21,6 @@ export class RosKotPermController {
     @Headers('x-api-key') apiKey: string,
   ) {
     const VALID_KEY = 'super-secret-token-777';
-
-    if (this.currentUsage >= this.dailyLimit) {
-      this.logger.warn('Лимит регистраций на сегодня исчерпан');
-      throw new HttpException(
-        { 
-          message: 'You have used up your available daily limit codes (max: 20)', 
-          error: 'QuotaExceeded' 
-        }, 
-        HttpStatus.TOO_MANY_REQUESTS
-      );
-    }
 
     this.logger.log(`Получен запрос на регистрацию кошки: ${data.name}`);
     
@@ -61,9 +47,6 @@ export class RosKotPermController {
     }
     const randomId = Math.random().toString(36).substring(2, 7).toUpperCase();
     const chipId = `RU-STATE-${randomId}`;
-
-    this.currentUsage++;
-    this.logger.log(`Регистрация # ${this.currentUsage} прошла успешно`);
 
     return {
       chipId: chipId,
