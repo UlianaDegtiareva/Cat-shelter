@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException, ConflictException, HttpException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ConflictException, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatEntity } from './entities/cat.entity';
@@ -19,8 +19,8 @@ export class CatsService {
   constructor(
     @InjectRepository(CatEntity)
     private readonly catRepository: Repository<CatEntity>,
-    private readonly httpService: HttpService,     // Для HTTP запросов
-    private readonly configService: ConfigService, // Для чтения .env
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(HealthCard)
@@ -156,22 +156,10 @@ export class CatsService {
     const apiKey = this.configService.get('ROSKOT_API_KEY');
   
     try {
-      const payload: RosKotRegistrationDto = {
-        name: cat.name || 'Без имени',
-        breed: cat.breed || 'Метис',
-      };
-      
       const response = await lastValueFrom(
-        this.httpService.post(
-          `${apiUrl}/register-chip`, 
-          payload,
-          { 
-            headers: { 
-              'x-api-key': apiKey,
-              'Content-Type': 'application/json',
-            },
-            timeout: 5000 
-          }
+        this.httpService.post(`${apiUrl}/register-chip`, 
+          { name: cat.name, breed: cat.breed },
+          { headers: { 'x-api-key': apiKey }, timeout: 5000 }
         )
       );
   
@@ -179,11 +167,19 @@ export class CatsService {
       return await this.catRepository.save(cat);
   
     } catch (error) {
-      const status = error.response?.status || 500;
-      throw new HttpException(
-        `RosKotMonitoring Error: ${error.response?.data?.message || error.message}`, 
-        status
-      );
+      if (error.response) {
+        const status = error.response.status;
+        const data = error.response.data;
+        const finalStatus = status === 500 ? HttpStatus.BAD_GATEWAY : status;
+        
+        throw new HttpException(data, finalStatus);
+      }
+
+      if (error.code === 'ECONNABORTED') {
+        throw new HttpException({ message: 'Gateway Timeout' }, HttpStatus.GATEWAY_TIMEOUT);
+      }
+
+      throw new HttpException({ message: 'External Service Unavailable' }, HttpStatus.SERVICE_UNAVAILABLE);
     }
   }
 }
