@@ -43,19 +43,12 @@ jobs:
           cd cat-reader
           go mod tidy
           go build -o main .
-          
-          # Запускаем и сразу пишем логи в файл
           nohup ./main > go-service.log 2>&1 &
           
-          echo "Go service started, waiting up to 60 seconds..."
-          npx wait-on http://localhost:8080/cats --timeout 60000 --interval 1500 || {
-            echo "❌ Go service did not start in time"
-            tail -n 40 go-service.log
-            exit 1
-          }
-          
-          echo "Go service is ready ✓"
-          tail -n 20 go-service.log
+          echo "Waiting for Go port 8080..."
+          # Проверяем TCP порт, а не HTTP путь
+          npx wait-on tcp:localhost:8080 --timeout 60000
+          echo "Go service is up ✓"
         env:
           DB_HOST: localhost
           DB_PORT: 5433
@@ -72,18 +65,11 @@ jobs:
 
       - name: Start NestJS Backend + wait
         run: |
-          # Запускаем в фоне и ждём готовности
           nohup npm run start > nestjs.log 2>&1 &
           
-          echo "NestJS started, waiting up to 75 seconds..."
-          npx wait-on http://localhost:3000/api --timeout 75000 --interval 2000 || {
-            echo "❌ NestJS did not start in time"
-            tail -n 40 nestjs.log
-            exit 1
-          }
-          
+          echo "Waiting for NestJS port 3000..."
+          npx wait-on tcp:localhost:3000 --timeout 75000
           echo "NestJS is ready ✓"
-          tail -n 20 nestjs.log
         env:
           DATABASE_HOST: localhost
           DATABASE_PORT: 5433
