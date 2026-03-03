@@ -14,15 +14,12 @@ import { HealthCard } from './cats/entities/health-card.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      // Имя сервиса из docker-compose.yml
-      host: 'db', 
-      // Внутри сети Docker порт базы всегда стандартный
-      port: 5432, 
+      host: process.env.DATABASE_HOST || 'db', 
+      port: parseInt(process.env.DATABASE_PORT, 10) || 5432, 
       username: 'user',
       password: 'password',
       database: 'shelter',
       entities: [CatEntity, UserEntity, Role, HealthCard],
-      // Включает авто-создание таблиц (удобно для курсовой)
       synchronize: true, 
     }),
     AuthModule,

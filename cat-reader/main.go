@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"os"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -14,7 +15,10 @@ var db *sql.DB
 
 func main() {
 	var err error
-	connStr := "host=db user=user password=password dbname=shelter port=5432 sslmode=disable"
+	dbHost := getEnv("DB_HOST", "db")
+    dbPort := getEnv("DB_PORT", "5432")
+    
+    connStr := fmt.Sprintf("host=%s user=user password=password dbname=shelter port=%s sslmode=disable", dbHost, dbPort)
 	db, err = sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
@@ -356,4 +360,11 @@ func getTopAdopters(c *gin.Context) {
 		})
 	}
 	c.JSON(http.StatusOK, adopters)
+}
+
+func getEnv(key, fallback string) string {
+    if value, ok := os.LookupEnv(key); ok {
+        return value
+    }
+    return fallback
 }
