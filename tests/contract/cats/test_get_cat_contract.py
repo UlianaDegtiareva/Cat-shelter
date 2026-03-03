@@ -1,6 +1,6 @@
 import pytest
 import allure
-from utils.data_builders import build_cat_payload
+from tests.utils.data_builders import build_cat_payload
 import logging
 logger = logging.getLogger(__name__)
 

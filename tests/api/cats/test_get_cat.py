@@ -1,7 +1,7 @@
 import pytest
 import allure
 from tests.utils.data_builders import build_cat_payload, build_user_payload
-from utils.models import assert_cat_response
+from tests.utils.models import assert_cat_response
 import tests.utils.openapi_validator
 import logging
 logger = logging.getLogger(__name__)
