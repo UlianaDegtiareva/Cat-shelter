@@ -14,7 +14,7 @@ import { HealthCard } from './cats/entities/health-card.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DATABASE_HOST || 'db', 
+      host: process.env.DATABASE_HOST || 'localhost', 
       port: parseInt(process.env.DATABASE_PORT, 10) || 5432, 
       username: 'user',
       password: 'password',
