@@ -1,8 +1,9 @@
 import { HttpException } from '@nestjs/common';
 
+const GO_SERVICE_URL = process.env.GO_SERVICE_URL || 'http://cat-reader:8080';
+
 export async function proxyGet(path: string) {
-  const baseUrl = 'http://cat-reader:8080'; 
-  const response = await fetch(`${baseUrl}${path}`);
+  const response = await fetch(`${GO_SERVICE_URL}${path}`);
 
   const data = await response.json();
 

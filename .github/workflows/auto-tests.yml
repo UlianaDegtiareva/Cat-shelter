@@ -2,18 +2,16 @@ name: API Tests
 
 on:
   push:
-    branches:
-      - "main"
-      - "dev"
-      - "task-*"
+    branches: ["main", "dev", "task-*"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
   api-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    
     services:
       db:
         image: postgres:15
@@ -28,38 +26,64 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache-dependency-path: cat-reader/go.sum
+
+      - name: Start Go Reader Service
+        run: |
+          cd cat-reader
+          go mod download
+          go build -o main .
+          ./main &
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5433
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: 'npm'
+
       - name: Install Node dependencies
         run: npm install
+
       - name: Start NestJS Backend
         run: npm run start &
         env:
           DATABASE_HOST: localhost
           DATABASE_PORT: 5433
-      - name: Wait for Backend to be ready
+          GO_SERVICE_URL: http://localhost:8080
+      - name: Wait for Services to be ready
         run: |
+          # Ждем основной API
           npx wait-on http://localhost:3000/api -t 60000
+          # Ждем Go сервис (чтение)
+          npx wait-on http://localhost:8080/cats -t 60000
           sleep 5
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       - name: Run Pytest
         run: |
           pytest -v \
             --base-url=http://localhost:3000 \
             --alluredir=allure-results
+
       - name: Upload Allure results
         uses: actions/upload-artifact@v4
         if: always()
