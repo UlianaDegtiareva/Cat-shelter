@@ -44,6 +44,9 @@ services:
       - db
     networks:
       - shelter-network
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
 
 networks:
   shelter-network:
