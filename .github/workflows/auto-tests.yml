@@ -10,8 +10,8 @@ on:
 jobs:
   api-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    
+    timeout-minutes: 12     # чуть больше, чтобы был запас
+
     services:
       db:
         image: postgres:15
@@ -31,22 +31,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # ─── Go ────────────────────────────────────────────────
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.23'
           cache-dependency-path: cat-reader/go.sum
 
-      - name: Start Go Reader Service
+      - name: Start Go Reader Service + wait
         run: |
           cd cat-reader
           go mod tidy
           go build -o main .
-          ./main &
+          
+          # Запускаем и сразу пишем логи в файл
+          nohup ./main > go-service.log 2>&1 &
+          
+          echo "Go service started, waiting up to 60 seconds..."
+          npx wait-on http://localhost:8080/cats --timeout 60000 --interval 1500 || {
+            echo "❌ Go service did not start in time"
+            tail -n 40 go-service.log
+            exit 1
+          }
+          
+          echo "Go service is ready ✓"
+          tail -n 20 go-service.log
         env:
           DB_HOST: localhost
           DB_PORT: 5433
 
+      # ─── Node.js / NestJS ──────────────────────────────────
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -56,23 +70,38 @@ jobs:
       - name: Install Node dependencies
         run: npm install
 
-      - name: Start NestJS Backend
-        run: npm run start &
+      - name: Start NestJS Backend + wait
+        run: |
+          # Запускаем в фоне и ждём готовности
+          nohup npm run start > nestjs.log 2>&1 &
+          
+          echo "NestJS started, waiting up to 75 seconds..."
+          npx wait-on http://localhost:3000/api --timeout 75000 --interval 2000 || {
+            echo "❌ NestJS did not start in time"
+            tail -n 40 nestjs.log
+            exit 1
+          }
+          
+          echo "NestJS is ready ✓"
+          tail -n 20 nestjs.log
         env:
           DATABASE_HOST: localhost
           DATABASE_PORT: 5433
           GO_SERVICE_URL: http://localhost:8080
-      - name: Wait for Services to be ready
+
+      # ─── Финальное ожидание и тесты ────────────────────────
+      - name: Final wait & extra safety sleep
         run: |
-          # Ждем основной API
-          npx wait-on http://localhost:3000/api -t 60000
-          # Ждем Go сервис (чтение)
-          npx wait-on http://localhost:8080/cats -t 60000
-          sleep 5
+          echo "Double-checking both services..."
+          curl -s http://localhost:3000/api || echo "API still not responding"
+          curl -s http://localhost:8080/cats || echo "Go reader still not responding"
+          sleep 4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
