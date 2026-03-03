@@ -45,14 +45,11 @@ jobs:
 
       - name: Start NestJS Backend
         run: npm run start &
-        env:
-          ROSKOT_API_URL: "http://localhost:3000/external-api/roskot"
-          ROSKOT_API_KEY: "super-secret-token-777"
 
       - name: Wait for Backend to be ready
         run: |
           # Ждем именно старта сервера
-          npx wait-on http://localhost:3000/external-api/roskot -t 60000 
+          npx wait-on http://localhost:3000/api -t 60000 
           sleep 5
 
       - name: Set up Python
