@@ -37,6 +37,7 @@ jobs:
       - name: Start Go Service
         run: |
           cd cat-reader
+          go mod tidy
           go build -o reader main.go
           ./reader &
         env:
