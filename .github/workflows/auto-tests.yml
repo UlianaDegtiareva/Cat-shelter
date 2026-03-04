@@ -2,12 +2,16 @@ name: API Tests
 
 on:
   push:
-    branches: 
+    branches:
       - "main"
       - "dev"
-      - "task-*"
+      - "*task*"
+      - "implemented-*"
+      - "!main-*"
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - "main"
+      - "dev"
   workflow_dispatch:
 
 jobs:
@@ -35,21 +39,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: 'npm'
+      - name: Make start.sh executable
+        run: chmod +x start.sh
 
-      - name: Install Node dependencies
-        run: npm install
-
-      - name: Start NestJS Backend
-        run: npm run start &
+      - name: Start Backend
+        run: ./start.sh &
 
       - name: Wait for Backend to be ready
         run: |
-          npx wait-on http://localhost:3000/api -t 60000 
+          npx wait-on http://localhost:3000/api -t 60000
           sleep 5
 
       - name: Set up Python
