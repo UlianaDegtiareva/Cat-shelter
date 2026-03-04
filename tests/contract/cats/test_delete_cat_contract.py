@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.mark.contract
 @allure.feature("Contract")
-@allure.story("Protected endpoint with token")
+@allure.story("DELETE/cats/{id} authorized")
 def test_delete_cat_authorized_contract(api, openapi_validator, auth_token):
     logger.info("[DELETE CAT][POSITIVE] authorized")
     
@@ -32,9 +32,10 @@ def test_delete_cat_authorized_contract(api, openapi_validator, auth_token):
         logger.info("Проверка контракта")
         openapi_validator.validate_response(resp)
 
+
 @pytest.mark.contract
 @allure.feature("Contract")
-@allure.story("Protected endpoint without token")
+@allure.story("DELETE/cats/{id} Unauthorized")
 def test_delete_cat_unauthorized_contract(api, openapi_validator):
     logger.info("[DELETE CAT][NEGATIVE] Unauthorized")
     
@@ -50,3 +51,24 @@ def test_delete_cat_unauthorized_contract(api, openapi_validator):
     with allure.step("Проверяем контракт"):
         logger.info("Проверка контракта")
         openapi_validator.validate_response(resp)
+
+
+@pytest.mark.contract
+@allure.feature("Contract")
+@allure.story("DELETE/cats/{id} invalid ID")
+@pytest.mark.parametrize("ID, expected_status",[(9999, 404), ("abc", 400), (1.5, 400)], ids=["nonexistent id", "invalid id format", "float id format"])
+def test_delete_invalid_ID_contract(api, openapi_validator, ID, expected_status, auth_token):
+    logger.info("[DELETE CAT][NEGATIVE] Delete cat by invalid Id")
+
+    # Act
+    with allure.step(f"Удаляем по некорректному ID: {ID}"):
+        logger.info(f"Запрашиваем по некорректному ID: {ID}")
+        delete_resp = api.delete_cat(ID, token=auth_token)
+
+    # Assert
+    with allure.step(f"Проверяем HTTP-статус"):
+        logger.info(f"HTTP-статус: {delete_resp.status_code}")
+        assert delete_resp.status_code == expected_status, f"Ожидалось {expected_status}, получено {delete_resp.status_code}"
+    with allure.step("Проверяем контракт"):
+        logger.info("Проверка контракта")
+        openapi_validator.validate_response(delete_resp)

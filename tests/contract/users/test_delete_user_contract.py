@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.mark.contract
 @allure.feature("Contract")
-@allure.story("Protected endpoint with token")
+@allure.story("DELETE/users/{id} authorized")
 def test_delete_user_authorized_contract(api, openapi_validator):
     logger.info("[DELETE USER][POSITIVE] authorized")
     
@@ -36,9 +36,10 @@ def test_delete_user_authorized_contract(api, openapi_validator):
         logger.info("Проверка контракта")
         openapi_validator.validate_response(delete_resp)
 
+
 @pytest.mark.contract
 @allure.feature("Contract")
-@allure.story("Protected endpoint without token")
+@allure.story("DELETE/users/{id} Unauthorized")
 def test_delete_user_unauthorized_contract(api, openapi_validator):
     logger.info("[DELETE USER][NEGATIVE] Unauthorized")
     
@@ -51,6 +52,30 @@ def test_delete_user_unauthorized_contract(api, openapi_validator):
     with allure.step("Проверяем HTTP-статус"):
         logger.info(f"HTTP-статус: {delete_resp.status_code}")
         assert delete_resp.status_code == 401, f"Ожидалось 401, получено {delete_resp.status_code}"
+    with allure.step("Проверяем контракт"):
+        logger.info("Проверка контракта")
+        openapi_validator.validate_response(delete_resp)
+
+
+@pytest.mark.contract
+@allure.feature("Contract")
+@allure.story("DELETE/users/{id} invalid user's id format")
+@pytest.mark.parametrize(
+    "userId, expected_status",
+    [(9999, 404), ("abc", 400), (1.5, 400)],
+    ids=["nonexistent id", "invalid id format", "float id format"])
+def test_delete_user_invalid_id_contract(api, openapi_validator, userId, expected_status, auth_token):
+    logger.info("[DELETE USER][NEGATIVE] Delete user by invalid Id")
+    
+    # Act
+    with allure.step(f"Удаляем пользователя с некорректным ID: {userId}"):
+        logger.info(f"Удаляем пользователя с некорректным ID: {userId}")
+        delete_resp = api.delete_user(userId, token=auth_token)
+
+    # Assert
+    with allure.step("Проверяем HTTP-статус"):
+        logger.info(f"HTTP-статус: {delete_resp.status_code}")
+        assert delete_resp.status_code == expected_status, f"Ожидалось {expected_status}, получено {delete_resp.status_code}"
     with allure.step("Проверяем контракт"):
         logger.info("Проверка контракта")
         openapi_validator.validate_response(delete_resp)

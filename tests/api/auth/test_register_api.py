@@ -45,7 +45,7 @@ BOUNDARY_PAYLOADS = [
 @allure.feature("API")
 @allure.story("POST/auth/register Boundary: login data length")
 @pytest.mark.parametrize("payload, description", BOUNDARY_PAYLOADS)
-def test_create_cat_login_boundary(api, openapi_validator, payload, description):
+def test_register_login_boundary(api, openapi_validator, payload, description):
     logger.info("[API] borderline login data length")
     
     # Arrange
@@ -71,7 +71,7 @@ BOUNDARY_PAYLOADS = [
 @allure.feature("API")
 @allure.story("POST/auth/register Boundary: user's name length")
 @pytest.mark.parametrize("payload, description", BOUNDARY_PAYLOADS)
-def test_create_cat_name_boundary(api, openapi_validator, payload, description, auth_token):
+def test_register_name_boundary(api, openapi_validator, payload, description, auth_token):
     logger.info("[API] borderline name length")
     
     # Arrange

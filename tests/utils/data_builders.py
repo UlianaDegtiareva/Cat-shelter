@@ -22,10 +22,3 @@ def build_user_payload(**kwargs):
         "password": generate_unique_name("TestPassword"),
         **kwargs
     }
-
-# # Генерация логина и пароля
-# def generate_unique_login():
-#     login = f"TestUser_{uuid.uuid4().hex[:8]}"
-#     password = f"password_{uuid.uuid4().hex[:8]}"
-#     user = generate_unique_user_payload()
-#     return {"firstName": user['firstName'], "lastName": user['lastName'], "login": login, "password": password}
