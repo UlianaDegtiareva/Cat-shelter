@@ -37,7 +37,7 @@ def test_delete_user_by_admin(api, openapi_validator, auth_token):
 @pytest.mark.contract
 @allure.feature("Contract")
 @allure.story("DELETE/users/{id} delete your own page")
-def test_delete_own_user_page(api, openapi_validator, auth_token):
+def test_delete_own_user_page(api, openapi_validator):
     logger.info("[DELETE USER][POSITIVE] delete your own page")
     
     # Arrange
@@ -46,8 +46,8 @@ def test_delete_own_user_page(api, openapi_validator, auth_token):
         logger.info(f"Регистрация пользователя: {payload}")
         reg_resp = api.register(payload)
         allure.attach(str(payload), name="User", attachment_type=allure.attachment_type.JSON)
-    token = reg_resp.json()["access_token"]
-    user_id = get_userId_by_login(api, payload["login"], token)
+        token = reg_resp.json()["access_token"]
+        user_id = get_userId_by_login(api, payload["login"], token)
 
     # Act
     with allure.step("Удаляем пользователя от лица этого же пользователя"):
@@ -92,6 +92,50 @@ def test_delete_user_forbidden(api, openapi_validator, auth_token):
     with allure.step("Проверяем HTTP-статус"):
         logger.info(f"HTTP-статус: {delete_resp.status_code}")
         assert delete_resp.status_code == 403, f"Ожидалось 403, получено {delete_resp.status_code}"
+    with allure.step("Проверяем контракт"):
+        logger.info("Проверка контракта")
+        openapi_validator.validate_response(delete_resp)
+
+    
+@pytest.mark.contract
+@allure.feature("Contract")
+@allure.story("DELETE/users/{id} Unauthorized")
+def test_delete_user_unauthorized_contract(api, openapi_validator):
+    logger.info("[DELETE USER][NEGATIVE] Unauthorized")
+    
+    # Act
+    with allure.step("Попытка удаления пользователя без регистрации"):
+        logger.info("Попытка удаления пользователя без регистрации")
+        delete_resp = api.delete_user(1)
+
+    # Assert
+    with allure.step("Проверяем HTTP-статус"):
+        logger.info(f"HTTP-статус: {delete_resp.status_code}")
+        assert delete_resp.status_code == 401, f"Ожидалось 401, получено {delete_resp.status_code}"
+    with allure.step("Проверяем контракт"):
+        logger.info("Проверка контракта")
+        openapi_validator.validate_response(delete_resp)
+
+
+@pytest.mark.contract
+@allure.feature("Contract")
+@allure.story("DELETE/users/{id} invalid user's id format")
+@pytest.mark.parametrize(
+    "userId, expected_status",
+    [(9999, 404), ("abc", 400), (1.5, 400)],
+    ids=["nonexistent id", "invalid id format", "float id format"])
+def test_delete_user_invalid_id_contract(api, openapi_validator, userId, expected_status, auth_token):
+    logger.info("[DELETE USER][NEGATIVE] Delete user by invalid Id")
+    
+    # Act
+    with allure.step(f"Удаляем пользователя с некорректным ID: {userId}"):
+        logger.info(f"Удаляем пользователя с некорректным ID: {userId}")
+        delete_resp = api.delete_user(userId, token=auth_token)
+
+    # Assert
+    with allure.step("Проверяем HTTP-статус"):
+        logger.info(f"HTTP-статус: {delete_resp.status_code}")
+        assert delete_resp.status_code == expected_status, f"Ожидалось {expected_status}, получено {delete_resp.status_code}"
     with allure.step("Проверяем контракт"):
         logger.info("Проверка контракта")
         openapi_validator.validate_response(delete_resp)
