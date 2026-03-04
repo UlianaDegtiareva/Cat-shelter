@@ -2,7 +2,7 @@ name: API Tests
 
 on:
   push:
-    branches: ["main", "dev", "task-*"]
+    branches: ["main", "dev", "*task*"]
   pull_request:
     branches: ["main"]
   workflow_dispatch:
