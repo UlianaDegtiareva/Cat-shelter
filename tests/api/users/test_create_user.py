@@ -2,7 +2,6 @@ import pytest
 import allure
 from tests.utils.data_builders import build_user_payload
 from tests.utils.models import assert_user_response
-import tests.utils.openapi_validator
 import logging
 logger = logging.getLogger(__name__)
 
@@ -49,13 +48,15 @@ def test_user_list_length_changes_after_addition(api):
     with allure.step(f"Проверяем начальное количество пользователей: {len(initial_resp.json())}"):
         logger.info(f"Начальное количество пользователей: {len(initial_resp.json())}")
         initial_count = len(initial_resp.json())
-
     with allure.step("Проверяем, что после добавления количество пользователей увеличилось"):
         new_count = len(after_create_resp.json())
         logger.info(f"Количество пользователей после добавления: {new_count}")
         assert new_count == initial_count + 1, f"Ожидалось {initial_count + 1}, получено {new_count}"
-
-
+    
+    with allure.step("Проверяем поля в ответе после создания"):
+        logger.info("Проверяем поля в ответе после создания")
+        assert_user_response(create_resp.json(), payload["login"], payload["firstName"], payload["lastName"])
+    
 
 INVALID_PAYLOADS = [
     ({"firstName": "  ", "lastName": "  "}, "space"),
@@ -65,7 +66,7 @@ INVALID_PAYLOADS = [
 @allure.feature("API")
 @allure.story("Boundary: user's name length")
 @pytest.mark.parametrize("payload, description", INVALID_PAYLOADS)
-def test_create_cat_namesboundary_contract(api, openapi_validator, payload, description):
+def test_create_user_name_boundary(api, payload, description):
     logger.info("[API] borderline name length")
 
     # Act
