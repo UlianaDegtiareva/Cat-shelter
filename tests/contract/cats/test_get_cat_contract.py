@@ -9,9 +9,17 @@ logger = logging.getLogger(__name__)
 @pytest.mark.contract
 @allure.feature("Contract")
 @allure.story("GET/cats")
-def test_get_all_cats_contract(api, openapi_validator):
+def test_get_all_cats_contract(api, openapi_validator, auth_token):
     logger.info("[GET CATS][POSITIVE] get all cats")
     
+    # Arrange
+    cat_payload = build_cat_payload()
+    with allure.step(f"Создаем кота"):
+        logger.info(f"Создаем кота: {cat_payload}")
+        create_resp = api.create_cat(cat_payload, token=auth_token)
+        allure.attach(str(cat_payload), name="Cat", attachment_type=allure.attachment_type.JSON)
+    cat_id = create_resp.json()["id"]
+
     # Act
     with allure.step("Получениe всех котов"):
         logger.info("Получениe всех котов")
@@ -24,6 +32,27 @@ def test_get_all_cats_contract(api, openapi_validator):
     with allure.step("Проверяем контракт"):
         logger.info("Проверка контракта")
         openapi_validator.validate_response(get_resp)
+
+
+@pytest.mark.contract
+@allure.feature("Contract")
+@allure.story("GET/cats")
+def test_get_all_cats_empty_contract(api, openapi_validator):
+    logger.info("[GET CATS][POSITIVE] Get empty list")
+
+    # Act
+    with allure.step("Запрашиваем всех котов в пустой БД"):
+        logger.info("Запрашиваем всех котов в пустой БД")
+        get_resp = api.get_all_cats()
+
+    # Assert
+    with allure.step("Проверяем HTTP-статус"):
+        logger.info(f"HTTP-статус: {get_resp.status_code}")
+        assert get_resp.status_code == 200, f"Ожидалось 200, получено {get_resp.status_code}"
+    with allure.step("Проверяем контракт"):
+        logger.info("Проверка контракта")
+        openapi_validator.validate_response(get_resp)
+
 
 @pytest.mark.contract
 @allure.feature("Contract")
@@ -52,6 +81,7 @@ def test_get_cat_by_Id_contract(api, openapi_validator, auth_token):
     with allure.step("Проверяем контракт"):
         logger.info("Проверка контракта")
         openapi_validator.validate_response(get_resp)
+
 
 @pytest.mark.contract
 @allure.feature("Contract")
