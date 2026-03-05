@@ -61,10 +61,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Pytest
-        run: |
-          pytest -v \
-            --base-url=http://localhost:3000 \
-            --alluredir=allure-results
+        run: timeout 3m pytest -v --base-url=http://localhost:3000 --alluredir=allure-results
 
       - name: Install Allure CLI
         run: |
