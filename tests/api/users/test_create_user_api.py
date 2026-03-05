@@ -43,16 +43,13 @@ def test_user_list_length_changes_after_addition(api):
         logger.info(f"HTTP-статус создания: {create_resp.status_code}")
         assert create_resp.status_code == 201, f"Ожидалось 201, получено {create_resp.status_code}"
         assert_user_response(create_resp.json(), payload["firstName"], payload["lastName"])
-
     with allure.step("Проверяем получение пользователя"):
         logger.info(f"HTTP-статус получения: {get_resp.status_code}")
         assert get_resp.status_code == 200, f"Ожидалось 200, получено {get_resp.status_code}"
-        assert_user_response(create_resp.json(), payload["firstName"], payload["lastName"])
 
     with allure.step(f"Проверяем начальное количество пользователей: {len(initial_resp.json())}"):
         logger.info(f"Начальное количество пользователей: {len(initial_resp.json())}")
         initial_count = len(initial_resp.json())
-
     with allure.step("Проверяем, что после добавления количество пользователей увеличилось"):
         new_count = len(after_create_resp.json())
         logger.info(f"Количество пользователей после добавления: {new_count}")
