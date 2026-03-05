@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.mark.contract
 @allure.feature("Contract")
-@allure.story("GET/cats/{id} without token")
+@allure.story("GET/cats/{id}")
 def test_get_cat_by_Id_unauthorized_contract(api, openapi_validator, auth_token):
     logger.info("[GET CAT BY ID][POSITIVE] do not required to be authorized")
     
@@ -35,10 +35,18 @@ def test_get_cat_by_Id_unauthorized_contract(api, openapi_validator, auth_token)
 
 @pytest.mark.contract
 @allure.feature("Contract")
-@allure.story("GET/cats without token")
-def test_get_all_cats_unauthorized_contract(api, openapi_validator):
+@allure.story("GET/cats")
+def test_get_all_cats_unauthorized_contract(api, openapi_validator, auth_token):
     logger.info("[GET ALL CATS][POSITIVE] do not required to be authorized")
     
+    # Arrange
+    cat_payload = build_cat_payload()
+    with allure.step(f"Создаем кота"):
+        logger.info(f"Создаем кота: {cat_payload}")
+        create_resp = api.create_cat(cat_payload, token=auth_token)
+        allure.attach(str(cat_payload), name="Cat", attachment_type=allure.attachment_type.JSON)
+    cat_id = create_resp.json()["id"]
+
     # Act
     with allure.step("Получениe всех котов без регистрации"):
         logger.info("Получениe всех котов без регистрации")

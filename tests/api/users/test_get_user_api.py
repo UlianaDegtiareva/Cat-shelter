@@ -37,9 +37,46 @@ def test_get_user_by_id(api):
 
 @pytest.mark.api
 @allure.feature("API")
+@allure.story("GET/users")
+def test_get_all_users(api):
+    logger.info("[API] Get list of all users with authorization")
+
+    # Arrange
+    user_payload_1 = build_user_payload()
+    user_payload_2 = build_user_payload()
+    with allure.step("Регистрируем 2ух пользователей"):
+        logger.info("Регистрация 2ух пользователей")
+        reg_resp_1 = api.register(user_payload_1)
+        reg_resp_2 = api.register(user_payload_2)
+        token = reg_resp_1.json()["access_token"]
+        logger.debug(f"Список пользователей: {api.get_all_users(token=token).json()}")
+        allure.attach(str(api.get_all_users(token=token).json()), name="All users", attachment_type=allure.attachment_type.JSON)
+    user_1 = get_userId_by_login(api, user_payload_1['login'], token)
+    user_2 = get_userId_by_login(api, user_payload_2['login'], token)
+
+    # Act
+    with allure.step("Запрашиваем пользователей"):
+        logger.info("Запрашиваем пользователей")
+        get_resp = api.get_all_users(token=token)
+        logger.debug(f"Список пользователей: {get_resp.json()}")
+        allure.attach(str(get_resp.json()), name="All users", attachment_type=allure.attachment_type.JSON)
+
+    # Assert
+    with allure.step("Проверяем HTTP-статус"):
+        logger.info(f"HTTP-статус получения: {get_resp.status_code}")
+        assert get_resp.status_code == 200, f"Ожидалось 200, получено {get_resp.status_code}"
+
+    with allure.step("Проверяем, что в ответе список"):
+        logger.info(f"Проверяем, что в ответе список")
+        assert isinstance(get_resp.json(), list)
+        assert len(get_resp.json()) == 2
+
+
+@pytest.mark.api
+@allure.feature("API")
 @allure.story("GET/users/{id}/cats")
 def test_user_with_adopted_cat(api):
-    logger.info("[API] Get user's cats  with authorization")
+    logger.info("[API] Get user's cats with authorization")
 
     # Arrange
     user_payload = build_user_payload()
