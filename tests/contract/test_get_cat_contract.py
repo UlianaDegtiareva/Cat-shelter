@@ -28,13 +28,10 @@ def test_get_all_cats_contract(api, openapi_validator):
     # Assert
     with allure.step("Проверяем HTTP-статус"):
         logger.info(f"HTTP-статус: {get_resp.status_code}")
-        # assert get_resp.status_code == 200, f"Ожидалось 200, получено {get_resp.status_code}"
-        assert get_resp.status_code == 201, f"Ожидалось 201, получено {get_resp.status_code}"
+        assert get_resp.status_code == 200, f"Ожидалось 200, получено {get_resp.status_code}"
     with allure.step("Проверяем контракт"):
         logger.info("Проверка контракта")
-        # openapi_validator.validate_response(get_resp)
-        openapi_validator.validate_response(wrong_resp)
-
+        openapi_validator.validate_response(get_resp)
 
 @pytest.mark.contract
 @allure.feature("Contract")
