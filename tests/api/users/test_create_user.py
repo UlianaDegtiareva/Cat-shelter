@@ -55,7 +55,7 @@ def test_user_list_length_changes_after_addition(api):
     
     with allure.step("Проверяем поля в ответе после создания"):
         logger.info("Проверяем поля в ответе после создания")
-        assert_user_response(create_resp.json(), payload["login"], payload["firstName"], payload["lastName"])
+        assert_user_response(create_resp.json(), payload["firstName"], payload["lastName"])
     
 
 INVALID_PAYLOADS = [

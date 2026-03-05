@@ -43,8 +43,8 @@ def test_get_all_users(api):
     # Arrange
     user_payload_1 = build_user_payload()
     user_payload_2 = build_user_payload()
-    with allure.step("Создаём нового пользователя"):
-        logger.info(f"Создание нового пользователя: {payload}")
+    with allure.step("Создаём 2ух пользователей"):
+        logger.info(f"Создание 2ух пользователей")
         create_resp_1 = api.create_user(user_payload_1)
         create_resp_2 = api.create_user(user_payload_2)
     user_1 = create_resp_1.json()["id"]
