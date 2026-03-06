@@ -212,7 +212,7 @@ def test_registration_adoption_and_chip(api, auth_token):
 
 
 @pytest.mark.e2e
-@allure.feature("E2E")
+@allure.feature("End-to-End")
 @allure.story("Create and update health card")
 def test_health_card_lifecycle(api, auth_token):
     logger.info("[End-to-End] creation and updating health card")
@@ -267,7 +267,7 @@ def test_health_card_lifecycle(api, auth_token):
 
 
 @pytest.mark.e2e
-@allure.feature("E2E")
+@allure.feature("End-to-End")
 @allure.story("Admin's rights")
 def test_new_admin_can_delete_other_users(api, auth_token):
     logger.info("[End-to-End] delegated admin can delete another user")
@@ -333,7 +333,7 @@ def test_new_admin_can_delete_other_users(api, auth_token):
 
 
 @pytest.mark.e2e
-@allure.feature("E2E")
+@allure.feature("End-to-End")
 @allure.story("Access to delete user's profile")
 def test_deleting_profile_control(api, auth_token):
     logger.info("[E2E] non-owner cannot delete profile, owner can delete his own")
