@@ -1,0 +1,28 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
+import { CatsModule } from './cats/cats.module';
+import { CatEntity } from './cats/entities/cat.entity';
+import { UserEntity } from './users/entities/user.entity';
+import { StatsModule } from './stats/stats.module';
+import { AuthModule } from './auth/auth.module';
+
+@Module({
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5433,
+      username: 'user',
+      password: 'password',
+      database: 'shelter',
+      entities: [CatEntity, UserEntity],
+      synchronize: true,
+    }),
+    AuthModule,
+    CatsModule,
+    UsersModule,
+    StatsModule,
+  ],
+})
+export class AppModule {}
