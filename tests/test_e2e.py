@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 def test_complete_adoption_lifecycle(api):
     logger.info("[End-to-End] adoption lifecycle")
     """
-    E2E-тест: цикл усыновления
     1. Создаём пользователя
     2. Создаём кота
     3. Изменяем данные кота
