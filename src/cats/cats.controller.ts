@@ -11,7 +11,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateHealthCardDto } from './dto/create-health-card.dto';
-import { proxyGet } from '../common/utils/proxy-fetcher';
+
 
 @ApiTags('Cats Management')
 @Controller('cats')
@@ -67,13 +67,13 @@ export class CatsController {
     summary: 'Get cat details', 
     description: 'Returns full information about a specific cat, including history and owner details if adopted.' 
   })
-  @ApiParam({ name: 'id', type: 'number', description: 'Unique numerical ID of the cat' })
+  @ApiParam({ name: 'id', description: 'Unique numerical ID of the cat' })
   @ApiResponse({ status: 200, description: 'Cat data retrieved successfully.' })
   @ApiResponse ({ status: 400, description: 'Invalid ID format. Expected an integer.'})
   @ApiResponse({ status: 404, description: 'Cat not found.' })
-  async findOne(@Param('id') id: string) {
-    this.validateId(id); // Валидация остается на стороне NestJS
-    return proxyGet(`/cats/${id}`); // Данные берем из Go
+  findOne(@Param('id') id: string) {
+    const numericId = this.validateId(id);
+    return this.catsService.findOne(numericId);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -107,17 +107,12 @@ export class CatsController {
   @ApiQuery({ name: 'isAdopted', required: false, description: 'Filter by adoption status (true/false)' })
   @ApiQuery({ name: 'isKitten', required: false, type: Boolean, description: 'Filter only cats younger than 1 year' })
   @ApiResponse({ status: 200, description: 'Success' })
-  async findAll(
+  findAll(
     @Query('breed') breed?: string, 
     @Query('isAdopted') isAdopted?: string,
     @Query('isKitten') isKitten?: string
   ) {
-    const params = new URLSearchParams({ 
-      ...(breed && { breed }), 
-      ...(isAdopted && { isAdopted }), 
-      ...(isKitten && { isKitten }) 
-    });
-    return proxyGet(`/cats?${params.toString()}`);
+    return this.catsService.findAll(breed, isAdopted, isKitten);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)

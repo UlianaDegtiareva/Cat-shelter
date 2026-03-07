@@ -2,7 +2,6 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { StatsService } from './stats.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { proxyGet } from '../common/utils/proxy-fetcher';
 
 
 @ApiTags('Statistics')
@@ -17,7 +16,7 @@ export class StatsController {
   @ApiResponse({ status: 200, description: 'Total counts and adoption percentage' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   getSummary() {
-    return proxyGet('/stats/summary');
+    return this.statsService.getGeneralSummary();
   }
 
   @UseGuards(JwtAuthGuard)
@@ -27,7 +26,7 @@ export class StatsController {
   @ApiResponse({ status: 200, description: 'List of breeds with counts' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   getBreedStats() {
-    return proxyGet('/stats/breeds');
+    return this.statsService.getBreedDistribution();
   }
 
   @UseGuards(JwtAuthGuard)
@@ -40,6 +39,6 @@ export class StatsController {
   @ApiResponse({ status: 200, description: 'List of top adopters' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   getTopAdopters() {
-    return proxyGet('/stats/top-adopters');
+    return this.statsService.getTopAdopters();
   }
 }

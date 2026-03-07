@@ -8,7 +8,6 @@ import { Repository } from 'typeorm';
 import { Role } from '../roles/entities/role.entity';
 import { RolesGuard } from 'src/auth/guards/roles.guard'; 
 import { Roles } from '../auth/decorators/roles.decorator';
-import { proxyGet } from '../common/utils/proxy-fetcher';
 
 @ApiTags('Users Management')
 @Controller('users')
@@ -26,7 +25,7 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Success' })
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   findAll() {
-    return proxyGet('/users');
+    return this.usersService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
@@ -41,7 +40,7 @@ export class UsersController {
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   @ApiResponse({ status: 404, description: 'User not found.' })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return proxyGet(`/users/${id}`);
+    return this.usersService.findOne(id);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -57,7 +56,7 @@ export class UsersController {
   @ApiResponse({ status: 401, description: 'Not authorized: No token provided or token invalid.' })
   @ApiResponse({ status: 404, description: 'User not found' })
   getUserCats(@Param('id', ParseIntPipe) id: number) {
-    return proxyGet(`/users/${id}/cats`);
+    return this.usersService.findUserCats(id);
   }
 
   @UseGuards(JwtAuthGuard)
