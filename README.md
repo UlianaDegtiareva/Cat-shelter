@@ -54,12 +54,15 @@
 
 ## 🛠 Технологический стек
 
-* **Runtime:** Node.js (v18+)
-* **Framework:** NestJS
 * **Database:** PostgreSQL (в Docker-контейнере)
-* **ORM:** TypeORM
 * **API Documentation:** Swagger UI
 * **Validation:** Class-validator
+Вы можете использовать любой язык программирования и фреймворк. Например:
+* **Node.js**: NestJS, Express, Fastify.
+* **Python**: FastAPI, Flask, Django.
+* **Go**: Gin, Fiber, Echo.
+
+**Главное требование:** Приложение должно запускаться через `./start.sh` и слушать порт `3000`.
 
 ## Инструкция по запуску
 

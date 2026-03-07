@@ -40,8 +40,8 @@ jobs:
       - name: Install Node dependencies
         run: npm install
 
-      - name: Start NestJS Backend
-        run: npm run start &
+      - name: Start Student Solution
+        run: ./start.sh &
         env:
           DATABASE_HOST: localhost
           DATABASE_PORT: 5433
