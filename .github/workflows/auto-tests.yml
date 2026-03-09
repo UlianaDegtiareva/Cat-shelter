@@ -60,11 +60,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run functional & contract tests
-        run: timeout 3m pytest -v -m "not coverage" --base-url=http://localhost:3000 --alluredir=allure-results
-
-      - name: Generate API coverage report
-        run: timeout 1m pytest -v -m coverage --base-url=http://localhost:3000 --alluredir=allure-results
+      - name: Run Pytest
+        run: timeout 3m pytest -v --base-url=http://localhost:3000 --alluredir=allure-results
 
       - name: Install Allure CLI
         if: always()

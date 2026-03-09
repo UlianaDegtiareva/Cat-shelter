@@ -88,7 +88,7 @@ class APICoverageTracker:
                 "expected_status_codes": expected_status_codes
             }
 
-        if status_code:
+        if status_code is not None:
             self.called_operations[key]["status_codes"].add(status_code)
         self.called_operations[key]["schema_valid"].append(schema_valid)
 

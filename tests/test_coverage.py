@@ -3,6 +3,7 @@ import json
 import allure
 from tests.utils.openapi_validator import OpenAPIValidator, APICoverageTracker
 
+@pytest.mark.order(-1)
 @pytest.mark.coverage
 def test_api_coverage_report(openapi_validator):
     tracker = openapi_validator.coverage_tracker
