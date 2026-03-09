@@ -1,17 +1,12 @@
-import requests
 import pytest
 import json
 import allure
 from tests.utils.openapi_validator import OpenAPIValidator, APICoverageTracker
 
 @pytest.mark.coverage
-def test_api_coverage_report(request):
-    validator = getattr(request.config, "openapi_validator_instance", None)
-    if not validator:
-        pytest.skip("OpenAPI Validator not initialized")
-
-    tracker = validator.coverage_tracker
-    spec_dict = validator.spec_dict
+def test_api_coverage_report(openapi_validator):
+    tracker = openapi_validator.coverage_tracker
+    spec_dict = openapi_validator.spec_dict
 
     all_ops = APICoverageTracker.get_all_operations(spec_dict)
     called_ops = tracker.report()

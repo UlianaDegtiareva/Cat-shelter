@@ -26,18 +26,13 @@ def clean_test_data(api):
     yield
     cleanup_test_cats(api)
 
-
 @pytest.fixture(scope="session")
 def api():
     return ShelterClient(base_url="http://localhost:3000")
 
-
 @pytest.fixture(scope="session")
-def openapi_validator(request):
-    validator = OpenAPIValidator("openapi.yaml")
-    request.config.openapi_validator_instance = validator
-    return validator
-
+def openapi_validator():
+    return OpenAPIValidator("openapi.yaml")
 
 @pytest.fixture(scope="session", autouse=True)
 def configure_logging():
