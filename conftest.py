@@ -57,7 +57,6 @@ def auth_token(api):
     assert resp.status_code == 200
     return resp.json()["access_token"]
 
-
 @pytest.fixture(scope="session")
 def api():
     return ShelterClient(base_url="http://localhost:3000")
@@ -70,11 +69,6 @@ def openapi_validator():
 def configure_logging():
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter(
-        "[%(levelname)s] [%(name)s] %(message)s"
-    )
-
     logging.getLogger("urllib3").setLevel(logging.INFO)
     logging.getLogger("requests").setLevel(logging.INFO)
 
