@@ -56,10 +56,5 @@ def openapi_validator():
 def configure_logging():
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter(
-        "[%(levelname)s] [%(name)s] %(message)s"
-    )
-
     logging.getLogger("urllib3").setLevel(logging.INFO)
     logging.getLogger("requests").setLevel(logging.INFO)
