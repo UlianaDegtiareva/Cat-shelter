@@ -63,31 +63,9 @@ def openapi_validator():
 def api():
     return ShelterClient(base_url="http://localhost:3000")
 
-
-# @pytest.fixture(scope="session")
-# def api(base_url):
-#     return ShelterClient(base_url=base_url)
-
-# def pytest_addoption(parser):
-#     parser.addoption(
-#         "--base-url",
-#         action="store",
-#         default="http://localhost:3000/",
-#         help="Base URL for API tests"
-#     )
-
-# @pytest.fixture(scope="session")
-# def base_url(request):
-#     return request.config.getoption("--base-url")
-
 @pytest.fixture(scope="session", autouse=True)
 def configure_logging():
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter(
-        "[%(levelname)s] [%(name)s] %(message)s"
-    )
-
     logging.getLogger("urllib3").setLevel(logging.INFO)
     logging.getLogger("requests").setLevel(logging.INFO)
