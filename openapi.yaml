@@ -777,9 +777,6 @@
           "401": {
             "description": "Auth Error: Invalid API Key."
           },
-          "429": {
-            "description": "Quota Error: Daily limit reached."
-          },
           "500": {
             "description": "Server Error: System crash (SystemError case)."
           }
