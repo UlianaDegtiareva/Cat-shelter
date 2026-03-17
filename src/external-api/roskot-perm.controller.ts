@@ -14,7 +14,6 @@ export class RosKotPermController {
   @ApiResponse({ status: 201, description: 'Success: Chip registered.' })
   @ApiResponse({ status: 400, description: 'Validation Error: Name too short.' })
   @ApiResponse({ status: 401, description: 'Auth Error: Invalid API Key.' })
-  @ApiResponse({ status: 429, description: 'Quota Error: Daily limit reached.' })
   @ApiResponse({ status: 500, description: 'Server Error: System crash (SystemError case).' })
   async registerCat(
     @Body() data: RosKotRegistrationDto,
