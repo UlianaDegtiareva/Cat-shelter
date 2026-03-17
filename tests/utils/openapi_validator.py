@@ -2,26 +2,25 @@ import yaml
 import json
 import allure
 import re
-from openapi_core import Spec, validate_response
+from openapi_core import validate_response
+from openapi_core import OpenAPI
 from openapi_core.contrib.requests import (
     RequestsOpenAPIRequest,
     RequestsOpenAPIResponse,
 )
-from openapi_core.validation.response.exceptions import ResponseValidationError
-from openapi_core.templating.responses.exceptions import ResponseNotFound
 
 class OpenAPIValidator:
     def __init__(self, spec_path: str):
         with open(spec_path, "r", encoding="utf-8") as f:
             self.spec_dict = yaml.safe_load(f)
-
-        self.spec = Spec.from_dict(self.spec_dict)
+            
+        self.openapi = OpenAPI.from_dict(self.spec_dict)
         self.coverage_tracker = APICoverageTracker(self.spec_dict)    
 
     def normalize_path(self, path):
-        for spec_path in self.spec_dict["paths"].keys():
+        for spec_path in self.spec_dict.get("paths", {}).keys():
             pattern = re.sub(r"\{[^}]+\}", r"[^/]+", spec_path)
-            pattern = "^" + pattern + "$"
+            pattern = f"^{pattern}$"
             if re.match(pattern, path):
                 return spec_path
         return path
@@ -30,18 +29,18 @@ class OpenAPIValidator:
         openapi_request = RequestsOpenAPIRequest(response.request)
         openapi_response = RequestsOpenAPIResponse(response)
         path = self.normalize_path(response.request.path_url.split("?")[0])
-
         try:
-            validate_response(
-                spec=self.spec,
+            self.openapi.validate_response(
                 request=openapi_request,
-                response=openapi_response,
+                response=openapi_response,      
             )
+            
             schema_valid = True
-        except (ResponseValidationError, ResponseNotFound) as e:
+            msg = ""
+        except Exception as e: 
             schema_valid = False
-            msg = f"Контракт нарушен: {e}"
-        
+            msg = f"Контракт нарушен: {type(e).__name__}: {str(e)}"
+
         self.coverage_tracker.add(
             method=response.request.method,
             path=path,
