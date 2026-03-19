@@ -3,7 +3,7 @@ import allure
 from tests.utils.data_builders import build_cat_payload
 import logging
 logger = logging.getLogger(__name__)
-import time
+
 @pytest.mark.api
 @allure.feature("API")
 @allure.story("POST/cats")
@@ -128,7 +128,7 @@ def test_create_cat_age_boundary(api, openapi_validator, age, expected_status):
 @allure.feature("API")
 def test_invalid_cat_not_saved(api):
     logger.info("[API] Checking the immutability of the DB when trying to add invalid cat")
-    time.sleep(180)
+
     # Arrange
     payload = build_cat_payload(name="A", age=-1)
 
