@@ -3,7 +3,7 @@ import allure
 from tests.utils.data_builders import build_cat_payload
 import logging
 logger = logging.getLogger(__name__)
-
+import time
 @pytest.mark.api
 @allure.feature("API")
 @allure.story("POST/cats")
