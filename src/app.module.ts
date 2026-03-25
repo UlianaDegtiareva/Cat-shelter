@@ -1,0 +1,37 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
+import { CatsModule } from './cats/cats.module';
+import { CatEntity } from './cats/entities/cat.entity';
+import { UserEntity } from './users/entities/user.entity';
+import { StatsModule } from './stats/stats.module';
+import { AuthModule } from './auth/auth.module';
+import { Role } from './roles/entities/role.entity';
+import { HealthCard } from './cats/entities/health-card.entity';
+import { ExternalApiModule } from './external-api/external-api.module';
+import { ConfigModule } from '@nestjs/config';
+
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5433,
+      username: 'user',
+      password: 'password',
+      database: 'shelter',
+      entities: [CatEntity, UserEntity, Role, HealthCard],
+      synchronize: true,
+    }),
+    AuthModule,
+    CatsModule,
+    UsersModule,
+    StatsModule,
+    ExternalApiModule,
+  ],
+})
+export class AppModule {}
