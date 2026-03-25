@@ -3,7 +3,9 @@ import allure
 from tests.utils.data_builders import build_user_payload
 import logging
 logger = logging.getLogger(__name__)
-#демонстрация работы
+
+# демонстрация работы 
+
 @pytest.mark.api
 @allure.feature("API")
 @allure.story("POST/auth/login")
