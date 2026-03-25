@@ -1,0 +1,8 @@
+INFO     test_make-admin_api:test_make-admin_api.py:38 [API] check if new admin have admin's rights
+INFO     test_make-admin_api:test_make-admin_api.py:43 Регистрация пользователя: {'firstName': 'TestUser_dcf5de56', 'lastName': 'TestUser_8c657d5e', 'login': 'TestLogin_118dca26', 'password': 'TestPassword_142f1f77'}
+INFO     test_make-admin_api:test_make-admin_api.py:49 Даем права администратора от имени админа
+INFO     test_make-admin_api:test_make-admin_api.py:53 Авторизация пользователя - нового админа
+INFO     test_make-admin_api:test_make-admin_api.py:59 Регистрация нового пользователя: {'firstName': 'TestUser_53c33e66', 'lastName': 'TestUser_6d9f5290', 'login': 'TestLogin_4362c6f0', 'password': 'TestPassword_8c6e3929'}
+INFO     test_make-admin_api:test_make-admin_api.py:66 Даем права администратора пользователю №2 от имени пользователя №1 (админ)
+INFO     test_make-admin_api:test_make-admin_api.py:71 HTTP-статус: 201
+INFO     test_make-admin_api:test_make-admin_api.py:75 Проверяем поля в ответе

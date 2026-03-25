@@ -1,0 +1,7 @@
+INFO     test_summary_stats_api:test_summary_stats_api.py:33 [API] checking summary statistics
+INFO     test_summary_stats_api:test_summary_stats_api.py:38 Регистрация: {'firstName': 'TestUser_16984750', 'lastName': 'TestUser_b3c12b2a', 'login': 'TestLogin_fd28ef19', 'password': 'TestPassword_96c7eb89'}
+INFO     test_summary_stats_api:test_summary_stats_api.py:45 Создаём 3ех котов
+INFO     test_summary_stats_api:test_summary_stats_api.py:52 Обновляем данные 1го и 2го кота о владельце
+INFO     test_summary_stats_api:test_summary_stats_api.py:58 Получаем статистику
+INFO     test_summary_stats_api:test_summary_stats_api.py:64 HTTP-статус: 200
+INFO     test_summary_stats_api:test_summary_stats_api.py:68 Проверяем поля ответа: {'totalAnimals': 3, 'adoptedCount': 2, 'adoptionRate': 66.67}

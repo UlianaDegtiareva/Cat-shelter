@@ -1,0 +1,10 @@
+INFO     test_e2e:test_e2e.py:218 [End-to-End] creation and updating health card
+INFO     test_e2e:test_e2e.py:224 Создание кота: {'name': 'TestCat_7493922e', 'age': 1, 'breed': 'Test'}
+INFO     test_e2e:test_e2e.py:230 Проверяем поля в ответе
+INFO     test_e2e:test_e2e.py:238 Создаем мед.книжку коту: {'lastVaccination': '2017-11-18', 'medicalStatus': 'Test_medical_Status', 'notes': 'Test_medical_Notes'}
+INFO     test_e2e:test_e2e.py:242 Проверяем поля в ответе
+INFO     test_e2e:test_e2e.py:251 Обновляем мед.книжку: {'lastVaccination': '2017-06-07', 'medicalStatus': 'Test_medical_Status', 'notes': 'Test_medical_Notes'}
+INFO     test_e2e:test_e2e.py:255 Получаем созданного кота по Id
+DEBUG    test_e2e:test_e2e.py:257 Найденный кот: {'id': 70, 'name': 'TestCat_7493922e', 'age': 1, 'breed': 'Test', 'isAdopted': False, 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'owner': None, 'healthCard': {'id': 7, 'lastVaccination': '2017-06-07T00:00:00.000Z', 'medicalStatus': 'Test_medical_Status', 'notes': 'Test_medical_Notes'}}
+INFO     test_e2e:test_e2e.py:261 Проверяем поля в ответе
+INFO     test_e2e:test_e2e.py:265 Проверяем данные кота после обновления мед.карты

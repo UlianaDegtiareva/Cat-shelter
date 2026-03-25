@@ -1,0 +1,5 @@
+INFO     test_login_contract:test_login_contract.py:74 [LOGIN][NEGATIVE] invalid payload
+INFO     test_login_contract:test_login_contract.py:78 Попытка авторизоваться с данными: missing 'password'
+INFO     test_login_contract:test_login_contract.py:84 HTTP-статус: 400
+INFO     test_login_contract:test_login_contract.py:87 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'

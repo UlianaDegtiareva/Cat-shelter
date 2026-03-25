@@ -1,0 +1,5 @@
+INFO     test_patch_health-card_api:test_patch_health-card_api.py:13 [API] check health-card patch success
+INFO     test_patch_health-card_api:test_patch_health-card_api.py:18 Создание кота: {'name': 'TestCat_77d19aaa', 'age': 1, 'breed': 'Test'}
+INFO     test_patch_health-card_api:test_patch_health-card_api.py:25 Создаем мед.книжку коту: {'lastVaccination': '2025-06-28', 'medicalStatus': 'Test_medical_Status', 'notes': 'Test_medical_Notes'}
+INFO     test_patch_health-card_api:test_patch_health-card_api.py:33 Обновляем мед.книжку: {'lastVaccination': '2013-07-22', 'medicalStatus': 'Test_medical_Status', 'notes': 'Test_medical_Notes'}
+INFO     test_patch_health-card_api:test_patch_health-card_api.py:39 Проверяем поля в ответе

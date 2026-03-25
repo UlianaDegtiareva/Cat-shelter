@@ -1,0 +1,4 @@
+INFO     test_register_contract:test_register_contract.py:73 [REGISTER][NEGATIVE] invalid payload
+INFO     test_register_contract:test_register_contract.py:77 Попытка зарегистрироваться с данными: missing 'lastName'
+INFO     test_register_contract:test_register_contract.py:83 HTTP-статус: 400
+INFO     test_register_contract:test_register_contract.py:86 Проверка контракта

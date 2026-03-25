@@ -1,0 +1,1 @@
+{'id': 21, 'name': 'TestCat_b0b45a08', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:28.829Z', 'chipCode': None, 'owner': {'id': 12, 'login': 'TestLogin_d54bc2fb', 'firstName': 'TestUser_b13fe8df', 'lastName': 'TestUser_2c4d27a7'}, 'healthCard': None}

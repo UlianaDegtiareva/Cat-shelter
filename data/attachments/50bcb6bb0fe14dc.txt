@@ -1,0 +1,10 @@
+INFO     test_e2e:test_e2e.py:339 [E2E] non-owner cannot delete profile, owner can delete his own
+INFO     test_e2e:test_e2e.py:347 Регистрация 1го пользователя: {'firstName': 'TestUser_ed5de429', 'lastName': 'TestUser_4baf9070', 'login': 'TestLogin_0323f381', 'password': 'TestPassword_0a2104ca'}
+INFO     test_e2e:test_e2e.py:354 Регистрация 2го пользователя: {'firstName': 'TestUser_56746b41', 'lastName': 'TestUser_b4256486', 'login': 'TestLogin_0b914a9e', 'password': 'TestPassword_74010ee9'}
+INFO     test_e2e:test_e2e.py:362 Проверяем успешную регистрацию пользователей
+INFO     test_e2e:test_e2e.py:370 Попытка удаления пользователя №2 от лица пользователя №1 (не админ)
+INFO     test_e2e:test_e2e.py:373 Получение пользователя №2 по ID
+INFO     test_e2e:test_e2e.py:378 Проверяем, что удаление не выполнено: 403
+INFO     test_e2e:test_e2e.py:384 Удаление пользователем №2 своей страницы
+INFO     test_e2e:test_e2e.py:387 Получение пользователя №2 по ID
+INFO     test_e2e:test_e2e.py:392 Проверяем, что удаление выполнено: 204

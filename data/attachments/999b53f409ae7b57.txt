@@ -1,0 +1,6 @@
+INFO     test_get_user_contract:test_get_user_contract.py:33 [GET USERS][NEGATIVE] Unauthorized
+INFO     test_get_user_contract:test_get_user_contract.py:37 Попытка получения всех пользователей без авторизации
+INFO     test_get_user_contract:test_get_user_contract.py:42 HTTP-статус: 401
+INFO     test_get_user_contract:test_get_user_contract.py:45 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'

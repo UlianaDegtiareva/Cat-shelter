@@ -1,0 +1,3 @@
+INFO     test_register_chip_api:test_register_chip_api.py:12 [API] register chip in roskot
+INFO     test_register_chip_api:test_register_chip_api.py:19 Регистрируем кота: {'name': 'Test_Cat', 'breed': 'Test_Cat'}
+INFO     test_register_chip_api:test_register_chip_api.py:25 Проверяем поля в ответе

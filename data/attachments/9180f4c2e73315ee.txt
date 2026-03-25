@@ -1,0 +1,10 @@
+INFO     test_create_cat_contract:test_create_cat_contract.py:12 [CREATE CAT][POSITIVE] authorized
+INFO     test_create_cat_contract:test_create_cat_contract.py:19 Cоздание кота: {'name': 'TestCat_0783ca00', 'age': 1, 'breed': 'Test'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:25 HTTP-статус: 201
+INFO     test_create_cat_contract:test_create_cat_contract.py:28 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'

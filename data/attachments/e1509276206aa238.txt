@@ -1,0 +1,12 @@
+INFO     test_e2e:test_e2e.py:273 [End-to-End] delegated admin can delete another user
+INFO     test_e2e:test_e2e.py:281 Регистрация 1го пользователя: {'firstName': 'TestUser_28031f62', 'lastName': 'TestUser_99d56569', 'login': 'TestLogin_9525fc66', 'password': 'TestPassword_7abc251e'}
+INFO     test_e2e:test_e2e.py:287 Регистрация 2го пользователя: {'firstName': 'TestUser_1e440ac4', 'lastName': 'TestUser_a49b2267', 'login': 'TestLogin_af6630e6', 'password': 'TestPassword_e4061773'}
+INFO     test_e2e:test_e2e.py:294 Проверяем успешную регистрацию 1го пользователя: 201
+INFO     test_e2e:test_e2e.py:298 Проверяем успешную регистрацию 2го пользователя: 201
+INFO     test_e2e:test_e2e.py:304 Даем права администратора пользователю №1 от имени суперадмина
+INFO     test_e2e:test_e2e.py:309 Проверяем передачу прав
+INFO     test_e2e:test_e2e.py:314 Авторизация пользователя №1- нового админа
+INFO     test_e2e:test_e2e.py:320 Удаляем пользователя №2
+INFO     test_e2e:test_e2e.py:323 Попытка получить пользователя №2 по ID
+INFO     test_e2e:test_e2e.py:328 HTTP-статус удаления: 204
+INFO     test_e2e:test_e2e.py:331 HTTP-статус получения после удаления: 404

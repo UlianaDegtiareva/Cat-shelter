@@ -1,0 +1,23 @@
+INFO     test_adopt_cat_contract:test_adopt_cat_contract.py:139 [PATCH CAT][NEGATIVE] adopt already adopted cat
+INFO     test_adopt_cat_contract:test_adopt_cat_contract.py:144 Регистрация: {'firstName': 'TestUser_5e7bbcb1', 'lastName': 'TestUser_ad87e1ff', 'login': 'TestLogin_3b01a2a2', 'password': 'TestPassword_ed84d3f9'}
+INFO     test_adopt_cat_contract:test_adopt_cat_contract.py:152 Создание нового кота: {'name': 'TestCat_9880dd68', 'age': 1, 'breed': 'Test'}
+INFO     test_adopt_cat_contract:test_adopt_cat_contract.py:160 Обновляем данные кота о владельце
+INFO     test_adopt_cat_contract:test_adopt_cat_contract.py:166 Регистрация 2го пользователя: {'firstName': 'TestUser_517556db', 'lastName': 'TestUser_3ece668b', 'login': 'TestLogin_f2bacb01', 'password': 'TestPassword_e3014b2f'}
+INFO     test_adopt_cat_contract:test_adopt_cat_contract.py:176 Пытаемся обновить данные кота о владельце на 2го пользователя
+INFO     test_adopt_cat_contract:test_adopt_cat_contract.py:181 HTTP-статус: 400
+INFO     test_adopt_cat_contract:test_adopt_cat_contract.py:184 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/cats/{id}/adopt' -> '/cats/(?P<id>[^\\/]*)/adopt'
+DEBUG    parse:parse.py:444 format '/cats/{id}/health-card' -> '/cats/(?P<id>[^\\/]*)/health-card'
+DEBUG    parse:parse.py:444 format '/cats/{id}/chip' -> '/cats/(?P<id>[^\\/]*)/chip'
+DEBUG    parse:parse.py:444 format '/stats/summary' -> '/stats/summary'
+DEBUG    parse:parse.py:444 format '/stats/breeds' -> '/stats/breeds'
+DEBUG    parse:parse.py:444 format '/stats/top-adopters' -> '/stats/top-adopters'
+DEBUG    parse:parse.py:444 format '/external-api/roskot/register-chip' -> '/external-api/roskot/register-chip'

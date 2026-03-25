@@ -1,0 +1,5 @@
+INFO     test_get_user_api:test_get_user_api.py:14 [API] Get user by Id
+INFO     test_get_user_api:test_get_user_api.py:19 Регистрация: {'firstName': 'TestUser_298f9b65', 'lastName': 'TestUser_8c87d236', 'login': 'TestLogin_c3080c31', 'password': 'TestPassword_ee969351'}
+INFO     test_get_user_api:test_get_user_api.py:27 Запрашиваем пользователя по ID: 20
+DEBUG    test_get_user_api:test_get_user_api.py:29 Найденный пользователь: {'id': 20, 'login': 'TestLogin_c3080c31', 'firstName': 'TestUser_298f9b65', 'lastName': 'TestUser_8c87d236'}
+INFO     test_get_user_api:test_get_user_api.py:34 Проверяем поля в ответе

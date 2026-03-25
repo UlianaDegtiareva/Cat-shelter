@@ -1,0 +1,6 @@
+INFO     test_login_contract:test_login_contract.py:12 [LOGIN][POSITIVE] valid payload
+INFO     test_login_contract:test_login_contract.py:18 Регистрация: {'firstName': 'TestUser_cdd1f436', 'lastName': 'TestUser_ab95a95a', 'login': 'TestLogin_2782796a', 'password': 'TestPassword_5c1d223a'}
+INFO     test_login_contract:test_login_contract.py:24 Авторизация
+INFO     test_login_contract:test_login_contract.py:29 HTTP-статус: 200
+INFO     test_login_contract:test_login_contract.py:32 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'

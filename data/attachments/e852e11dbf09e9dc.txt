@@ -1,0 +1,7 @@
+INFO     test_get_cat_api:test_get_cat_api.py:178 [API] filtered cat's list return empty list
+INFO     test_get_cat_api:test_get_cat_api.py:183 Регистрация: {'firstName': 'TestUser_8befb020', 'lastName': 'TestUser_0183a849', 'login': 'TestLogin_940e1346', 'password': 'TestPassword_44b1682f'}
+INFO     test_get_cat_api:test_get_cat_api.py:190 Создаём 2ух котов
+INFO     test_get_cat_api:test_get_cat_api.py:196 Обновляем данные 1го кота о владельце
+INFO     test_get_cat_api:test_get_cat_api.py:202 Получаем только котят с владельцем
+INFO     test_get_cat_api:test_get_cat_api.py:208 HTTP-статус: 200
+INFO     test_get_cat_api:test_get_cat_api.py:211 Проверяем, что список пустой

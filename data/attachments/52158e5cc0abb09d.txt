@@ -1,0 +1,7 @@
+INFO     test_top_adopters_stats_api:test_top_adopters_stats_api.py:14 [API] checking stats by top adopters
+INFO     test_top_adopters_stats_api:test_top_adopters_stats_api.py:20 Регистрация 2ух пользователей
+INFO     test_top_adopters_stats_api:test_top_adopters_stats_api.py:29 Создаём 5 котов
+INFO     test_top_adopters_stats_api:test_top_adopters_stats_api.py:37 Обновляем данные 1, 2, 3, 4 кота о владельце
+INFO     test_top_adopters_stats_api:test_top_adopters_stats_api.py:46 Получаем статистику
+INFO     test_top_adopters_stats_api:test_top_adopters_stats_api.py:52 HTTP-статус: 200
+INFO     test_top_adopters_stats_api:test_top_adopters_stats_api.py:56 Проверяем данные в ответе

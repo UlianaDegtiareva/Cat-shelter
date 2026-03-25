@@ -1,0 +1,19 @@
+INFO     test_chip_cat_contract:test_chip_cat_contract.py:41 [POST][NEGATIVE] chip cat: unauthorized
+INFO     test_chip_cat_contract:test_chip_cat_contract.py:45 Чипируем кота без авторизации
+INFO     test_chip_cat_contract:test_chip_cat_contract.py:50 HTTP-статус: 401
+INFO     test_chip_cat_contract:test_chip_cat_contract.py:53 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/cats/{id}/adopt' -> '/cats/(?P<id>[^\\/]*)/adopt'
+DEBUG    parse:parse.py:444 format '/cats/{id}/health-card' -> '/cats/(?P<id>[^\\/]*)/health-card'
+DEBUG    parse:parse.py:444 format '/cats/{id}/chip' -> '/cats/(?P<id>[^\\/]*)/chip'
+DEBUG    parse:parse.py:444 format '/stats/summary' -> '/stats/summary'
+DEBUG    parse:parse.py:444 format '/stats/breeds' -> '/stats/breeds'
+DEBUG    parse:parse.py:444 format '/stats/top-adopters' -> '/stats/top-adopters'
+DEBUG    parse:parse.py:444 format '/external-api/roskot/register-chip' -> '/external-api/roskot/register-chip'

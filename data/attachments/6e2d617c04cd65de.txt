@@ -1,0 +1,11 @@
+INFO     test_delete_user_api:test_delete_user_api.py:13 [API] check deleting user by admin
+INFO     test_delete_user_api:test_delete_user_api.py:17 Получаем исходный список пользователей
+DEBUG    test_delete_user_api:test_delete_user_api.py:20 Список пользователей: [{'id': 1, 'login': 'superadmin', 'firstName': 'Admin', 'lastName': 'Glavniy'}]
+INFO     test_delete_user_api:test_delete_user_api.py:25 Регистрация пользователя: {'firstName': 'TestUser_a6c6c13c', 'lastName': 'TestUser_dee90d6e', 'login': 'TestLogin_433f3602', 'password': 'TestPassword_780bd0f5'}
+INFO     test_delete_user_api:test_delete_user_api.py:32 Удаляем пользователя от лица админа
+INFO     test_delete_user_api:test_delete_user_api.py:36 Попытка получить пользователя по ID
+INFO     test_delete_user_api:test_delete_user_api.py:40 Получаем список пользователей после удаления
+DEBUG    test_delete_user_api:test_delete_user_api.py:43 Список пользователей: [{'id': 1, 'login': 'superadmin', 'firstName': 'Admin', 'lastName': 'Glavniy'}]
+INFO     test_delete_user_api:test_delete_user_api.py:47 HTTP-статус удаления: 204
+INFO     test_delete_user_api:test_delete_user_api.py:51 HTTP-статус получения после удаления: 404
+INFO     test_delete_user_api:test_delete_user_api.py:55 Количество пользователей после удаления

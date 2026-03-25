@@ -1,0 +1,5 @@
+INFO     test_register_contract:test_register_contract.py:36 [REGISTER][NEGATIVE] duplicate login
+INFO     test_register_contract:test_register_contract.py:43 Регистрация: {'firstName': 'TestUser_be1042fa', 'lastName': 'TestUser_6de9031d', 'login': 'TestLogin_a067d171', 'password': 'TestPassword_69c9e41a'}
+INFO     test_register_contract:test_register_contract.py:48 Регистрируемся повторно с тем же логином
+INFO     test_register_contract:test_register_contract.py:53 HTTP-статус: 409
+INFO     test_register_contract:test_register_contract.py:57 Проверка контракта

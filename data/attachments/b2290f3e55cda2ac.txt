@@ -1,0 +1,9 @@
+INFO     test_patch_cat_api:test_patch_cat_api.py:56 [API] Successful adoption with authorization
+INFO     test_patch_cat_api:test_patch_cat_api.py:61 Регистрация: {'firstName': 'TestUser_b13fe8df', 'lastName': 'TestUser_2c4d27a7', 'login': 'TestLogin_d54bc2fb', 'password': 'TestPassword_439e39fd'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:69 Создание кота: {'name': 'TestCat_b0b45a08', 'age': 1, 'breed': 'Test'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:76 Обновление данных кота о новом владельце
+INFO     test_patch_cat_api:test_patch_cat_api.py:80 Получаем кота
+DEBUG    test_patch_cat_api:test_patch_cat_api.py:82 Данные кота: {'id': 21, 'name': 'TestCat_b0b45a08', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:28.829Z', 'chipCode': None, 'owner': {'id': 12, 'login': 'TestLogin_d54bc2fb', 'firstName': 'TestUser_b13fe8df', 'lastName': 'TestUser_2c4d27a7'}, 'healthCard': None}
+INFO     test_patch_cat_api:test_patch_cat_api.py:87 Проверяем данные кота
+INFO     test_patch_cat_api:test_patch_cat_api.py:91 Получаем данные о кошках пользователя
+DEBUG    test_patch_cat_api:test_patch_cat_api.py:93 Данные пользователя: {'id': 12, 'login': 'TestLogin_d54bc2fb', 'firstName': 'TestUser_b13fe8df', 'lastName': 'TestUser_2c4d27a7', 'cats': [{'id': 21, 'name': 'TestCat_b0b45a08', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:28.829Z', 'chipCode': None}]}

@@ -1,0 +1,20 @@
+INFO     test_make-admin_contract:test_make-admin_contract.py:13 [POST][POSITIVE] making user admin
+INFO     test_make-admin_contract:test_make-admin_contract.py:18 Регистрация нового пользователя: {'firstName': 'TestUser_f35f5cec', 'lastName': 'TestUser_3c3bd1a8', 'login': 'TestLogin_5fb0ad4f', 'password': 'TestPassword_5a2c579f'}
+INFO     test_make-admin_contract:test_make-admin_contract.py:25 Даем права администратора от имени админа
+INFO     test_make-admin_contract:test_make-admin_contract.py:30 HTTP-статус: 201
+INFO     test_make-admin_contract:test_make-admin_contract.py:34 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/cats/{id}/adopt' -> '/cats/(?P<id>[^\\/]*)/adopt'
+DEBUG    parse:parse.py:444 format '/cats/{id}/health-card' -> '/cats/(?P<id>[^\\/]*)/health-card'
+DEBUG    parse:parse.py:444 format '/cats/{id}/chip' -> '/cats/(?P<id>[^\\/]*)/chip'
+DEBUG    parse:parse.py:444 format '/stats/summary' -> '/stats/summary'
+DEBUG    parse:parse.py:444 format '/stats/breeds' -> '/stats/breeds'
+DEBUG    parse:parse.py:444 format '/stats/top-adopters' -> '/stats/top-adopters'
+DEBUG    parse:parse.py:444 format '/external-api/roskot/register-chip' -> '/external-api/roskot/register-chip'

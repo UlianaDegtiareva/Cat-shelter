@@ -1,0 +1,5 @@
+INFO     test_register_api:test_register_api.py:12 [API] registration
+INFO     test_register_api:test_register_api.py:19 Регистрация: {'firstName': 'TestUser_ee9cbd71', 'lastName': 'TestUser_ccae6148', 'login': 'TestLogin_0fd8c3b7', 'password': 'TestPassword_9bced7f7'}
+INFO     test_register_api:test_register_api.py:24 Получаем список пользователей
+INFO     test_register_api:test_register_api.py:30 Проверяем наличие access токена в ответе
+INFO     test_register_api:test_register_api.py:34 Проверяем, что созданный пользователй есть в списке

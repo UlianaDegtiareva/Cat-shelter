@@ -1,0 +1,20 @@
+INFO     test_make-admin_contract:test_make-admin_contract.py:42 [POST][NEGATIVE] Access denied
+INFO     test_make-admin_contract:test_make-admin_contract.py:48 Регистрация 1го пользователя: {'firstName': 'TestUser_4e29ab59', 'lastName': 'TestUser_06f6b5ae', 'login': 'TestLogin_fcc1b7bd', 'password': 'TestPassword_7a689eb2'}
+INFO     test_make-admin_contract:test_make-admin_contract.py:51 Регистрация 2го пользователя: {'firstName': 'TestUser_7abe6474', 'lastName': 'TestUser_d9bc8ab1', 'login': 'TestLogin_2af0562f', 'password': 'TestPassword_1557312f'}
+INFO     test_make-admin_contract:test_make-admin_contract.py:64 HTTP-статус: 403
+INFO     test_make-admin_contract:test_make-admin_contract.py:68 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/cats/{id}/adopt' -> '/cats/(?P<id>[^\\/]*)/adopt'
+DEBUG    parse:parse.py:444 format '/cats/{id}/health-card' -> '/cats/(?P<id>[^\\/]*)/health-card'
+DEBUG    parse:parse.py:444 format '/cats/{id}/chip' -> '/cats/(?P<id>[^\\/]*)/chip'
+DEBUG    parse:parse.py:444 format '/stats/summary' -> '/stats/summary'
+DEBUG    parse:parse.py:444 format '/stats/breeds' -> '/stats/breeds'
+DEBUG    parse:parse.py:444 format '/stats/top-adopters' -> '/stats/top-adopters'
+DEBUG    parse:parse.py:444 format '/external-api/roskot/register-chip' -> '/external-api/roskot/register-chip'

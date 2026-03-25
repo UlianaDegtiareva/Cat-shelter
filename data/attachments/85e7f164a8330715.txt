@@ -1,0 +1,12 @@
+INFO     test_patch_cat_api:test_patch_cat_api.py:103 [API] Successful update user's data after multuple adoption
+INFO     test_patch_cat_api:test_patch_cat_api.py:108 Регистрация: {'firstName': 'TestUser_5dc2a388', 'lastName': 'TestUser_6a6d623b', 'login': 'TestLogin_7e42ec7f', 'password': 'TestPassword_93b6fc5a'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:116 Создаём 1го кота {'name': 'TestCat_476f792f', 'age': 1, 'breed': 'Test'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:123 Создаём 2го кота {'name': 'TestCat_967e1d89', 'age': 1, 'breed': 'Test'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:132 Обновляем данные о владельце 1ой кошки
+INFO     test_patch_cat_api:test_patch_cat_api.py:135 Обновляем данные о владельце 2ой кошки
+INFO     test_patch_cat_api:test_patch_cat_api.py:140 Проверяем данные 1ой кошки
+DEBUG    test_patch_cat_api:test_patch_cat_api.py:142 Данные 1ой кошки: {'id': 22, 'name': 'TestCat_476f792f', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:29.129Z', 'chipCode': None, 'owner': {'id': 13, 'login': 'TestLogin_7e42ec7f', 'firstName': 'TestUser_5dc2a388', 'lastName': 'TestUser_6a6d623b'}, 'healthCard': None}
+INFO     test_patch_cat_api:test_patch_cat_api.py:147 Проверяем данные 2ой кошки
+DEBUG    test_patch_cat_api:test_patch_cat_api.py:149 Данные 1ой кошки: {'id': 23, 'name': 'TestCat_967e1d89', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:29.134Z', 'chipCode': None, 'owner': {'id': 13, 'login': 'TestLogin_7e42ec7f', 'firstName': 'TestUser_5dc2a388', 'lastName': 'TestUser_6a6d623b'}, 'healthCard': None}
+INFO     test_patch_cat_api:test_patch_cat_api.py:154 Получаем данные пользователя с кошками
+DEBUG    test_patch_cat_api:test_patch_cat_api.py:156 Данные пользователя: {'id': 13, 'login': 'TestLogin_7e42ec7f', 'firstName': 'TestUser_5dc2a388', 'lastName': 'TestUser_6a6d623b', 'cats': [{'id': 22, 'name': 'TestCat_476f792f', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:29.129Z', 'chipCode': None}, {'id': 23, 'name': 'TestCat_967e1d89', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:29.134Z', 'chipCode': None}]}

@@ -1,0 +1,4 @@
+INFO     test_create_health-card_api:test_create_health-card_api.py:13 [API] check health-card creation
+INFO     test_create_health-card_api:test_create_health-card_api.py:18 Создание кота: {'name': 'TestCat_f85391b4', 'age': 1, 'breed': 'Test'}
+INFO     test_create_health-card_api:test_create_health-card_api.py:27 Создаем мед.книжку коту: {'lastVaccination': '2025-02-13', 'medicalStatus': 'Test_medical_Status', 'notes': 'Test_medical_Notes'}
+INFO     test_create_health-card_api:test_create_health-card_api.py:32 Проверяем поля в ответе

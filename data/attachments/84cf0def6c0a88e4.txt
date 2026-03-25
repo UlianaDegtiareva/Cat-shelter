@@ -1,0 +1,22 @@
+INFO     test_e2e:test_e2e.py:98 [End-to-End][POSITIVE] Registration, adoption and chiping
+INFO     test_e2e:test_e2e.py:104 Попытка авторизоваться без регистрации: {'login': 'test_user', 'password': 'password123'}
+INFO     test_e2e:test_e2e.py:109 Проверяем, что авторизация не прошла: 401
+INFO     test_e2e:test_e2e.py:116 Регистрация: {'firstName': 'TestUser_ef9c4e37', 'lastName': 'TestUser_78855173', 'login': 'TestLogin_f931dc7e', 'password': 'TestPassword_9429ad5d'}
+INFO     test_e2e:test_e2e.py:122 Проверяем успешную регистрацию: 201
+INFO     test_e2e:test_e2e.py:131 Создаём кота: {'name': 'TestCat_98871408', 'age': 1, 'breed': 'Test'}
+INFO     test_e2e:test_e2e.py:137 Проверяем успешную создание кота: 201
+INFO     test_e2e:test_e2e.py:142 Получаем всех пользователей
+INFO     test_e2e:test_e2e.py:147 Проверяем получение списка пользователей:200
+INFO     test_e2e:test_e2e.py:153 Обновляем данные кота о владельце
+INFO     test_e2e:test_e2e.py:157 Проверяем усыновление: 200
+INFO     test_e2e:test_e2e.py:161 Проверяем данные кота
+INFO     test_e2e:test_e2e.py:167 Получаем данные пользователя с кошками
+INFO     test_e2e:test_e2e.py:175 Чипируем кота от лица админа
+INFO     test_e2e:test_e2e.py:178 Получаем чипированного кота по Id
+DEBUG    test_e2e:test_e2e.py:180 Найденный кот: {'id': 69, 'name': 'TestCat_98871408', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:22:17.378Z', 'chipCode': 'RU-STATE-50AYS', 'owner': {'id': 52, 'login': 'TestLogin_f931dc7e', 'firstName': 'TestUser_ef9c4e37', 'lastName': 'TestUser_78855173'}, 'healthCard': None}
+INFO     test_e2e:test_e2e.py:184 Проверяем наличие кода чипирования
+INFO     test_e2e:test_e2e.py:188 Проверяем поля в ответе
+INFO     test_e2e:test_e2e.py:196 Удаляем кота от лица админа
+INFO     test_e2e:test_e2e.py:199 Удаляем авторизованного пользователя от лица админа
+INFO     test_e2e:test_e2e.py:203 Проверяем удаление кота: 204
+INFO     test_e2e:test_e2e.py:208 Проверяем удаление пользователя: 204

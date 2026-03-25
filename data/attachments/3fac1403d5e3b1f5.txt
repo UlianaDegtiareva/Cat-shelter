@@ -1,0 +1,7 @@
+INFO     test_patch_cat_api:test_patch_cat_api.py:14 [API] Successful update cat's data
+INFO     test_patch_cat_api:test_patch_cat_api.py:19 Регистрация: {'firstName': 'TestUser_881d40a3', 'lastName': 'TestUser_6f3daf7e', 'login': 'TestLogin_d4a378a5', 'password': 'TestPassword_e4859a6d'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:26 Создание нового кота: {'name': 'TestCat_0ecce75c', 'age': 1, 'breed': 'Test'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:35 Обновление данных кота: {'name': 'TestCat_6846bda3', 'age': 1, 'breed': 'Test'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:41 Получаем данные кота
+DEBUG    test_patch_cat_api:test_patch_cat_api.py:43 Обновленные данные  кота: {'id': 20, 'name': 'TestCat_6846bda3', 'age': 1, 'breed': 'Test', 'isAdopted': False, 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'owner': None, 'healthCard': None}
+INFO     test_patch_cat_api:test_patch_cat_api.py:47 Проверяем обновленные данные

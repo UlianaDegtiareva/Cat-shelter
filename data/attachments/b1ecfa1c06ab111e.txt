@@ -1,0 +1,19 @@
+INFO     test_patch_health-card_contract:test_patch_health-card_contract.py:72 [PATCH][NEGATIVE] update health-card with invalid Id
+INFO     test_patch_health-card_contract:test_patch_health-card_contract.py:79 Попытка обновить мед.книжку с некорректным ID: abc
+INFO     test_patch_health-card_contract:test_patch_health-card_contract.py:84 HTTP-статус: 400
+INFO     test_patch_health-card_contract:test_patch_health-card_contract.py:87 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/cats/{id}/adopt' -> '/cats/(?P<id>[^\\/]*)/adopt'
+DEBUG    parse:parse.py:444 format '/cats/{id}/health-card' -> '/cats/(?P<id>[^\\/]*)/health-card'
+DEBUG    parse:parse.py:444 format '/cats/{id}/chip' -> '/cats/(?P<id>[^\\/]*)/chip'
+DEBUG    parse:parse.py:444 format '/stats/summary' -> '/stats/summary'
+DEBUG    parse:parse.py:444 format '/stats/breeds' -> '/stats/breeds'
+DEBUG    parse:parse.py:444 format '/stats/top-adopters' -> '/stats/top-adopters'
+DEBUG    parse:parse.py:444 format '/external-api/roskot/register-chip' -> '/external-api/roskot/register-chip'

@@ -1,0 +1,10 @@
+INFO     test_get_cat_contract:test_get_cat_contract.py:40 [GET CATS][POSITIVE] Get empty list
+INFO     test_get_cat_contract:test_get_cat_contract.py:44 Запрашиваем всех котов в пустой БД
+INFO     test_get_cat_contract:test_get_cat_contract.py:49 HTTP-статус: 200
+INFO     test_get_cat_contract:test_get_cat_contract.py:52 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'

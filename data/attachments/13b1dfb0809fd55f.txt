@@ -1,0 +1,3 @@
+INFO     test_register_api:test_register_api.py:49 [API] borderline login data length
+INFO     test_register_api:test_register_api.py:56 Попытка зарегистрироваться с данными: spaces
+INFO     test_register_api:test_register_api.py:62 HTTP-статус: 400

@@ -1,0 +1,5 @@
+INFO     test_breeds_stats_api:test_breeds_stats_api.py:12 [API] checking stats by breed
+INFO     test_breeds_stats_api:test_breeds_stats_api.py:16 Создаём 3ех котов
+INFO     test_breeds_stats_api:test_breeds_stats_api.py:24 Получаем статистику
+INFO     test_breeds_stats_api:test_breeds_stats_api.py:31 HTTP-статус: 200
+INFO     test_breeds_stats_api:test_breeds_stats_api.py:34 Проверяем количество котов каждой породы

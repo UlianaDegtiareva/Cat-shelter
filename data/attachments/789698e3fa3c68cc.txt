@@ -1,0 +1,11 @@
+INFO     test_get_cat_contract:test_get_cat_contract.py:13 [GET CATS][POSITIVE] get all cats
+INFO     test_get_cat_contract:test_get_cat_contract.py:18 Создаем кота: {'name': 'TestCat_8e4de4bf', 'age': 1, 'breed': 'Test'}
+INFO     test_get_cat_contract:test_get_cat_contract.py:25 Получениe всех котов
+INFO     test_get_cat_contract:test_get_cat_contract.py:30 HTTP-статус: 200
+INFO     test_get_cat_contract:test_get_cat_contract.py:33 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'

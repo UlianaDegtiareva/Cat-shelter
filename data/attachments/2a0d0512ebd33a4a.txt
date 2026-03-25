@@ -1,0 +1,6 @@
+INFO     test_get_user_contract:test_get_user_contract.py:13 [GET USERS][POSITIVE] get all users
+INFO     test_get_user_contract:test_get_user_contract.py:17 Получениe всех пользователей
+INFO     test_get_user_contract:test_get_user_contract.py:22 HTTP-статус: 200
+INFO     test_get_user_contract:test_get_user_contract.py:25 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'

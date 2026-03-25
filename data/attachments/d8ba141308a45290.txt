@@ -1,0 +1,7 @@
+INFO     test_patch_cat_api:test_patch_cat_api.py:167 [API] data doesn't change after unsuccessful PATCH
+INFO     test_patch_cat_api:test_patch_cat_api.py:174 Создание 1го кота: {'name': 'dublicatedName', 'age': 1, 'breed': 'Test'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:179 Создание 2го кота: {'name': 'TestCat_97dd124d', 'age': 1, 'breed': 'Test'}
+INFO     test_patch_cat_api:test_patch_cat_api.py:188 Попытка обновления имени 2го кота на имя 1го кота
+INFO     test_patch_cat_api:test_patch_cat_api.py:193 Получаем кота после попытки обновления
+DEBUG    test_patch_cat_api:test_patch_cat_api.py:195 Данные кота: {'id': 25, 'name': 'TestCat_97dd124d', 'age': 1, 'breed': 'Test', 'isAdopted': False, 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'owner': None, 'healthCard': None}
+INFO     test_patch_cat_api:test_patch_cat_api.py:199 Проверяем, что данные не обновились

@@ -1,0 +1,6 @@
+INFO     test_register_api:test_register_api.py:75 [API] borderline name length
+INFO     test_register_api:test_register_api.py:82 Получаем исходный список пользователей
+INFO     test_register_api:test_register_api.py:87 Попытка зарегистрироваться с данными: too short 'firstName' and 'lastName'
+INFO     test_register_api:test_register_api.py:92 Получаем список после попытки добавления
+INFO     test_register_api:test_register_api.py:98 HTTP-статус: 400
+INFO     test_register_api:test_register_api.py:102 Сравниваем количество до и после попытки регистрации

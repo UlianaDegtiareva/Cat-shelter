@@ -1,0 +1,10 @@
+INFO     test_delete_cat_api:test_delete_cat_api.py:61 [API] Clearing user's list of adopted cats after deleting a cat
+INFO     test_delete_cat_api:test_delete_cat_api.py:65 Регистрация: {'firstName': 'TestUser_f7dcbda3', 'lastName': 'TestUser_b69fbddf', 'login': 'TestLogin_dcbb8649', 'password': 'TestPassword_b3ba78b2'}
+INFO     test_delete_cat_api:test_delete_cat_api.py:75 Создаём кота {'name': 'TestCat_3155e8c0', 'age': 1, 'breed': 'Test'}
+INFO     test_delete_cat_api:test_delete_cat_api.py:81 Обновляем данные кошки о владельце
+DEBUG    test_delete_cat_api:test_delete_cat_api.py:87 Данные о кошках пользователя: {'id': 5, 'login': 'TestLogin_dcbb8649', 'firstName': 'TestUser_f7dcbda3', 'lastName': 'TestUser_b69fbddf', 'cats': [{'id': 10, 'name': 'TestCat_3155e8c0', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:26.901Z', 'chipCode': None}]}
+INFO     test_delete_cat_api:test_delete_cat_api.py:91 Удаляем кошку
+INFO     test_delete_cat_api:test_delete_cat_api.py:96 Проверяем наличие кошки у пользвоателя до удаления
+INFO     test_delete_cat_api:test_delete_cat_api.py:101 Проверяем, что кошка удалилась
+INFO     test_delete_cat_api:test_delete_cat_api.py:106 Проверяем наличие кошки у пользвоателя после удаления
+DEBUG    test_delete_cat_api:test_delete_cat_api.py:108 Данные о кошках пользователя: {'id': 5, 'login': 'TestLogin_dcbb8649', 'firstName': 'TestUser_f7dcbda3', 'lastName': 'TestUser_b69fbddf', 'cats': []}

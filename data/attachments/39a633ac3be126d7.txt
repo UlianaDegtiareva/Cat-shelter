@@ -1,0 +1,5 @@
+INFO     test_get_user_api:test_get_user_api.py:125 [API] Get empty list of user's cats
+INFO     test_get_user_api:test_get_user_api.py:130 Регистрация: {'firstName': 'TestUser_21d10382', 'lastName': 'TestUser_628c7dcd', 'login': 'TestLogin_b6659d86', 'password': 'TestPassword_9153ec59'}
+INFO     test_get_user_api:test_get_user_api.py:138 Получаем список котов пользователя
+INFO     test_get_user_api:test_get_user_api.py:143 HTTP-статус получения: 200
+INFO     test_get_user_api:test_get_user_api.py:147 Проверяем количество котов в списке: 0

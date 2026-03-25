@@ -1,0 +1,3 @@
+INFO     test_create_cat_api:test_create_cat_api.py:126 [API] borderline age values
+INFO     test_create_cat_api:test_create_cat_api.py:133 Попытка создания кота с возрастом: 0
+INFO     test_create_cat_api:test_create_cat_api.py:138 HTTP-статус: 201

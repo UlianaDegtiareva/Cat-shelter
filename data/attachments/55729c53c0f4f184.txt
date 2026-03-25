@@ -1,0 +1,18 @@
+INFO     test_create_cat_contract:test_create_cat_contract.py:60 [CREATE CAT][NEGATIVE] duplicate name
+INFO     test_create_cat_contract:test_create_cat_contract.py:68 Создаём первого кота: {'name': 'duplicated_name', 'age': 1, 'breed': 'Test'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:73 Попытка создать второго с тем же именем : {'name': 'duplicated_name', 'age': 1, 'breed': 'Test'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:79 HTTP-статус 1-го запроса: 201
+INFO     test_create_cat_contract:test_create_cat_contract.py:83 HTTP-статус 2-го запроса: 409
+INFO     test_create_cat_contract:test_create_cat_contract.py:87 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'

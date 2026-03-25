@@ -1,0 +1,14 @@
+INFO     test_e2e:test_e2e.py:14 [End-to-End] Data reconciliation in three types of statistics and filtering
+INFO     test_e2e:test_e2e.py:20 Регистрация 2ух пользователей
+DEBUG    test_e2e:test_e2e.py:23 Список пользователей: [{'id': 1, 'login': 'superadmin', 'firstName': 'Admin', 'lastName': 'Glavniy'}, {'id': 50, 'login': 'TestLogin_22e7d5b3', 'firstName': 'TestUser_cb7367e7', 'lastName': 'TestUser_25ba8269'}, {'id': 51, 'login': 'TestLogin_231ed8b1', 'firstName': 'TestUser_302eaa4c', 'lastName': 'TestUser_120816ea'}]
+INFO     test_e2e:test_e2e.py:29 Создаём 6 котов
+INFO     test_e2e:test_e2e.py:37 Обновляем данные 1, 2, 3, 4, 5 кота о владельце
+INFO     test_e2e:test_e2e.py:47 Сбор общей статистики
+INFO     test_e2e:test_e2e.py:52 Сбор статистики по породам
+INFO     test_e2e:test_e2e.py:57 Сбор топа усыновителей
+INFO     test_e2e:test_e2e.py:62 Получаем только котят
+INFO     test_e2e:test_e2e.py:68 Проверям общее число котов
+INFO     test_e2e:test_e2e.py:72 Проверям число усыновленных
+INFO     test_e2e:test_e2e.py:78 Проверям данные владельцев
+INFO     test_e2e:test_e2e.py:83 Проверям породы
+INFO     test_e2e:test_e2e.py:89 Проверям получение отфильтрованнх данных

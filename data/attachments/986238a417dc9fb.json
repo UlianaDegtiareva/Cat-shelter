@@ -1,0 +1,397 @@
+{
+  "coverage_percent": 100.0,
+  "total_endpoints": 20,
+  "tested_endpoints": [
+    {
+      "method": "DELETE",
+      "path": "/cats/{id}",
+      "status_codes": [
+        204,
+        400,
+        401,
+        403,
+        404
+      ],
+      "expected_status_codes": [
+        204,
+        400,
+        401,
+        403,
+        404
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/users/{id}",
+      "status_codes": [
+        204,
+        400,
+        401,
+        403,
+        404
+      ],
+      "expected_status_codes": [
+        204,
+        400,
+        401,
+        403,
+        404
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "GET",
+      "path": "/cats",
+      "status_codes": [
+        200
+      ],
+      "expected_status_codes": [
+        200
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "GET",
+      "path": "/cats/{id}",
+      "status_codes": [
+        200,
+        400,
+        404
+      ],
+      "expected_status_codes": [
+        200,
+        400,
+        404
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "GET",
+      "path": "/stats/breeds",
+      "status_codes": [
+        200,
+        401
+      ],
+      "expected_status_codes": [
+        200,
+        401
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "GET",
+      "path": "/stats/summary",
+      "status_codes": [
+        200,
+        401
+      ],
+      "expected_status_codes": [
+        200,
+        401
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "GET",
+      "path": "/stats/top-adopters",
+      "status_codes": [
+        200,
+        401
+      ],
+      "expected_status_codes": [
+        200,
+        401
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "GET",
+      "path": "/users",
+      "status_codes": [
+        200,
+        401
+      ],
+      "expected_status_codes": [
+        200,
+        401
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "GET",
+      "path": "/users/{id}",
+      "status_codes": [
+        200,
+        400,
+        401,
+        404
+      ],
+      "expected_status_codes": [
+        200,
+        400,
+        401,
+        404
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "GET",
+      "path": "/users/{id}/cats",
+      "status_codes": [
+        200,
+        400,
+        401,
+        404
+      ],
+      "expected_status_codes": [
+        200,
+        400,
+        401,
+        404
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "PATCH",
+      "path": "/cats/{id}",
+      "status_codes": [
+        200,
+        400,
+        401,
+        404,
+        409
+      ],
+      "expected_status_codes": [
+        200,
+        400,
+        401,
+        404,
+        409
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "PATCH",
+      "path": "/cats/{id}/adopt",
+      "status_codes": [
+        200,
+        400,
+        401,
+        404
+      ],
+      "expected_status_codes": [
+        200,
+        400,
+        401,
+        404
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "PATCH",
+      "path": "/cats/{id}/health-card",
+      "status_codes": [
+        200,
+        400,
+        401,
+        404
+      ],
+      "expected_status_codes": [
+        200,
+        400,
+        401,
+        404
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "status_codes": [
+        200,
+        400,
+        401
+      ],
+      "expected_status_codes": [
+        200,
+        400,
+        401
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "POST",
+      "path": "/auth/register",
+      "status_codes": [
+        201,
+        400,
+        409
+      ],
+      "expected_status_codes": [
+        201,
+        400,
+        409
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "POST",
+      "path": "/cats",
+      "status_codes": [
+        201,
+        400,
+        401,
+        409
+      ],
+      "expected_status_codes": [
+        201,
+        400,
+        401,
+        409
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "POST",
+      "path": "/cats/{id}/chip",
+      "status_codes": [
+        201,
+        400,
+        401,
+        403,
+        404,
+        409,
+        502,
+        504
+      ],
+      "expected_status_codes": [
+        201,
+        400,
+        401,
+        403,
+        404,
+        409,
+        502,
+        504
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "POST",
+      "path": "/cats/{id}/health-card",
+      "status_codes": [
+        201,
+        400,
+        401,
+        404,
+        409
+      ],
+      "expected_status_codes": [
+        201,
+        400,
+        401,
+        404,
+        409
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "POST",
+      "path": "/external-api/roskot/register-chip",
+      "status_codes": [
+        201,
+        400,
+        401,
+        500
+      ],
+      "expected_status_codes": [
+        201,
+        400,
+        401,
+        500
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    },
+    {
+      "method": "POST",
+      "path": "/users/{id}/make-admin",
+      "status_codes": [
+        201,
+        400,
+        401,
+        403,
+        404
+      ],
+      "expected_status_codes": [
+        201,
+        400,
+        401,
+        403,
+        404
+      ],
+      "missing_status_codes": [],
+      "schema_passed": true,
+      "status_codes_coverage_percent": 100.0,
+      "all_expected_statuses_covered": true
+    }
+  ],
+  "untested_endpoints": []
+}

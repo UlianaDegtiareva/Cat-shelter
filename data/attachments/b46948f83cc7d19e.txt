@@ -1,0 +1,7 @@
+INFO     test_get_cat_api:test_get_cat_api.py:134 [API] checking filtering cats by age, breed and adoption status
+INFO     test_get_cat_api:test_get_cat_api.py:139 Регистрация: {'firstName': 'TestUser_eb2c2162', 'lastName': 'TestUser_03d3b32b', 'login': 'TestLogin_50f9ed4b', 'password': 'TestPassword_395566ec'}
+INFO     test_get_cat_api:test_get_cat_api.py:146 Создаём 2ух котов
+INFO     test_get_cat_api:test_get_cat_api.py:152 Обновляем данные 1го кота о владельце
+INFO     test_get_cat_api:test_get_cat_api.py:158 Получаем только котят + Test_breed_1 + с владельцем
+INFO     test_get_cat_api:test_get_cat_api.py:164 HTTP-статус: 200
+INFO     test_get_cat_api:test_get_cat_api.py:167 Проверяем данные в ответе

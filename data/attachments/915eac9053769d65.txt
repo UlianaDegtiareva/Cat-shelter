@@ -1,0 +1,10 @@
+INFO     test_create_cat_contract:test_create_cat_contract.py:96 [CREATE CAT][POSITIVE] payload with optional fields
+INFO     test_create_cat_contract:test_create_cat_contract.py:103 Создание кота с optional-полями: {'name': 'TestCat_3b40b149', 'age': 1, 'breed': 'Test', 'history': 'Found in 2024', 'description': 'Very friendly'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:109 HTTP-статус: 201
+INFO     test_create_cat_contract:test_create_cat_contract.py:112 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'

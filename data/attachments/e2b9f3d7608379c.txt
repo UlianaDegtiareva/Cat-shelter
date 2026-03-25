@@ -1,0 +1,21 @@
+INFO     test_delete_user_contract:test_delete_user_contract.py:70 [DELETE USER][NEGATIVE] Access denied
+INFO     test_delete_user_contract:test_delete_user_contract.py:76 Регистрация 1го пользователя: {'firstName': 'TestUser_e6912a25', 'lastName': 'TestUser_c3835325', 'login': 'TestLogin_8a7446ee', 'password': 'TestPassword_62c28ee3'}
+INFO     test_delete_user_contract:test_delete_user_contract.py:79 Регистрация 2го пользователя: {'firstName': 'TestUser_79fe8afe', 'lastName': 'TestUser_5d67df21', 'login': 'TestLogin_b31eda07', 'password': 'TestPassword_2b454b34'}
+INFO     test_delete_user_contract:test_delete_user_contract.py:88 Удаляем пользователя №1 от лица пользователя №2 (не админ)
+INFO     test_delete_user_contract:test_delete_user_contract.py:93 HTTP-статус: 403
+INFO     test_delete_user_contract:test_delete_user_contract.py:96 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/cats/{id}/adopt' -> '/cats/(?P<id>[^\\/]*)/adopt'
+DEBUG    parse:parse.py:444 format '/cats/{id}/health-card' -> '/cats/(?P<id>[^\\/]*)/health-card'
+DEBUG    parse:parse.py:444 format '/cats/{id}/chip' -> '/cats/(?P<id>[^\\/]*)/chip'
+DEBUG    parse:parse.py:444 format '/stats/summary' -> '/stats/summary'
+DEBUG    parse:parse.py:444 format '/stats/breeds' -> '/stats/breeds'
+DEBUG    parse:parse.py:444 format '/stats/top-adopters' -> '/stats/top-adopters'
+DEBUG    parse:parse.py:444 format '/external-api/roskot/register-chip' -> '/external-api/roskot/register-chip'

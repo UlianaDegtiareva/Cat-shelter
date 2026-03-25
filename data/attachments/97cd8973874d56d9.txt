@@ -1,0 +1,8 @@
+INFO     test_delete_user_api:test_delete_user_api.py:117 [API] Set NULL to cat's owner when user is deleted
+INFO     test_delete_user_api:test_delete_user_api.py:122 Регистрация: {'firstName': 'TestUser_c7e58c2d', 'lastName': 'TestUser_5dca43a6', 'login': 'TestLogin_e4607078', 'password': 'TestPassword_c6ac11af'}
+INFO     test_delete_user_api:test_delete_user_api.py:132 Создание кота: {'name': 'TestCat_5f92a32d', 'age': 1, 'breed': 'Test'}
+INFO     test_delete_user_api:test_delete_user_api.py:139 Обновляем данные о владельце кошки
+INFO     test_delete_user_api:test_delete_user_api.py:143 Удаляем пользователя
+INFO     test_delete_user_api:test_delete_user_api.py:148 Проверяем, что кошка осталась, но данные владельца удалены
+DEBUG    test_delete_user_api:test_delete_user_api.py:150 Данные кота: {'id': 38, 'name': 'TestCat_5f92a32d', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:42.021Z', 'chipCode': None, 'owner': None, 'healthCard': None}
+DEBUG    test_delete_user_api:test_delete_user_api.py:153 HTTP-статус получения пользователя: 404

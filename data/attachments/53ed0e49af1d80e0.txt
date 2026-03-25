@@ -1,0 +1,10 @@
+INFO     test_get_user_api:test_get_user_api.py:78 [API] Get user's cats
+INFO     test_get_user_api:test_get_user_api.py:83 Регистрация: {'firstName': 'TestUser_d1ddf4b7', 'lastName': 'TestUser_c0398bec', 'login': 'TestLogin_be30c34e', 'password': 'TestPassword_ac138b03'}
+INFO     test_get_user_api:test_get_user_api.py:91 Создание кота: {'name': 'TestCat_ae56a0c4', 'age': 1, 'breed': 'Test'}
+INFO     test_get_user_api:test_get_user_api.py:97 Обновляем данные о владельце кошки
+INFO     test_get_user_api:test_get_user_api.py:102 Получаем список котов пользователя
+DEBUG    test_get_user_api:test_get_user_api.py:104 Cписок котов: {'id': 23, 'login': 'TestLogin_be30c34e', 'firstName': 'TestUser_d1ddf4b7', 'lastName': 'TestUser_c0398bec', 'cats': [{'id': 39, 'name': 'TestCat_ae56a0c4', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:21:42.927Z', 'chipCode': None}]}
+INFO     test_get_user_api:test_get_user_api.py:108 HTTP-статус регистрации пользователя: 201
+INFO     test_get_user_api:test_get_user_api.py:110 HTTP-статус создания кота: 201
+INFO     test_get_user_api:test_get_user_api.py:112 HTTP-статус получения спискa котов: 200
+INFO     test_get_user_api:test_get_user_api.py:116 Проверяем количество котов в списке: 1

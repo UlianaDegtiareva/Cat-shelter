@@ -1,0 +1,7 @@
+INFO     test_chip_cat_api:test_chip_cat_api.py:13 [API] chip cat
+INFO     test_chip_cat_api:test_chip_cat_api.py:18 Создание кота: {'name': 'TestCat_5778d116', 'age': 1, 'breed': 'Test'}
+INFO     test_chip_cat_api:test_chip_cat_api.py:25 Чипируем кота
+INFO     test_chip_cat_api:test_chip_cat_api.py:29 Получаем кота по Id
+DEBUG    test_chip_cat_api:test_chip_cat_api.py:31 Найденный кот: {'id': 1, 'name': 'TestCat_5778d116', 'age': 1, 'breed': 'Test', 'isAdopted': False, 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': 'RU-STATE-J0VRI', 'owner': None, 'healthCard': None}
+INFO     test_chip_cat_api:test_chip_cat_api.py:36 Проверяем наличие кода чипирования
+INFO     test_chip_cat_api:test_chip_cat_api.py:44 Проверяем поля в ответе

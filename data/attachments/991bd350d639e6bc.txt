@@ -1,0 +1,4 @@
+INFO     test_make-admin_api:test_make-admin_api.py:13 [API] make user admin
+INFO     test_make-admin_api:test_make-admin_api.py:18 Регистрация нового пользователя: {'firstName': 'TestUser_77888951', 'lastName': 'TestUser_3dace967', 'login': 'TestLogin_2f5ebdaa', 'password': 'TestPassword_ecda618b'}
+INFO     test_make-admin_api:test_make-admin_api.py:25 Даем права администратора от имени админа
+INFO     test_make-admin_api:test_make-admin_api.py:30 Проверяем поля в ответе

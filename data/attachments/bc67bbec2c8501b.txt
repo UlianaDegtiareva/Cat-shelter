@@ -1,0 +1,9 @@
+INFO     test_create_cat_api:test_create_cat_api.py:70 [API] Checking for multiple cat creation
+INFO     test_create_cat_api:test_create_cat_api.py:80 Создаём котов и добавляем их Id в список
+DEBUG    test_create_cat_api:test_create_cat_api.py:83 Созданный кот: {'name': 'TestCat_f9c52ddf', 'age': 1, 'breed': 'Test', 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'id': 3, 'isAdopted': False}
+DEBUG    test_create_cat_api:test_create_cat_api.py:83 Созданный кот: {'name': 'TestCat_fbb11706', 'age': 1, 'breed': 'Test', 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'id': 4, 'isAdopted': False}
+DEBUG    test_create_cat_api:test_create_cat_api.py:83 Созданный кот: {'name': 'TestCat_ef7273f3', 'age': 1, 'breed': 'Test', 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'id': 5, 'isAdopted': False}
+INFO     test_create_cat_api:test_create_cat_api.py:87 Получаем всех котов и их Id
+DEBUG    test_create_cat_api:test_create_cat_api.py:90 Список котов: [{'id': 5, 'name': 'TestCat_ef7273f3', 'age': 1, 'breed': 'Test', 'isAdopted': False, 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'owner': None, 'healthCard': None}, {'id': 4, 'name': 'TestCat_fbb11706', 'age': 1, 'breed': 'Test', 'isAdopted': False, 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'owner': None, 'healthCard': None}, {'id': 3, 'name': 'TestCat_f9c52ddf', 'age': 1, 'breed': 'Test', 'isAdopted': False, 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'owner': None, 'healthCard': None}]
+INFO     test_create_cat_api:test_create_cat_api.py:94 Сравниваем Id созданных и полученных из БД котов
+DEBUG    test_create_cat_api:test_create_cat_api.py:95 Список Id созданных котов: [3, 4, 5], Список Id из БД [5, 4, 3]

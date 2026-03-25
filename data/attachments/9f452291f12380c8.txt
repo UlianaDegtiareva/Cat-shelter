@@ -1,0 +1,11 @@
+INFO     test_create_cat_contract:test_create_cat_contract.py:128 [CREATE CAT][NEGATIVE] invalid payload
+INFO     test_create_cat_contract:test_create_cat_contract.py:132 Попытка создания с недопустимым payload: missing 'name'
+DEBUG    test_create_cat_contract:test_create_cat_contract.py:133 Payload: {'age': 3, 'breed': 'B'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:139 HTTP-статус: 400
+INFO     test_create_cat_contract:test_create_cat_contract.py:143 Проверка контракта
+DEBUG    parse:parse.py:444 format '/auth/register' -> '/auth/register'
+DEBUG    parse:parse.py:444 format '/auth/login' -> '/auth/login'
+DEBUG    parse:parse.py:444 format '/users' -> '/users'
+DEBUG    parse:parse.py:444 format '/users/{id}' -> '/users/(?P<id>[^\\/]*)'
+DEBUG    parse:parse.py:444 format '/users/{id}/cats' -> '/users/(?P<id>[^\\/]*)/cats'
+DEBUG    parse:parse.py:444 format '/users/{id}/make-admin' -> '/users/(?P<id>[^\\/]*)/make-admin'

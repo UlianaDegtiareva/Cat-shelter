@@ -1,0 +1,6 @@
+INFO     test_login_api:test_login_api.py:13 [API] login successful
+INFO     test_login_api:test_login_api.py:19 Регистрация: {'firstName': 'TestUser_9db41b41', 'lastName': 'TestUser_3c74ca25', 'login': 'TestLogin_da74c0cb', 'password': 'TestPassword_5e286d05'}
+INFO     test_login_api:test_login_api.py:25 Авторизация
+INFO     test_login_api:test_login_api.py:30 Получаем список пользователей с помощью полученного токена
+INFO     test_login_api:test_login_api.py:36 Проверяем наличие access токена в ответе
+INFO     test_login_api:test_login_api.py:40 Проверяем корректность access токена

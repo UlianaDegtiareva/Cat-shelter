@@ -1,0 +1,1 @@
+{'id': 52, 'login': 'TestLogin_f931dc7e', 'firstName': 'TestUser_ef9c4e37', 'lastName': 'TestUser_78855173', 'cats': [{'id': 69, 'name': 'TestCat_98871408', 'age': 1, 'breed': 'Test', 'isAdopted': True, 'history': None, 'description': None, 'adoptionDate': '2026-03-25T07:22:17.378Z', 'chipCode': None}]}

@@ -1,0 +1,12 @@
+INFO     test_create_cat_api:test_create_cat_api.py:12 [API] Checking cat creaton and availability
+INFO     test_create_cat_api:test_create_cat_api.py:17 Регистрация: {'firstName': 'TestUser_29319fc2', 'lastName': 'TestUser_eca7dbc8', 'login': 'TestLogin_d7a7ec39', 'password': 'TestPassword_8ebd4a53'}
+INFO     test_create_cat_api:test_create_cat_api.py:26 Получаем исходный список котов
+DEBUG    test_create_cat_api:test_create_cat_api.py:29 Список котов: []
+INFO     test_create_cat_api:test_create_cat_api.py:33 Создаём кота: {'name': 'TestCat_b7aba5bc', 'age': 1, 'breed': 'Test'}
+INFO     test_create_cat_api:test_create_cat_api.py:39 Получаем созданного кота по его Id: 2
+INFO     test_create_cat_api:test_create_cat_api.py:43 Получаем список котов после добавления
+DEBUG    test_create_cat_api:test_create_cat_api.py:46 Список котов: [{'id': 2, 'name': 'TestCat_b7aba5bc', 'age': 1, 'breed': 'Test', 'isAdopted': False, 'history': None, 'description': None, 'adoptionDate': None, 'chipCode': None, 'owner': None, 'healthCard': None}]
+INFO     test_create_cat_api:test_create_cat_api.py:51 HTTP-статус создания: 201
+INFO     test_create_cat_api:test_create_cat_api.py:53 HTTP-статус получения: 200
+INFO     test_create_cat_api:test_create_cat_api.py:57 Количество котов после добавления: 1
+INFO     test_create_cat_api:test_create_cat_api.py:61 Проверяем поля в ответе

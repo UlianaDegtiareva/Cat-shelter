@@ -1,0 +1,4 @@
+INFO     test_summary_stats_api:test_summary_stats_api.py:13 [API] checking summary when database is empty
+INFO     test_summary_stats_api:test_summary_stats_api.py:17 Получаем статистику
+INFO     test_summary_stats_api:test_summary_stats_api.py:23 HTTP-статус: 200
+INFO     test_summary_stats_api:test_summary_stats_api.py:26 Проверяем поля ответа: {'totalAnimals': 0, 'adoptedCount': 0, 'adoptionRate': 0}
